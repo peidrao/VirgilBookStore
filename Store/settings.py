@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     # Apps
     'home.apps.HomeConfig',
     'writer.apps.WriterConfig',
+    'book.apps.BookConfig',
 
     'ckeditor',
     'ckeditor_uploader',
+    'mptt'
 ]
 
 MIDDLEWARE = [

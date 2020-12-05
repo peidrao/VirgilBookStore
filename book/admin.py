@@ -7,9 +7,10 @@ from .models import Genre, Book, Images
 
 
 class GenreAdmin(DraggableMPTTAdmin):
-    mptt_indent_field = 'title'
-    list_display = ['tree_actions', 'indented_title',
-                    'related_books_count', 'related_books_cumulative', 'created_at']
+    mptt_indent_field = "title"
+    list_display = ('tree_actions', 'indented_title',
+                    'related_books_count', 'related_books_cumulative_count')
+    list_display_links = ('indented_title',)
     prepopulated_fields = {'slug': ('title',)}
 
     def get_queryset(self, request):
@@ -27,11 +28,12 @@ class GenreAdmin(DraggableMPTTAdmin):
         return instance.books_count
     related_books_count.short_description = 'Livros desta categoria específica'
 
-    def related_books_cumulative(self, instance):
+    def related_books_cumulative_count(self, instance):
         return instance.books_cumulative_count
-    related_books_cumulative.short_description = 'Livros relacionados'
+    related_books_cumulative_count.short_description = 'Livros relacionados'
 
 
+@admin_thumbnails.thumbnail('image')
 class BookImageInline(admin.TabularInline):
     model = Images
     readonly_fields = ('id',)
@@ -39,7 +41,7 @@ class BookImageInline(admin.TabularInline):
 
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'status', 'image_tag']
+    list_display = ['title', 'genre', 'status', 'image_tag']
     list_filter = ['genre']
     readonly_fields = ('image_tag',)
     inlines = [BookImageInline]

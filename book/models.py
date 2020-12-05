@@ -20,11 +20,11 @@ class Genre(MPTTModel):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.title
-
     class MPTTMeta:
         order_insertion_by = ['title']
+
+    def __str__(self):
+        return self.title
 
     def get_absolute_url(self):
         return reverse("genre_detail", kwargs={"slug": self.slug})
@@ -45,13 +45,14 @@ class Book(models.Model):
     )
 
     writer = models.ForeignKey(Writer, on_delete=models.CASCADE, null=False)
-    genre = models.ManyToManyField(Genre)
+    genre = models.ForeignKey(
+        Genre, on_delete=models.CASCADE, null=False)
 
     title = models.CharField(max_length=150, null=False)
     description = models.CharField(max_length=250, null=False)
     keywords = models.CharField(max_length=255)
     publication_date = models.DateField()
-    image = models.FileField(upload_to='book/', null=False)
+    image = models.FileField(upload_to='capa/', null=False)
 
     price = models.FloatField()
     amount = models.IntegerField()

@@ -5,7 +5,7 @@ from book.models import Book
 
 
 def index(request):
-    books_latest = Book.objects.all().order_by('-id')[:5]
+    books_latest = Book.objects.all().order_by('-id')[:8]
     context = {
         'books_latest': books_latest
     }

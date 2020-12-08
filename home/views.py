@@ -16,12 +16,14 @@ def book_detail(request, id, slug):
     query = request.GET.get('q')
     genre = Genre.objects.all()
     book = Book.objects.get(pk=id)
+    books = Book.objects.all().order_by('genre')[:5]
 
     images = Images.objects.filter(book_id=id)
     context = {
         'genre': genre,
         'book': book,
         'images': images,
+        'books': books,
     }
 
     return render(request, 'pages/book_detail.html', context)

@@ -50,7 +50,8 @@ INSTALLED_APPS = [
 
     'ckeditor',
     'ckeditor_uploader',
-    'mptt'
+    'mptt',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

@@ -12,6 +12,9 @@ urlpatterns = [
     path('', include('home.urls')),
     path('home/', include('home.urls')),
 
+    path('contact/', views.contact, name='contact'),
+
+
     path('book/<int:id>/<slug:slug>', views.book_detail, name='book_detail')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

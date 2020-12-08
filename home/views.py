@@ -7,9 +7,11 @@ from .forms import ContactMessageForm
 
 
 def index(request):
+    genres = Genre.objects.all()
     books_latest = Book.objects.all().order_by('-id')[:8]
     context = {
-        'books_latest': books_latest
+        'books_latest': books_latest,
+        'genres': genres,
     }
     return render(request, 'index.html', context)
 
@@ -18,7 +20,7 @@ def book_detail(request, id, slug):
     query = request.GET.get('q')
     genre = Genre.objects.all()
     book = Book.objects.get(pk=id)
-    books = Book.objects.all().order_by('genre')[:5]
+    books = Book.objects.filter(genre_id=id)
 
     images = Images.objects.filter(book_id=id)
     context = {

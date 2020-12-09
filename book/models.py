@@ -49,7 +49,7 @@ class Book(models.Model):
         Genre, on_delete=models.CASCADE, null=False)
 
     title = models.CharField(max_length=150, null=False)
-    description = models.CharField(max_length=250, null=False)
+    description = RichTextUploadingField()
     keywords = models.CharField(max_length=255)
     publication_date = models.DateField()
     image = models.FileField(upload_to='capa/', null=False)
@@ -57,6 +57,7 @@ class Book(models.Model):
     price = models.FloatField()
     amount = models.IntegerField()
     detail = RichTextUploadingField()
+    specification = RichTextUploadingField()
     slug = models.SlugField(unique=True, null=False)
 
     status = models.CharField(choices=STATUS, max_length=5)

@@ -1,3 +1,4 @@
+{% load static %}
 <footer id="footer">
     <div class="fpart-first">
         <div class="container">
@@ -11,7 +12,7 @@
                                 href="contact-us.html">Contact Us</a>
                     </ul>
                 </div>
-                <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                <div class="column col-lg-4 col-md-4 col-sm-3 col-xs-12">
                     <h5>Information</h5>
                     <ul>
                         <li><a href="about-us.html">About Us</a></li>
@@ -20,30 +21,12 @@
                         <li><a href="about-us.html">Terms &amp; Conditions</a></li>
                     </ul>
                 </div>
-                <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                <div class="column col-lg-4 col-md-4 col-sm-3 col-xs-12">
                     <h5>Customer Service</h5>
                     <ul>
                         <li><a href="contact-us.html">Contact Us</a></li>
                         <li><a href="#">Returns</a></li>
                         <li><a href="sitemap.html">Site Map</a></li>
-                    </ul>
-                </div>
-                <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                    <h5>Extras</h5>
-                    <ul>
-                        <li><a href="#">Brands</a></li>
-                        <li><a href="#">Gift Vouchers</a></li>
-                        <li><a href="#">Affiliates</a></li>
-                        <li><a href="#">Specials</a></li>
-                    </ul>
-                </div>
-                <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                    <h5>My Account</h5>
-                    <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Order History</a></li>
-                        <li><a href="#">Wish List</a></li>
-                        <li><a href="#">Newsletter</a></li>
                     </ul>
                 </div>
             </div>
@@ -57,16 +40,14 @@
                             target="_blank">Ami Bappy</a></p>
                 </div>
                 <div class="social pull-right flip">
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/socialicons/facebook.png"
-                            alt="Facebook" title="Facebook"></a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/socialicons/twitter.png"
-                            alt="Twitter" title="Twitter"> </a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/socialicons/google_plus.png"
-                            alt="Google+" title="Google+"> </a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/socialicons/pinterest.png"
-                            alt="Pinterest" title="Pinterest"> </a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/socialicons/rss.png" alt="RSS"
-                            title="RSS"> </a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/socialicons/facebook.png' %}" alt="Facebook" title="Facebook"></a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/socialicons/twitter.png' %}" alt="Twitter" title="Twitter"> </a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/socialicons/linkedin.png' %}" alt="Linkedin" title="Linkedin"> </a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/socialicons/youtube.png' %}" alt="YouTube" title="YouTube"> </a>
                 </div>
             </div>
             <div class="bottom-row">
@@ -78,18 +59,15 @@
                         leap into electronic typesetting, remaining essentially unchanged.</p>
                 </div>
                 <div class="payments_types">
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/payment/payment_paypal.png"
-                            alt="paypal" title="PayPal"></a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/payment/payment_american.png"
-                            alt="american-express" title="American Express"></a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/payment/payment_2checkout.png"
-                            alt="2checkout" title="2checkout"></a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/payment/payment_maestro.png"
-                            alt="maestro" title="Maestro"></a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/payment/payment_discover.png"
-                            alt="discover" title="Discover"></a>
-                    <a href="#" target="_blank"> <img data-toggle="tooltip" src="image/payment/payment_mastercard.png"
-                            alt="mastercard" title="MasterCard"></a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/payment/payment_american.png' %}" alt="american" title="American"></a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/payment/payment_mastercard.png' %}" alt="master-card"
+                            title="Marter Card"></a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/payment/payment_paypal.png' %}" alt="paypal" title="PayPal"></a>
+                    <a href="#" target="_blank"> <img data-toggle="tooltip"
+                            src="{% static 'image/payment/payment_visa.png' %}" alt="visa" title="Visa"></a>
                 </div>
             </div>
         </div>

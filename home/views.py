@@ -2,16 +2,18 @@ from django.shortcuts import render, HttpResponseRedirect
 
 # Create your views here.
 from book.models import Book, Genre, Images
-from .models import ContactMessage
+from .models import ContactMessage, Banner
 from .forms import ContactMessageForm
 
 
 def index(request):
+    banner = Banner.objects.all()
     genre = Genre.objects.all()
     books_latest = Book.objects.all().order_by('-id')[:8]
     context = {
         'books_latest': books_latest,
         'genre': genre,
+        'banner': banner,
     }
 
     return render(request, 'index.html', context)

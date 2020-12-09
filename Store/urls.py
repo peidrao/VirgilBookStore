@@ -15,6 +15,8 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
 
 
-    path('book/<int:id>/<slug:slug>', views.book_detail, name='book_detail')
+    path('book/<int:id>/<slug:slug>', views.book_detail, name='book_detail'),
+    path('genre/<int:id>/<slug:slug>',
+         views.book_genre, name='book_genre'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

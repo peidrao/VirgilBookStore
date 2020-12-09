@@ -7,12 +7,13 @@ from .forms import ContactMessageForm
 
 
 def index(request):
-    genres = Genre.objects.all()
+    genre = Genre.objects.all()
     books_latest = Book.objects.all().order_by('-id')[:8]
     context = {
         'books_latest': books_latest,
-        'genres': genres,
+        'genre': genre,
     }
+
     return render(request, 'index.html', context)
 
 
@@ -31,6 +32,16 @@ def book_detail(request, id, slug):
     }
 
     return render(request, 'pages/book_detail.html', context)
+
+
+def book_genre(request, id, slug):
+    #query = request.GET.get('q')
+    genre = Genre.objects.all()
+    books = Book.objects.filter(genre_id=id)
+
+    context = {
+        'genre': genre,  'books': books}
+    return render(request, 'pages/book_genre.html', context)
 
 
 def contact(request):

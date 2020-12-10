@@ -6,3 +6,5 @@
 - [ ] - Aplicar zoom para ver os produtos melhor
 - [ ] - Fazer pesquisa de livros em campo de busca
 - [ ] - Arrumar visualização de livros em suas categorias.
+- [ ] - Customizar formulário de criação de conta
+ 

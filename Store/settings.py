@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'writer.apps.WriterConfig',
     'book.apps.BookConfig',
     'order.apps.OrderConfig',
+    'user.apps.UserConfig',
 
     'ckeditor',
     'ckeditor_uploader',

@@ -5,6 +5,13 @@
 {% block header  %} {% include 'header.html' %} {% endblock  %}
 {% comment %} {% block subheader  %} {% include 'subheader.html' %} {% endblock  %} {% endcomment %}
 {% block content  %} <div id="container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
     <div class="container">
         <!-- Breadcrumb Start-->
         <ul class="breadcrumb">
@@ -17,108 +24,23 @@
             <div class="col-sm-9" id="content">
                 <h1 class="title">Register Account</h1>
                 <p>If you already have an account with us, please login at the <a href="login.html">Login Page</a>.</p>
-                <form class="form-horizontal" method="post" action="">
-                    {% csrf_token %}
-                    <fieldset id="account">
-                        <legend>Your Personal Details</legend>
-                        <div style="display: none;" class="form-group required">
-                            <label class="col-sm-2 control-label">Customer Group</label>
-                            <div class="col-sm-10">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" checked="checked" value="1" name="customer_group_id">
-                                        Default
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-firstname" class="col-sm-2 control-label">Nome</label>
-                            <div class="col-sm-10">
-                                {{form.first_name|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-lastname" class="col-sm-2 control-label">Sobrenome</label>
-                            <div class="col-sm-10">
-                                {{form.last_name|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-firstname" class="col-sm-2 control-label">Nome de Usuário</label>
-                            <div class="col-sm-10">
-                                {{form.username|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-email" class="col-sm-2 control-label">E-Mail</label>
-                            <div class="col-sm-10">
-                                {{form.email|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-telephone" class="col-sm-2 control-label">Celular</label>
-                            <div class="col-sm-10">
-                                {{form.phone|as_crispy_field}}
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset id="address">
-                        <legend>Your Address</legend>
-                        <div class="form-group required">
-                            <label for="input-address-1" class="col-sm-2 control-label">Endereço</label>
-                            <div class="col-sm-10">
-                                {{form.address|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-address-1" class="col-sm-2 control-label">Número</label>
-                            <div class="col-sm-10">
-                                {{form.number_address|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-city" class="col-sm-2 control-label">Cidade</label>
-                            <div class="col-sm-10">
-                                {{form.city|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-postcode" class="col-sm-2 control-label">CEP</label>
-                            <div class="col-sm-10">
-                                {{form.zip_code|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-country" class="col-sm-2 control-label">País</label>
-                            <div class="col-sm-10">
-                                {{form.state|as_crispy_field}}
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Your Password</legend>
-                        <div class="form-group required">
-                            <label for="input-password" class="col-sm-2 control-label">Senha</label>
-                            <div class="col-sm-10">
-                                {{form.password1|as_crispy_field}}
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label for="input-confirm" class="col-sm-2 control-label">Confirme a senha</label>
-                            <div class="col-sm-10">
-                                {{form.password2|as_crispy_field}}
-                            </div>
-                        </div>
-                    </fieldset>
-                    <div class="buttons">
-                        <div class="pull-right">
-                            <input type="checkbox" value="1" name="agree"> &nbsp;I have read and agree to the <a
-                                class="agree" href="#"><b>Privacy Policy</b></a> &nbsp;
-                            <input type="submit" class="btn btn-primary" value="Confirmar">
-                        </div>
-                    </div>
-                </form>
+                 <form method="post">
+                     {% csrf_token %}
+                     {% for field in form %}
+                     <p>
+                         {{ field.label_tag }}<br>
+                         {{ field }}
+                         {% if field.help_text %}
+                         <small style="color: grey">{{ field.help_text }}</small>
+                         {% endif %}
+                         {% for error in field.errors %}
+                         <p style="color: red">{{ error }}</p>
+                         {% endfor %}
+                     </p>
+                     {% endfor %}
+                     <button type="submit">Sign up</button>
+                 </form>
+               
             </div>
         </div>
     </div>

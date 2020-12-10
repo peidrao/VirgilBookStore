@@ -3,5 +3,13 @@
 {% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
 {% block header  %} {% include 'header.html' %} {% endblock  %}
 
-{% block content  %} {% include 'content.html' %} {% endblock  %}
+{% block content  %}
+<div class="container">
+    <div class="row">
+        <h1>Bem vindo, {{user.first_name}} </h1>
+
+    </div>
+</div>
+
+{% endblock  %}
 {% block footer  %} {% include 'footer.html' %} {% endblock  %}

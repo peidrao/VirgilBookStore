@@ -15,6 +15,9 @@ urlpatterns = [
     path('user/', include('user.urls')),
 
     path('signup/', UserViews.signup_form, name='signup_form'),
+    path('login/', UserViews.login, name='login'),
+    path('profile/', UserViews.index, name='index'),
+    path('logout/', UserViews.logout, name='logout'),
 
     path('contact/', views.contact, name='contact'),
 

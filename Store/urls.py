@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from home import views
+from user import views as UserViews
 #from order import views
 
 urlpatterns = [
@@ -11,6 +12,9 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('home.urls')),
     path('home/', include('home.urls')),
+    path('user/', include('user.urls')),
+
+    path('signup/', UserViews.signup_form, name='signup_form'),
 
     path('contact/', views.contact, name='contact'),
 

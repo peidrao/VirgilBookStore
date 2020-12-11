@@ -17,3 +17,7 @@ class ContactMessageForm(forms.ModelForm):
             'subject':  forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'placeholder': 'Assunto', 'required': True}),
             'message':  forms.Textarea(attrs={'class': 'form-control', 'rows': '5', 'placeholder': 'Sua mensagem', 'required': True}),
         }
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=100)

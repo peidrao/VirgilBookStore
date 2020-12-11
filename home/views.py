@@ -1,9 +1,9 @@
-from django.shortcuts import render, HttpResponseRedirect
-
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+import json
 # Create your views here.
 from book.models import Book, Genre, Images
 from .models import ContactMessage, Banner
-from .forms import ContactMessageForm
+from .forms import ContactMessageForm, SearchForm
 
 
 def index(request):
@@ -66,3 +66,34 @@ def contact(request):
     }
 
     return render(request, 'pages/contact.html', context)
+
+
+def search(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            books = Book.objects.filter(title__icontains=query)
+            genre = Genre.objects.all()
+
+            context = {
+                'query': query,
+                'books': books,
+                'genre': genre,
+            }
+            return render(request, 'pages/search_books.html', context)
+    return HttpResponseRedirect('/')
+
+
+def search_auto(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        books = Book.objects.filter(title__icontains=q)
+        results = []
+        for item in books:
+            results.append(item.title)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)

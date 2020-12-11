@@ -6,7 +6,6 @@ from django.contrib import messages
 from .models import UserProfile
 from book.models import Genre
 from .forms import SignUpForm
-# Create your views here.
 
 
 @login_required(login_url='/login')

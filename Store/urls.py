@@ -19,6 +19,9 @@ urlpatterns = [
     path('profile/', UserViews.index, name='index'),
     path('logout/', UserViews.logout, name='logout'),
 
+    path('search/', views.search, name='search'),
+    path('search_auto/', views.search_auto, name='search_auto'),
+
     path('contact/', views.contact, name='contact'),
 
 

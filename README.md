@@ -7,4 +7,5 @@
 - [ ] - Fazer pesquisa de livros em campo de busca
 - [ ] - Arrumar visualização de livros em suas categorias.
 - [ ] - Customizar formulário de criação de conta
+- [ ] - Listar livros a serem pesquisados antes de realizar a requisicão
  

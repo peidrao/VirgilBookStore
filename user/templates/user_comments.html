@@ -1,0 +1,47 @@
+{% extends 'home.html' %}
+
+{% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
+{% block header  %} {% include 'header.html' %} {% endblock  %}
+
+{% block content  %}
+<div class="container">
+    <div class="row">
+        {% block menu %} {% include 'menu.html' %} {% endblock  %}
+        <aside id="column-right" class="col-sm-3 hidden-xs">
+            <h3 class="subtitle">Seus comentários</h3>
+            <table class="shopping-cart-table table">
+                <tr>
+                    <th class="text-left">Livro </th>
+                    <th class="text-left">Avaliação </th>
+                    <th class="text-left">Subject </th>
+                    <th class="text-left">Comment </th>
+                    <th class="text-left">Status </th>
+                    <th class="text-left">Date </th>
+                    <th class="text-left">Detail </th>
+                </tr>
+                {% for rs in comments %}
+                <tr>
+                    <td class="text-left">
+                        <a href="/book/{{ rs.book_id }}/{{ rs.book.slug }}">
+                            <strong> {{ rs.book.title}}</strong>
+                        </a>
+                    </td>
+                    <td class="text-left">{{ rs.rate}} </td>
+                    <td class="text-left">{{ rs.subject}} </td>
+                    <td class="text-left">{{ rs.comment}} </td>
+                    <td class="text-left">{{ rs.status}} </td>
+                    <td class="text-left">{{ rs.created_at|date:"D m, Y"}} </td>
+                    <td class="text-left">
+                        <a class="primary-btn" href="/user/deletecomment/{{ rs.id }}"
+                            onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </aside>
+
+    </div>
+</div>
+
+{% endblock  %}
+{% block footer  %} {% include 'footer.html' %} {% endblock  %}

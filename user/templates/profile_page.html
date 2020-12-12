@@ -6,7 +6,8 @@
 {% block content  %}
 <div class="container">
     <div class="row">
-        <h1>Bem vindo, {{user.first_name}} </h1>
+        <h3 class="subtitle">Bem vindo, {{user.first_name}}</h3>
+        {% block menu  %} {% include 'menu.html' %} {% endblock  %}
 
     </div>
 </div>

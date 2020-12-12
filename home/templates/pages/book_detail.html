@@ -116,7 +116,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-description" data-toggle="tab">Description</a></li>
                         <li><a href="#tab-specification" data-toggle="tab">Specification</a></li>
-                        <li><a href="#tab-review" data-toggle="tab">Reviews (2)</a></li>
+                        <li><a href="#tab-review" data-toggle="tab">Avaliações (2)</a></li>
                     </ul>
                     <div class="tab-content">
                         <div itemprop="description" id="tab-description" class="tab-pane active">
@@ -129,105 +129,82 @@
 
                         </div>
                         <div id="tab-review" class="tab-pane">
-                            <form class="form-horizontal">
-                                <div id="review">
-                                    <div>
-                                        <table class="table table-striped table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="width: 50%;"><strong><span>harvey</span></strong></td>
-                                                    <td class="text-right"><span>20/01/2016</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <p>Lorem Ipsum is simply dummy text of the printing and
-                                                            typesetting industry. Lorem Ipsum has been the industry's
-                                                            standard dummy text ever since the 1500s, when an unknown
-                                                            printer took a galley of type and scrambled it to make a
-                                                            type specimen book.</p>
-                                                        <div class="rating"> <span class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <table class="table table-striped table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="width: 50%;"><strong><span>Andrson</span></strong></td>
-                                                    <td class="text-right"><span>20/01/2016</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <p>Lorem Ipsum is simply dummy text of the printing and
-                                                            typesetting industry. Lorem Ipsum has been the industry's
-                                                            standard dummy text ever since the 1500s, when an unknown
-                                                            printer took a galley of type and scrambled it to make a
-                                                            type specimen book.</p>
-                                                        <div class="rating"> <span class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star fa-stack-2x"></i><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                                class="fa fa-stack"><i
-                                                                    class="fa fa-star-o fa-stack-2x"></i></span> </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="text-right"></div>
+
+                            <div id="review">
+                                <div>
+                                    {% for comment in comments %}
+                                    <table class="table table-striped table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 50%;">
+                                                    <strong><span>{{comment.subject}}</span></strong></td>
+                                                <td class="text-right"><span>{{comment.created_at}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p>{{comment.comment}}</p>
+                                                    <div class="rating"> <span class="fa fa-stack"><i
+                                                                class="fa fa-star fa-stack-2x"></i><i
+                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
+                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
+                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
+                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
+                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                                                class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    {% endfor %}
+
                                 </div>
-                                <h2>Write a review</h2>
+                                <div class="text-right"></div>
+                            </div>
+                            <h2>Write a review</h2>
+                            {% if messages %}
+                            {% for message in messages  %}
+                            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                {{message}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endfor %}
+
+                            {% endif %}
+                            <form action="/book/addcomment/{{book.id}}" class="form-horizontal" method="POST">
+                                {% csrf_token %}
                                 <div class="form-group required">
                                     <div class="col-sm-12">
-                                        <label for="input-name" class="control-label">Your Name</label>
-                                        <input type="text" class="form-control" id="input-name" value="" name="name">
+                                        <label for="input-name" class="control-label">Assunto</label>
+                                        <input type="text" class="form-control" id="input-name" value="" name="subject">
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="col-sm-12">
                                         <label for="input-review" class="control-label">Your Review</label>
                                         <textarea class="form-control" id="input-review" rows="5"
-                                            name="text"></textarea>
-                                        <div class="help-block"><span class="text-danger">Note:</span> HTML is not
-                                            translated!</div>
+                                            name="comment"></textarea>
+
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="col-sm-12">
                                         <label class="control-label">Rating</label>
                                         &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                        <input type="radio" value="1" name="rating"> &nbsp;
-                                        <input type="radio" value="2" name="rating"> &nbsp;
-                                        <input type="radio" value="3" name="rating"> &nbsp;
-                                        <input type="radio" value="4" name="rating"> &nbsp;
-                                        <input type="radio" value="5" name="rating"> &nbsp;Good
+                                        <input type="radio" value="1" name="rate"> &nbsp;
+                                        <input type="radio" value="2" name="rate"> &nbsp;
+                                        <input type="radio" value="3" name="rate"> &nbsp;
+                                        <input type="radio" value="4" name="rate"> &nbsp;
+                                        <input type="radio" value="5" name="rate"> &nbsp;Good
                                     </div>
                                 </div>
                                 <div class="buttons">
                                     <div class="pull-right">
-                                        <button class="btn btn-primary" id="button-review"
-                                            type="button">Continue</button>
+                                        <button class="btn btn-primary" id="button-review" type="submit">Enviar</button>
                                     </div>
                                 </div>
                             </form>

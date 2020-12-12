@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .models import UserProfile
-from book.models import Genre
+from book.models import Genre, Comment
 from .forms import SignUpForm
 
 
@@ -71,3 +71,24 @@ def login(request):
 def logout(request):
     logout_func(request)
     return HttpResponseRedirect('/')
+
+
+@login_required(login_url='/login')
+def user_comments(request):
+    genre = Genre.objects.all()
+    current_user = request.user
+    comments = Comment.objects.filter(user_id=current_user.id)
+    context = {
+        'genre': genre,
+        'comments': comments
+    }
+
+    return render(request, 'user_comments.html', context)
+
+
+@login_required(login_url='/login')
+def user_deletecomment(request, id):
+    current_user = request.user
+    comments = Comment.objects.filter(user_id=current_user.id, id=id).delete()
+    messages.success(request, 'Comentário deleteado!')
+    return HttpResponseRedirect('/user/comments')

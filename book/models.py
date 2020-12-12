@@ -1,4 +1,5 @@
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db import models
 
@@ -85,3 +86,26 @@ class Images(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    STATUS = (
+        ('Nova', 'Nova'),
+        ('Verdade', 'Verdade'),
+        ('Falso', 'Falso'),
+    )
+
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=100, blank=True)
+    comment = models.CharField(max_length=255, blank=True)
+
+    rate = models.IntegerField(default=1)
+    ip = models.CharField(max_length=50, blank=True)
+    status = models.CharField(choices=STATUS, max_length=10, default='Nova')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject

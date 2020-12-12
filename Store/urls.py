@@ -13,6 +13,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('home/', include('home.urls')),
     path('user/', include('user.urls')),
+    path('book/', include('book.urls')),
 
     path('signup/', UserViews.signup_form, name='signup_form'),
     path('login/', UserViews.login, name='login'),

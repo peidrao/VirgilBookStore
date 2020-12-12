@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 import json
 # Create your views here.
-from book.models import Book, Genre, Images
+from book.models import Book, Genre, Images, Comment
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm
 
@@ -24,6 +24,7 @@ def book_detail(request, id, slug):
     genre = Genre.objects.all()
     book = Book.objects.get(pk=id)
     books = Book.objects.filter(genre_id=id)
+    comments = Comment.objects.filter(book_id=id, status='Verdade')
 
     images = Images.objects.filter(book_id=id)
     context = {
@@ -31,6 +32,7 @@ def book_detail(request, id, slug):
         'book': book,
         'images': images,
         'books': books,
+        'comments': comments,
     }
 
     return render(request, 'pages/book_detail.html', context)

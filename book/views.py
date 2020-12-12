@@ -21,7 +21,7 @@ def add_comment(request, id):
             data.comment = form.cleaned_data['comment']
             data.rate = form.cleaned_data['rate']
             data.ip = request.META.get('REMOTE_ADDR')
-            data.product_id = id
+            data.book_id = id
 
             current_user = request.user
             data.user_id = current_user.id

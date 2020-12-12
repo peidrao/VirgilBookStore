@@ -71,3 +71,9 @@ def login(request):
 def logout(request):
     logout_func(request)
     return HttpResponseRedirect('/')
+
+
+@login_required(login_url='/login')
+def user_comments(request):
+    genre = Genre.objects.all()
+    current_user = request.user

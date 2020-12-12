@@ -3,7 +3,7 @@ from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 
 # Register your models here.
-from .models import Genre, Book, Images
+from .models import Genre, Book, Images, Comment
 
 
 class GenreAdmin(DraggableMPTTAdmin):
@@ -53,6 +53,13 @@ class ImagesAdmin(admin.ModelAdmin):
     list_display = ['image', 'title', 'image_thumbnail']
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'comment', 'status', 'created_at']
+    list_filter = ['status']
+    readonly_fields = ('subject', 'comment', 'user', 'book')
+
+
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Images, ImagesAdmin)
+admin.site.register(Comment, CommentAdmin)

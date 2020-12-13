@@ -83,19 +83,31 @@
                             <div class="rating" itemprop="aggregateRating" itemscope
                                 itemtype="http://schema.org/AggregateRating">
                                 <meta itemprop="ratingValue" content="0" />
-                                <p><span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i
-                                            class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-1x"></i><i
-                                            class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-1x"></i><i
-                                            class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-1x"></i><i
-                                            class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star-o fa-stack-1x"></i></span> <a
-                                        onClick="$('a[href=\'#tab-review\']').trigger('click'); return false;"
-                                        href=""><span itemprop="reviewCount">1 reviews</span></a> / <a
-                                        onClick="$('a[href=\'#tab-review\']').trigger('click'); return false;"
-                                        href="">Write a review</a></p>
+
+                                <p>
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if book.avaregereview < 1%}-o {% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if book.avaregereview < 2%}-o{% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if book.avaregereview < 3%}-o{% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if book.avaregereview < 4%}-o{% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if book.avaregereview < 5%}-o{% endif %}"></i>
+                                    </span>
+
+
+                                    <a href=""><span itemprop="reviewCount">{{book.countreview}} reviews</span></a>
+                                </p>
                             </div>
                             <hr>
                             <!-- AddThis Button BEGIN -->
@@ -116,7 +128,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-description" data-toggle="tab">Description</a></li>
                         <li><a href="#tab-specification" data-toggle="tab">Specification</a></li>
-                        <li><a href="#tab-review" data-toggle="tab">Avaliações (2)</a></li>
+                        <li><a href="#tab-review" data-toggle="tab">Avaliações ({{book.countreview}})</a></li>
                     </ul>
                     <div class="tab-content">
                         <div itemprop="description" id="tab-description" class="tab-pane active">
@@ -144,17 +156,32 @@
                                             <tr>
                                                 <td colspan="2">
                                                     <p>{{comment.comment}}</p>
-                                                    <div class="rating"> <span class="fa fa-stack"><i
-                                                                class="fa fa-star fa-stack-2x"></i><i
-                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                            class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                                class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                                                    <div class="rating">
+                                                        <span class="fa fa-stack">
+                                                            <i
+                                                                class="fa fa-star{% if comment.rate < 1 %}-o{% endif %}"></i>
+                                                        </span>
+
+                                                        <span class="fa fa-stack">
+                                                            <i
+                                                                class="fa fa-star{% if comment.rate < 2 %}-o{% endif %}"></i>
+                                                        </span>
+
+                                                        <span class="fa fa-stack">
+                                                            <i
+                                                                class="fa fa-star{% if comment.rate < 3 %}-o{% endif %}"></i>
+                                                        </span>
+
+                                                        <span class="fa fa-stack">
+                                                            <i
+                                                                class="fa fa-star{% if comment.rate < 4 %}-o{% endif %}"></i>
+                                                        </span>
+
+                                                        <span class="fa fa-stack">
+                                                            <i
+                                                                class="fa fa-star{% if comment.rate < 5 %}-o{% endif %}"></i>
+                                                        </span>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -225,15 +252,28 @@
                             <div class="caption">
                                 <h4><a href="/book/{{item.id}}/{{item.slug}}">{{item.title}}</a></h4>
                                 <p class="price"> R$ {{item.price}} </p>
-                                <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                                <div class="rating">
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if item.avaregereview < 1%}-o {% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if item.avaregereview < 2%}-o{% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if item.avaregereview < 3%}-o{% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if item.avaregereview < 4%}-o{% endif %}"></i>
+                                    </span>
+
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star{% if item.avaregereview < 5%}-o{% endif %}"></i>
+
+                                </div>
                             </div>
                             <div class="button-group">
                                 <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span></button>
@@ -268,77 +308,6 @@
                                     class="price-old">$122.00</span> <span class="saving">-10%</span></p>
                         </div>
                     </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/iphone_1-50x50.jpg" alt="iPhone5"
-                                    title="iPhone5" class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">iPhone5</a></h4>
-                            <p class="price"> $123.20 </p>
-                            <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/macbook_1-50x50.jpg"
-                                    alt="Ideapad Yoga 13-59341124 Laptop" title="Ideapad Yoga 13-59341124 Laptop"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Ideapad Yoga 13-59341124 Laptop</a></h4>
-                            <p class="price"> $2.00 </p>
-                            <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> </div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/sony_vaio_1-50x50.jpg"
-                                    alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Xitefun Causal Wear Fancy Shoes</a></h4>
-                            <p class="price"> <span class="price-new">$902.00</span> <span
-                                    class="price-old">$1,202.00</span> <span class="saving">-25%</span> </p>
-                            <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> </div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/FinePix-Long-Zoom-Camera-50x50.jpg"
-                                    alt="FinePix S8400W Long Zoom Camera" title="FinePix S8400W Long Zoom Camera"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">FinePix S8400W Long Zoom Camera</a></h4>
-                            <p class="price">$122.00</p>
-                        </div>
-                    </div>
                 </div>
                 <div class="list-group">
                     <h3 class="subtitle">Custom Content</h3>
@@ -363,80 +332,7 @@
                                     class="price-old">$1,900.00</span> <span class="saving">-26%</span> </p>
                         </div>
                     </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/samsung_tab_1-50x50.jpg"
-                                    alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Aspire Ultrabook Laptop</a></h4>
-                            <p class="price"> <span class="price-new">$230.00</span> <span
-                                    class="price-old">$241.99</span> <span class="saving">-5%</span> </p>
-                            <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> </div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/apple_cinema_30-50x50.jpg"
-                                    alt="Brand Fashion Cotton T-Shirt" title="Brand Fashion Cotton T-Shirt"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="index.php?route=product/product&amp;product_id=42">Brand Fashion Cotton
-                                    T-Shirt</a></h4>
-                            <p class="price"> <span class="price-new">$110.00</span> <span
-                                    class="price-old">$122.00</span> <span class="saving">-10%</span> </p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/nikon_d300_1-50x50.jpg"
-                                    alt="Digital Camera for Elderly" title="Digital Camera for Elderly"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Digital Camera for Elderly</a></h4>
-                            <p class="price"> <span class="price-new">$92.00</span> <span
-                                    class="price-old">$98.00</span> <span class="saving">-6%</span> </p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/nikon_d300_5-50x50.jpg"
-                                    alt="Hair Care Products" title="Hair Care Products" class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Hair Care Products</a></h4>
-                            <p class="price"> <span class="price-new">$66.80</span> <span
-                                    class="price-old">$90.80</span> <span class="saving">-27%</span> </p>
-                            <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> </div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/macbook_air_1-50x50.jpg"
-                                    alt="Laptop Silver black" title="Laptop Silver black" class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Laptop Silver black</a></h4>
-                            <p class="price"> <span class="price-new">$1,142.00</span> <span
-                                    class="price-old">$1,202.00</span> <span class="saving">-5%</span> </p>
-                        </div>
-                    </div>
+
                 </div>
             </aside>
             <!--Right Part End -->

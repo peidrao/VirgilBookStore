@@ -39,7 +39,7 @@ def book_detail(request, id, slug):
 
 
 def book_genre(request, id, slug):
-    #query = request.GET.get('q')
+    # query = request.GET.get('q')
     genre = Genre.objects.all()
     books = Book.objects.filter(genre_id=id)
 

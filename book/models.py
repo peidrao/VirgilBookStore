@@ -1,5 +1,6 @@
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
+from django.db.models import Avg, Count
 from django.urls import reverse
 from django.db import models
 
@@ -77,6 +78,22 @@ class Book(models.Model):
             return mark_safe('<img src={} height="50" />'.format(self.image.url))
         else:
             return ""
+
+    def avaregereview(self):
+        reviews = Comment.objects.filter(
+            book=self, status='Verdade').aggregate(avarage=Avg('rate'))
+        avg = 0
+        if reviews['avarage'] is not None:
+            avg = float(reviews['avarage'])
+        return avg
+
+    def countreview(self):
+        reviews = Comment.objects.filter(
+            book=self).aggregate(count=Count('id'))
+        cnt = 0
+        if reviews['count'] is not None:
+            ctn = int(reviews['count'])
+        return ctn
 
 
 class Images(models.Model):

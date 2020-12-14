@@ -5,6 +5,7 @@ from django.conf import settings
 
 from home import views
 from user import views as UserViews
+from order import views as OrderViews
 #from order import views
 
 urlpatterns = [
@@ -25,6 +26,8 @@ urlpatterns = [
 
     path('contact/', views.contact, name='contact'),
 
+
+    path('shopcart', OrderViews.shopcart, 'shopcart'),
 
     path('book/<int:id>/<slug:slug>', views.book_detail, name='book_detail'),
     path('genre/<int:id>/<slug:slug>',

@@ -67,15 +67,14 @@
                                                 <h3>
                                                     {{ request.session.currency }}</h3>
                                                 <label class="control-label" for="input-quantity">Qty</label>
-                                                <input type="text" name="quantity" value="1" max={{book.amount}}
-                                                    id="input-quantity" class="form-control" />
-                                                <a class="qtyBtn plus" href="javascript:void(0);">+</a>
+                                                <input class="input" type="number" name="quantity" value="1" min="1"
+                                                    max={{book.amount}} />
+                                                {% comment %} <a class="qtyBtn plus" href="javascript:void(0);">+</a>
                                                 <br />
                                                 <a class="qtyBtn mines" href="javascript:void(0);">-</a>
-                                                <div class="clear"></div>
+                                                {% endcomment %}
                                             </div>
-                                            <button type="submit" id="button-cart" {% if book.amount < 1  %} disabled
-                                                {% endif %} class="btn btn-primary btn-lg">Add to
+                                            <button type="submit" id="button-cart" class="btn btn-primary btn-lg">Add to
                                                 Cart</button>
                                         </div>
                                     </form>

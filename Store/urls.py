@@ -26,9 +26,7 @@ urlpatterns = [
     path('search_auto/', views.search_auto, name='search_auto'),
 
     path('contact/', views.contact, name='contact'),
-
-
-    path('shopcart', OrderViews.shopcart, 'shopcart'),
+    path('shopcart/', OrderViews.shopcart, 'shopcart'),
 
     path('book/<int:id>/<slug:slug>', views.book_detail, name='book_detail'),
     path('genre/<int:id>/<slug:slug>',

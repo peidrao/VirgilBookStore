@@ -37,6 +37,19 @@ def add_shop_cart(request, id):
                 data.save()
             messages.success(request, "Livro adicionando no carrinho")
         return HttpResponseRedirect(url)
+    else:
+        if control == 1:
+            data = ShopCart.objects.get(book_id=id)
+            data.quantity += 1
+            data.save()
+        else:
+            data = ShopCart()
+            data.user_id = current_user.id
+            data.book_id = id
+            data.quantity = 1
+            data.save()  #
+        messages.success(request, "Livro Adicionado!")
+        return HttpResponseRedirect(url)
 
 
 def shopcart(request):

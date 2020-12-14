@@ -15,6 +15,7 @@ urlpatterns = [
     path('home/', include('home.urls')),
     path('user/', include('user.urls')),
     path('book/', include('book.urls')),
+    path('order/', include('order.urls')),
 
     path('signup/', UserViews.signup_form, name='signup_form'),
     path('login/', UserViews.login, name='login'),

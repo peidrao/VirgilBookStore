@@ -1,19 +1,25 @@
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 import json
+
 # Create your views here.
 from book.models import Book, Genre, Images, Comment
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm
+from order.models import Order
 
 
 def index(request):
     banner = Banner.objects.all()
     genre = Genre.objects.all()
     books_latest = Book.objects.all().order_by('-id')[:8]
+    current_user = request.user
+    order = Order.objects.filter(user_id=current_user.id)
+
     context = {
         'books_latest': books_latest,
         'genre': genre,
         'banner': banner,
+        'order': order,
     }
 
     return render(request, 'index.html', context)

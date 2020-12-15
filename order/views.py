@@ -21,7 +21,7 @@ def addtoshopcart(request, id):
         control = 1
     else:
         control = 0
-   
+
     if request.method == 'POST':
         print('1111111111111111111111111111111111111111111111')
         form = ShopCartForm(request.POST)
@@ -37,7 +37,7 @@ def addtoshopcart(request, id):
                 data.user_id = current_user.id
                 data.book_id = id
                 data.quantity = form.cleaned_data['quantity']
-    
+
                 data.save()
             messages.success(request, "Livro adicionando no carrinho")
         return HttpResponseRedirect(url)
@@ -69,3 +69,10 @@ def shopcart(request):
         'genre': genre, 'shopcart': shopcart, 'total': total}
 
     return render(request, 'shopcart_books.html', context)
+
+
+@login_required(login_url='/login')
+def delete_from_cart(request, id):
+    ShopCart.objects.filter(id=id).delete()
+    messages.success(request, 'Seu item foi deletado!')
+    return HttpResponseRedirect('/shopcart')

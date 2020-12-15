@@ -10,13 +10,13 @@
         <!-- Breadcrumb Start-->
         <ul class="breadcrumb">
             <li><a href="index.html"><i class="fa fa-home"></i></a></li>
-            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="cart.html">Carrinho de compras</a></li>
         </ul>
         <!-- Breadcrumb End-->
         <div class="row">
             <!--Middle Part Start-->
             <div id="content" class="col-sm-12">
-                <h1 class="title">Shopping Cart</h1>
+                <h1 class="title">Carrinho de compras</h1>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -27,6 +27,7 @@
                                 <td class="text-left">Quantidade</td>
                                 <td class="text-right">Preço</td>
                                 <td class="text-right">Total</td>
+                                <td class="text-right">Deletar livro</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,6 +45,13 @@
                                 <td class="text-left">{{item.quantity}}</td>
                                 <td class="text-right">R$ {{item.price|floatformat:-2}}</td>
                                 <td class="text-right">$ {{item.amount|floatformat:-2}}</td>
+                                <td class="text-center">
+                                    <div class="input-group btn-block quantity">
+                                        <span class="input-group-btn">
+                                            <a href="/order/deletefromcart/{{ item.id }}" class="btn btn-danger"><i
+                                                    class="fa fa-times-circle"></i></a>
+                                        </span></div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

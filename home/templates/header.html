@@ -23,15 +23,17 @@
                             <li>
                                 <table class="table">
                                     <tbody>
+                                        {% for item in order %}
                                         <tr>
                                             <td class="text-center">
                                                 <a href="product.html"><img class="img-thumbnail"
                                                         title="Xitefun Causal Wear Fancy Shoes"
                                                         alt="Xitefun Causal Wear Fancy Shoes"
-                                                        src="image/product/sony_vaio_1-50x50.jpg"></a>
+                                                        src="{{item.image.url}}"></a>
                                             </td>
-                                            <td class="text-left"><a href="product.html">Xitefun Causal Wear Fancy
-                                                    Shoes</a></td>
+
+                                            <td class="text-left"><a href="/book/{{book.id}}/{{book.slug}}">
+                                                    {{book.title}} </a></td>
                                             <td class="text-right">x 1</td>
                                             <td class="text-right">$902.00</td>
                                             <td class="text-center">
@@ -39,21 +41,7 @@
                                                     type="button"><i class="fa fa-times"></i></button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                <a href="product.html"><img class="img-thumbnail"
-                                                        title="Aspire Ultrabook Laptop" alt="Aspire Ultrabook Laptop"
-                                                        src="image/product/samsung_tab_1-50x50.jpg"></a>
-                                            </td>
-                                            <td class="text-left"><a href="product.html">Aspire Ultrabook Laptop</a>
-                                            </td>
-                                            <td class="text-right">x 1</td>
-                                            <td class="text-right">$230.00</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-danger btn-xs remove" title="Remove" onClick=""
-                                                    type="button"><i class="fa fa-times"></i></button>
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </li>

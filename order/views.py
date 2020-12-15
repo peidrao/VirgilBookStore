@@ -76,5 +76,4 @@ def shopcart(request):
     context = {
         'genre': genre, 'shopcart': shopcart, 'total': total}
 
-    # return render(request, 'shopcart_books.html', context)
-    return HttpResponse('Teste')
+    return render(request, 'shopcart_books.html', context)

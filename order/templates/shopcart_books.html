@@ -48,7 +48,8 @@
                                 <td class="text-center">
                                     <div class="input-group btn-block quantity">
                                         <span class="input-group-btn">
-                                            <a href="/order/deletefromcart/{{ item.id }}" class="btn btn-danger"><i
+                                            <a href="/order/deletefromcart/{{ item.id }}" class="btn btn-danger"
+                                                onclick="return confirm('Delete ! Are you sure?')"><i
                                                     class="fa fa-times-circle"></i></a>
                                         </span></div>
                                 </td>
@@ -70,8 +71,8 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <div class="pull-left"><a href="index.html" class="btn btn-default">Continue Shopping</a></div>
-                    <div class="pull-right"><a href="checkout.html" class="btn btn-primary">Checkout</a></div>
+                    <div class="pull-left"><a href="/" class="btn btn-default">Continue Shopping</a></div>
+                    <div class="pull-right"><a href="/order/orderbook" class="btn btn-primary">Checkout</a></div>
                 </div>
             </div>
             <!--Middle Part End -->

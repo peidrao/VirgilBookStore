@@ -6,7 +6,7 @@ from .models import ShopCart, Order, OrderBook
 
 
 class ShopCartAdmin(admin.ModelAdmin):
-    list_display = ['book', 'user', 'quantity', 'price']
+    list_display = ['book', 'user', 'quantity', 'price', 'amount']
     list_filter = ['user']
 
 

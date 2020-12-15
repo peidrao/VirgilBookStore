@@ -22,8 +22,12 @@ def addtoshopcart(request, id):
         control = 1
     else:
         control = 0
+    print(ShopCartForm())
 
+    print(ShopCartForm(request.POST))
     print('control::::: ', control)
+    print('control::::: ', control)
+    print(request.method)
     if request.method == 'POST':
         print('1111111111111111111111111111111111111111111111')
         form = ShopCartForm(request.POST)
@@ -46,6 +50,7 @@ def addtoshopcart(request, id):
             messages.success(request, "Livro adicionando no carrinho")
         return HttpResponseRedirect(url)
     else:
+        print('teste')
         if control == 1:
             data = ShopCart.objects.get(book_id=id)
             data.quantity += 1

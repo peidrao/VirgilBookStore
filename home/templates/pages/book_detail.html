@@ -60,31 +60,25 @@
                             <div id="product">
                                 <h3 class="subtitle">Available Options</h3>
                                 <div class="cart">
-                                    <form action="/order/addtoshopcart/{{book.id}}" method"post">
+                                    {% if messages %}
+                                    {% for message in messages  %}
+                                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                    </div>
+                                    {% endfor %}
+
+                                    {% endif %}
+                                    <form action="/order/addtoshopcart/{{book.id}}" method="POST">
                                         {% csrf_token %}
-                                        <div>
-                                            <div class="qty">
-                                                <h3>
-                                                    {{ request.session.currency }}</h3>
-                                                <label class="control-label" for="input-quantity">Qty</label>
-                                                <input class="input" type="number" name="quantity" value="1" min="1"
-                                                    max={{book.amount}} />
-                                                {% comment %} <a class="qtyBtn plus" href="javascript:void(0);">+</a>
-                                                <br />
-                                                <a class="qtyBtn mines" href="javascript:void(0);">-</a>
-                                                {% endcomment %}
-                                            </div>
-                                            <button type="submit" id="button-cart" class="btn btn-primary btn-lg">Add to
-                                                Cart</button>
+                                        <div class="qty">
+
+                                            <input class="input" name="quantity" type="number" value="1" min="1"
+                                                max="{{ product.amount }}">
+
                                         </div>
+                                        <button type="submit" id="button-cart" class="btn btn-primary btn-lg">Add to
+                                            Cart</button>
                                     </form>
-                                    {% comment %} <div>
-                                        <button type="button" class="wishlist" onClick=""><i class="fa fa-heart"></i>
-                                            Add to Wish List</button>
-                                        <br />
-                                        <button type="button" class="wishlist" onClick=""><i class="fa fa-exchange"></i>
-                                            Compare this Product</button>
-                                    </div> {% endcomment %}
                                 </div>
 
                             </div>

@@ -16,15 +16,17 @@ class ShopCart(models.Model):
 
     @property
     def price(self):
-        return self.book.price
+        return (self.book.price)
 
     @property
-    def amout(self):
-        return self.quantity * self.book.price
+    def amount(self):
+        return (self.quantity * self.book.price)
 
-    @property
-    def varamount(self):
-        return (self.quantity * self.variant.price)
+
+class ShopCartForm(ModelForm):
+    class Meta:
+        model = ShopCart
+        fields = ['quantity']
 
 
 class ShopCartForm(ModelForm):

@@ -8,4 +8,5 @@
 - [ ] - Arrumar visualização de livros em suas categorias.
 - [ ] - Customizar formulário de criação de conta
 - [ ] - Listar livros a serem pesquisados antes de realizar a requisicão
- 
+- [ ] - Colocar quantidade de livros no carrinho no botão do header
+- [ ] - **Fazer deploy da aplicação**

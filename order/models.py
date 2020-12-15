@@ -60,6 +60,7 @@ class Order(models.Model):
 
     ip = models.CharField(blank=True, max_length=20)
     adminnote = models.CharField(blank=True, max_length=100)
+    usernote = models.CharField(blank=True, max_length=250)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

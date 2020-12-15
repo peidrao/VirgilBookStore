@@ -1,10 +1,13 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.utils.crypto import get_random_string
 from django.contrib import messages
 # Create your views here.
-from .models import ShopCart, ShopCartForm
+from .models import ShopCart, ShopCartForm, Order, OrderBook
 
-from book.models import Genre
+from book.models import Genre, Book
+from user.models import UserProfile
+from .forms import OrderForm
 
 
 def index(request):
@@ -76,3 +79,63 @@ def delete_from_cart(request, id):
     ShopCart.objects.filter(id=id).delete()
     messages.success(request, 'Seu item foi deletado!')
     return HttpResponseRedirect('/shopcart')
+
+
+@login_required(login_url='/login')
+def order_book(request):
+    genre = Genre.objects.all()
+    current_user = request.user
+    shopcart = ShopCart.objects.filter(user_id=current_user.id)
+    profile = UserProfile.objects.filter(user_id=current_user.id)
+    total = 0
+    for item in shopcart:
+        total += item.book.price * item.quantity
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            data = Order()
+            data.first_name = form.cleaned_data['first_name']
+            data.last_name = form.cleaned_data['last_name']
+            data.address = form.cleaned_data['address']
+            data.city = form.cleaned_data['city']
+            data.phone = form.cleaned_data['phone']
+            data.user_id = current_user.id
+            data.total = total
+            data.ip = request.META.get('REMOTE_ADDR')
+            ordercode = get_random_string(5).upper()
+            data.code = ordercode
+            data.save()
+
+            for rs in shopcart:
+                detail = OrderBook()
+                detail.order_id = data.id
+                detail.book_id = rs.book_id
+                detail.user_id = current_user.id
+                detail.quantity = rs.quantity
+                detail.price = rs.price
+                detail.amount = rs.amount
+                detail.save()
+
+                book = Book.objects.get(id=rs.book_id)
+                book.amount -= rs.quantity
+                book.save()
+
+            ShopCart.objects.filter(user_id=current_user.id).delete()
+            request.session['cart_items'] = 0
+            messages.success(
+                request, 'Your order has been completed, Thank You')
+            return HttpResponse('Compra Finzalidade')
+        else:
+            messages.warning(request, form.errors)
+            return HttpResponse('/order/orderbook')
+
+    form = OrderForm()
+    profile = UserProfile.objects.get(user_id=current_user.id)
+    context = {'shopcart': shopcart,
+               'genre': genre,
+               'total': total,
+               'form': form,
+               'profile': profile}
+
+    return render(request, 'order_form.html', context)

@@ -9,4 +9,5 @@
 - [ ] - Customizar formulário de criação de conta
 - [ ] - Listar livros a serem pesquisados antes de realizar a requisicão
 - [ ] - Colocar quantidade de livros no carrinho no botão do header
+- [ ] - Aumentar campo phone ao finalizar compra (o tamnho atual é de 11 caracteres)
 - [ ] - **Fazer deploy da aplicação**

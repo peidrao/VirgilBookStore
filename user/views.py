@@ -119,3 +119,16 @@ def user_request(request):
     }
 
     return render(request, 'user_request.html', context)
+
+
+@login_required(login_url='/login')
+def user_order_book(request):
+    genre = Genre.objects.all()
+    current_user = request.user
+    order = OrderBook.objects.filter(user_id=current_user.id)
+    context = {
+        'genre': genre,
+        'order': order,
+    }
+
+    return render(request, 'user_order_books.html', context)

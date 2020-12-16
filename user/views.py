@@ -106,3 +106,16 @@ def user_orders(request):
     }
 
     return render(request, 'user_orders.html', context)
+
+
+@login_required(login_url='/login')
+def user_request(request):
+    genre = Genre.objects.all()
+    current_user = request.user
+    order = Order.objects.filter(user_id=current_user.id)
+    context = {
+        'genre': genre,
+        'order': order,
+    }
+
+    return render(request, 'user_request.html', context)

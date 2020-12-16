@@ -128,10 +128,16 @@ def order_book(request):
             request.session['cart_items'] = 0
             messages.success(
                 request, 'Your order has been completed, Thank You')
-            return HttpResponse('Compra Finzalidade')
+
+            context = {
+                'ordercode': ordercode,
+                'genre': genre,
+            }
+
+            return render(request, 'order_completed.html', context)
         else:
             messages.warning(request, form.errors)
-            return HttpResponse(form.fields)
+            return HttpResponseRedirect('/order/orderbook')
 
     form = OrderForm()
     profile = UserProfile.objects.get(user_id=current_user.id)

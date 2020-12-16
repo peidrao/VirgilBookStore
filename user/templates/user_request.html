@@ -21,23 +21,22 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <td class="text-center">Nome</td>
+                                <td class="text-center">Código do pedido</td>
                                 <td class="text-left">Sobrenome</td>
                                 <td class="text-left">Total</td>
-                                <td class="text-left">Status</td>
-                                <td class="text-right">Data</td>
-                                <td class="text-right">Detalhes</td>
+
+                                <td class="text-right">Última atualização</td>
+                                <td class="text-right">Status</td>
                             </tr>
                         </thead>
                         <tbody>
                             {% for item in order %}
                             <tr>
-                                <td class="text-center"> {{item.first_name}} </td>
+                                <td class="text-center"> {{item.code}} </td>
                                 <td class="text-left">{{item.last_name}}</td>
                                 <td class="text-left">{{item.total}}</td>
+                                <td class="text-left">{{item.updated_at|date:"d M, Y"}}</td>
                                 <td class="text-left">{{item.status}}</td>
-                                <td class="text-left">{{item.created_at|date:"d M, Y"}}</td>
-                                <td><a class="primary-btn" href="/user/orderdetail/{{ rs.id }}"> Detalhe </a></td>
                             </tr>
                             {% endfor %}
                         </tbody>

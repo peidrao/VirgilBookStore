@@ -11,3 +11,9 @@
 - [ ] - Colocar quantidade de livros no carrinho no botão do header
 - [ ] - Aumentar campo phone ao finalizar compra (o tamnho atual é de 11 caracteres)
 - [ ] - **Fazer deploy da aplicação**
+- [ ] - Realizar testes
+- [ ] - Estilização 
+- [ ] - Refatorar código
+- [ ] - fazer troca de funções por Class-based views 
+
+

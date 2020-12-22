@@ -1,6 +1,8 @@
 # Virgil Book Store
 
 
+# teste
+
 ## Para não esquecer (o que falta)
 
 - [ ] - Aplicar zoom para ver os produtos melhor

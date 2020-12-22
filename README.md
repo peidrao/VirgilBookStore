@@ -1,6 +1,6 @@
 # Virgil Book Store
 
-## Para não esquecer (o que falta)
+## Para não esquecer (o que está falta)
 
 - [ ] - Aplicar zoom para ver os produtos melhor
 - [x] - Fazer pesquisa de livros em campo de busca

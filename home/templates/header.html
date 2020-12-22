@@ -1,0 +1,172 @@
+{% load static %}
+<div id="header">
+
+    <header class="header-row">
+        <div class="container">
+            <div class="table-container">
+                <!-- Logo Start -->
+                <div class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
+                    <div id="logo">
+                        <a href="/"><img class="img-responsive" src="{% static 'image/logo.png' %}" title="MarketShop"
+                                alt="MarketShop" /></a>
+                    </div>
+                </div>
+                <!-- Logo End -->
+                <!-- Mini Cart Start-->
+                <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div id="cart">
+                        <button type="button" data-toggle="dropdown" data-loading-text="Loading..."
+                            class="heading dropdown-toggle">
+                            <span class="cart-icon pull-left flip"></span>
+                            <span id="cart-total">2 item(s) - $1,132.00</span></button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <table class="table">
+                                    <tbody>
+                                        {% for item in order %}
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="product.html"><img class="img-thumbnail"
+                                                        title="Xitefun Causal Wear Fancy Shoes"
+                                                        alt="Xitefun Causal Wear Fancy Shoes"
+                                                        src="{{item.book.image.url}}"></a>
+                                            </td>
+                                            <td class="text-left"><a href="/book/{{book.id}}/{{book.slug}}">
+                                                    {{book.title}} </a></td>
+                                            <td class="text-right">x 1</td>
+                                            <td class="text-right">$902.00</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger btn-xs remove" title="Remove" onClick=""
+                                                    type="button"><i class="fa fa-times"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                <div>
+                                    <p class="checkout"><a href="/shopcart/" class="btn btn-primary"><i
+                                                class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a
+                                            href="checkout.html" class="btn btn-primary"><i class="fa fa-share"></i>
+                                            Checkout</a></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <script>
+                    $(function () {
+                        $("#query").autocomplete({
+                            source: "/search_auto/",
+                            select: function (event, ui) { //item selected
+                                AutoCompleteSelectHandler(event, ui)
+                            },
+                            minLength: 2,
+                        });
+                    });
+
+                    function AutoCompleteSelectHandler(event, ui) {
+                        var selectedObj = ui.item;
+                    }
+                </script>
+
+
+                <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
+                    <div id="search" class="input-group">
+                        <form action="/search/" method="POST">
+                            {% csrf_token %}
+                            <input id="filter_name" type="text" name="query" value="" id="query"
+                                placeholder="Procure aqui..." class="form-control input-lg" />
+                            <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Search End-->
+            </div>
+        </div>
+    </header>
+    <!-- Header End-->
+    <!-- Main Menu Start-->
+    <div class="container">
+        <nav id="menu" class="navbar">
+            <div class="navbar-header"> <span class="visible-xs visible-sm"> Menu <b></b></span></div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a class="home_link" title="Home" href="/"><span>Home</span></a></li>
+                    {% load mptt_tags %}
+                    <li class="mega-menu dropdown"><a>Categorias</a>
+                        <div class="dropdown-menu">
+                            {% recursetree genre %}
+
+                            <div class="column col-lg-2 col-md-3"> <a
+                                    href="/genre/{{node.id}}/{{node.slug}}">{{node.title}}</a>
+
+                                {% if not node.is_leaf_node %}
+                                <ul>
+                                    <li> <a href="category.html"> {{children}} <span>&rsaquo;</span></a>
+                                        <div class="dropdown-menu">
+                                            <ul>
+                                                <li> <a href="/category/{{node.id}}/{{node.slug}}">New Sub Categories
+                                                    </a> </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                            </div>
+                            {% endrecursetree %}
+                    </li>
+                    <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>Custom Block</a>
+                        <div class="dropdown-menu custom_block">
+                            <ul>
+                                <li>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><img alt="" src="image/banner/cms-block.jpg"></td>
+                                                <td><img alt="" src="image/banner/responsive.jpg"></td>
+                                                <td><img alt="" src="image/banner/cms-block.jpg"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h4>CMS Blocks</h4>
+                                                </td>
+                                                <td>
+                                                    <h4>Responsive Template</h4>
+                                                </td>
+                                                <td>
+                                                    <h4>Dedicated Support</h4>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>This is a CMS block. You can insert any content (HTML, Text, Images)
+                                                    Here.</td>
+                                                <td>This is a CMS block. You can insert any content (HTML, Text, Images)
+                                                    Here.</td>
+                                                <td>This is a CMS block. You can insert any content (HTML, Text, Images)
+                                                    Here.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong><a class="btn btn-primary btn-sm" href="#">Read
+                                                            More</a></strong></td>
+                                                <td><strong><a class="btn btn-primary btn-sm" href="#">Read
+                                                            More</a></strong></td>
+                                                <td><strong><a class="btn btn-primary btn-sm" href="#">Read
+                                                            More</a></strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="contact-link"><a href="/contact">Contact Us</a></li>
+                    <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- Main Menu End-->
+</div>

@@ -1,0 +1,59 @@
+{% extends 'home.html' %}
+
+{% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
+{% block header  %} {% include 'header.html' %} {% endblock  %}
+
+{% block content  %}
+
+<div id="container">
+    <div class="container">
+        <!-- Breadcrumb Start-->
+        <ul class="breadcrumb">
+            <li><a href="index.html"><i class="fa fa-home"></i></a></li>
+            <li><a href="cart.html">Lista de compras</a></li>
+        </ul>
+        <!-- Breadcrumb End-->
+        <div class="row">
+            <!--Middle Part Start-->
+            <div id="content" class="col-sm-12">
+                <h1 class="title">Shopping Cart</h1>
+                <div class="table-responsive">
+                    <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Product</th>
+                            <th class="text-left">Price </th>
+                            <th class="text-left">Quantity </th>
+                            <th class="text-left">Amount </th>
+                            <th class="text-left">Status </th>
+                            <th class="text-left">Date </th>
+                            <th class="text-left">Detail </th>
+                        </tr>
+                        {% for rs in order %}
+                        <tr>
+                            <td class="text-left">
+                                <a href="/book/{{ rs.book_id }}/{{ rs.book.slug }}">
+                                    <img src="{{rs.book.image.url}}" alt="" style="height: 80px">
+                                </a>
+                            </td>
+                            <td class="text-left">{{ rs.price}} </td>
+                            <td class="text-left">{{ rs.quantity}} </td>
+                            <td class="text-left">{{ rs.amount}} </td>
+                            <td class="text-left">{{ rs.status}} </td>
+                            <td class="text-left">{{ rs.created_at|date:"d M, Y" }} </td>
+                            <td class="text-left"><a class="primary-btn"
+                                    href="/user/order_product_detail/{{ rs.id }}/{{rs.order.id}}">
+                                    Detail </a></td>
+
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+            <!--Middle Part End -->
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
+{% block footer  %} {% include 'footer.html' %} {% endblock  %}

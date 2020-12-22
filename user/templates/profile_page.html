@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+
+{% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
+{% block header  %} {% include 'header.html' %} {% endblock  %}
+
+{% block content  %}
+<div class="container">
+    <div class="row">
+        <h3 class="subtitle">Bem vindo, {{user.first_name}}</h3>
+        {% block menu  %} {% include 'menu.html' %} {% endblock  %}
+
+    </div>
+</div>
+
+{% endblock  %}
+{% block footer  %} {% include 'footer.html' %} {% endblock  %}

@@ -1,0 +1,288 @@
+{% extends 'home.html' %}
+
+{% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
+{% block header  %} {% include 'header.html' %} {% endblock  %}
+
+{% block content  %}
+<div id="container">
+    <div class="container">
+        <!-- Breadcrumb Start-->
+        <ul class="breadcrumb">
+            <li><a href="/"><i class="fa fa-home"></i></a></li>
+
+            {% for book in books  %}
+            <li><a href="category.html">{{book.genre.title}}</a></li>
+            {% endfor %}
+        </ul>
+        <!-- Breadcrumb End-->
+        <div class="row">
+            <!--Left Part Start -->
+            <aside id="column-left" class="col-sm-3 hidden-xs">
+                <h3 class="subtitle">Categories</h3>
+                <div class="box-category">
+                    <ul id="cat_accordion">
+                        <li><a href="category.html">Clothing</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Men</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Women</a></li>
+                                <li><a href="category.html">Girls</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Boys</a></li>
+                                <li><a href="category.html">Baby</a></li>
+                                <li><a href="category.html">Accessories</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="active" href="category.html">Electronics</a> <span class="down"></span>
+                            <ul style="display:block;">
+                                <li><a href="category.html">Laptops</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Desktops</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Cameras</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Mobile Phones</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">TV &amp; Home Audio</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories New</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">MP3 Players</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Shoes</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Men</a></li>
+                                <li><a href="category.html">Women</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Girls</a></li>
+                                <li><a href="category.html">Boys</a></li>
+                                <li><a href="category.html">Baby</a></li>
+                                <li><a href="category.html">Accessories</a><span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Watches</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Men's Watches</a></li>
+                                <li><a href="category.html">Women's Watches</a></li>
+                                <li><a href="category.html">Kids' Watches</a></li>
+                                <li><a href="category.html">Accessories</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Jewellery</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Silver</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Gold</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">test 1</a></li>
+                                        <li><a href="category.html">test 2</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Diamond</a></li>
+                                <li><a href="category.html">Pearl</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Men's Jewellery</a></li>
+                                <li><a href="category.html">Children's Jewellery</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">New Sub Categories</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Health &amp; Beauty</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Perfumes</a></li>
+                                <li><a href="category.html">Makeup</a></li>
+                                <li><a href="category.html">Sun Care</a></li>
+                                <li><a href="category.html">Skin Care</a></li>
+                                <li><a href="category.html">Eye Care</a></li>
+                                <li><a href="category.html">Hair Care</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Kids &amp; Babies</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Toys</a></li>
+                                <li><a href="category.html">Games</a> <span class="down"></span>
+                                    <ul>
+                                        <li><a href="category.html">test 25</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="category.html">Puzzles</a></li>
+                                <li><a href="category.html">Hobbies</a></li>
+                                <li><a href="category.html">Strollers</a></li>
+                                <li><a href="category.html">Health &amp; Safety</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Sports</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Cycling</a></li>
+                                <li><a href="category.html">Running</a></li>
+                                <li><a href="category.html">Swimming</a></li>
+                                <li><a href="category.html">Football</a></li>
+                                <li><a href="category.html">Golf</a></li>
+                                <li><a href="category.html">Windsurfing</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Home &amp; Garden</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Bedding</a></li>
+                                <li><a href="category.html">Food</a></li>
+                                <li><a href="category.html">Furniture</a></li>
+                                <li><a href="category.html">Kitchen</a></li>
+                                <li><a href="category.html">Lighting</a></li>
+                                <li><a href="category.html">Tools</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="category.html">Wines &amp; Spirits</a> <span class="down"></span>
+                            <ul>
+                                <li><a href="category.html">Wine</a></li>
+                                <li><a href="category.html">Whiskey</a></li>
+                                <li><a href="category.html">Vodka</a></li>
+                                <li><a href="category.html">Liqueurs</a></li>
+                                <li><a href="category.html">Beer</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="banner owl-carousel">
+                    <div class="item">
+                        <a href="#"><img src="image/banner/small-banner1-265x350.jpg" alt="small banner"
+                                class="img-responsive" /></a>
+                    </div>
+                    <div class="item">
+                        <a href="#"><img src="image/banner/small-banner-265x350.jpg" alt="small banner1"
+                                class="img-responsive" /></a>
+                    </div>
+                </div>
+            </aside>
+            <!--Left Part End -->
+            <!--Middle Part Start-->
+            <div id="content" class="col-sm-9">
+                <h1 class="title">{{genre.name}}</h1>
+                <h3 class="subtitle">Resultados para: {{query}}</h3>
+                <div class="category-list-thumb row">
+                    {% load mptt_tags %}
+                    {% recursetree genre %}
+                    {% if not node.is_leaf_node %}
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                        <a href="category.html"><img src="image/no_image.jpg" alt="Laptops (6)" /></a> <a
+                            href="category.html"> {{children}}</a>
+                    </div>
+                    {% endif %}
+
+                    {% endrecursetree %}
+
+                </div>
+
+                <br />
+                <div class="row products-category">
+                    {% for book in books %}
+                    <div class="product-layout product-grid col-lg-5ths col-md-5ths col-sm-3 col-xs-12">
+                        <div class="product-thumb">
+                            <div class="image">
+                                <a href="/book/{{book.id}}/{{book.slug}}"><img src="{{book.image.url}}"
+                                        alt="{{book.title}}" title="{{book.title}}" class="img-responsive" /></a>
+                            </div>
+                            <div>
+                                <div class="caption">
+                                    <h4><a href="/book/{{book.id}}/{{book.slug}}"> {{book.title}} </a></h4>
+                                    <p class="description"> Latest Intel mobile architecture Powered by the most
+                                        advanced mobile processors from Intel, t..</p>
+                                    <p class="price"> <span class="price-new">R${{book.price}}</span> <span
+                                            class="price-old">R$100,00</span> <span class="saving">-26%</span> <span
+                                            class="price-tax">{{book.price}}</span> </p>
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn-primary" type="button" onClick=""><span>Add to
+                                            Cart</span></button>
+                                    <div class="add-to-links">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
+                                            onClick=""><i class="fa fa-heart"></i> <span>Add to Wish
+                                                List</span></button>
+                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
+                                            onClick=""><i class="fa fa-exchange"></i> <span>Compare this
+                                                Product</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <ul class="pagination">
+                            <li class="active"><span>1</span></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">&gt;</a></li>
+                            <li><a href="#">&gt;|</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 text-right">Showing 1 to 12 of 15 (2 Pages)</div>
+                </div>
+            </div>
+            <!--Middle Part End -->
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
+{% block footer  %} {% include 'footer.html' %} {% endblock  %}

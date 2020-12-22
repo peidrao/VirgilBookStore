@@ -1,0 +1,33 @@
+ <div id="header">
+     <nav id="top" class="htop">
+         <div class="container">
+             <div class="row"> <span class="drop-icon visible-sm visible-xs"><i class="fa fa-align-justify"></i></span>
+                 <div class="pull-left flip left-top">
+                     <div class="links">
+                         <ul>
+                             <li class="mobile"><i class="fa fa-phone"></i>+91 9898777656</li>
+                             <li class="email"><a href="mailto:info@marketshop.com"><i
+                                         class="fa fa-envelope"></i>info@marketshop.com</a></li>
+
+                             </li>
+                             <li><a href="#">Wish List (0)</a></li>
+                             <li><a href="checkout.html">Checkout</a></li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div id="top-links" class="nav pull-right flip">
+                     <ul>
+                         {% if user.id is not None %}
+                         <li><a href="/profile"> {{user.first_name}} </a></li>
+                         <li><a href="/logout"> Sair </a></li>
+
+                         {% else %}
+                         <li><a href="/login">Login</a></li>
+                         <li><a href="/signup">Registrar</a></li>
+                         {% endif %}
+                     </ul>
+                 </div>
+             </div>
+         </div>
+     </nav>
+ </div>

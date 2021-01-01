@@ -1,6 +1,7 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login as auth_login, logout as logout_func
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 from .models import UserProfile
@@ -12,12 +13,11 @@ from order.models import Order, OrderBook
 @login_required(login_url='/login')
 def index(request):
     current_user = request.user
-    profile = UserProfile.objects.get(user_id=current_user.id)
 
+    # profile = UserProfile.objects.get(user_id=current_user.id)
     genre = Genre.objects.all()
     context = {
         'genre': genre,
-        'profile': profile
     }
     return render(request, 'profile_page.html', context)
 
@@ -32,6 +32,7 @@ def signup_form(request):
             user = authenticate(username=username, password=password)
             auth_login(request, user)
             current_user = request.user
+
             data = UserProfile()
             data.user_id = current_user.id
             data.image = 'images/users/user.png'

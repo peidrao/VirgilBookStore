@@ -51,12 +51,17 @@
                             <input type="password" name="password" value="" placeholder="Password" id="input-password"
                                 class="form-control" />
                             <br />
-                            <a href="#">Esqueci minha senha</a></div>
-                          <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Sign in with Google</a>
-                        <input type="submit" value="Login" class="btn btn-primary" />
-
+                            <a href="#">Esqueci minha senha</a>
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" /> 
+                        <p class="text-center">ou</p>
+                         <div class="mb-5">
+                    <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Logue-se com Google</a>     
+                    </div>
                     </form>
+                   
                 </div>
+                
             </div>
         </div>
     </div>

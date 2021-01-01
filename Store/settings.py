@@ -152,8 +152,8 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-
-SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'  # Redirecionar o usuário após o login
+SITE_ID = 2
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

@@ -1,4 +1,6 @@
+
 {% extends 'home.html' %}
+{% load socialaccount %}
 
 {% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
 {% block header  %} {% include 'header.html' %} {% endblock  %}
@@ -50,6 +52,7 @@
                                 class="form-control" />
                             <br />
                             <a href="#">Esqueci minha senha</a></div>
+                          <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Sign in with Google</a>
                         <input type="submit" value="Login" class="btn btn-primary" />
 
                     </form>

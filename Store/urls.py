@@ -11,6 +11,7 @@ from order import views as OrderViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', include('home.urls')),
     path('home/', include('home.urls')),
     path('user/', include('user.urls')),

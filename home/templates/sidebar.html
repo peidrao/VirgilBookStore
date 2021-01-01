@@ -5,13 +5,11 @@
                  <div class="pull-left flip left-top">
                      <div class="links">
                          <ul>
-                             <li class="mobile"><i class="fa fa-phone"></i>+91 9898777656</li>
-                             <li class="email"><a href="mailto:info@marketshop.com"><i
-                                         class="fa fa-envelope"></i>info@marketshop.com</a></li>
-
-                             </li>
-                             <li><a href="#">Wish List (0)</a></li>
-                             <li><a href="checkout.html">Checkout</a></li>
+                            {% if user.is_authenticated %}
+                             <li class="mobile"><i class="fa fa-phone"></i>Olá, {{user.username}}</li>
+                           {% else %}
+                             <li class="mobile"><i class="fa fa-phone"></i>Seja bem vindo, por favor logue-se na sua conta</li>
+                           {% endif %}
                          </ul>
                      </div>
                  </div>

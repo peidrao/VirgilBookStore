@@ -6,7 +6,9 @@ from django.conf import settings
 from home import views
 from user import views as UserViews
 from order import views as OrderViews
-# from order import views
+
+
+app_name = 'Store'
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -26,26 +26,21 @@ def addtoshopcart(request, id):
         control = 0
 
     if request.method == 'POST':
-        print('1111111111111111111111111111111111111111111111')
         form = ShopCartForm(request.POST)
-        print('formulário:  ', form)
         if form.is_valid():
             if control == 1:
                 data = ShopCart.objects.get(book_id=id)
                 data.quantity += form.cleaned_data['quantity']
-
                 data.save()
             else:
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.book_id = id
                 data.quantity = form.cleaned_data['quantity']
-
                 data.save()
             messages.success(request, "Livro adicionando no carrinho")
         return HttpResponseRedirect(url)
     else:
-        print('teste')
         if control == 1:
             data = ShopCart.objects.get(book_id=id)
             data.quantity += 1
@@ -90,13 +85,9 @@ def order_book(request):
     total = 0
     for item in shopcart:
         total += item.book.price * item.quantity
-    print('Aqui 1')
     if request.method == 'POST':
         form = OrderForm(request.POST)
-        print('Aqui 2')
-        print(form)
         if form.is_valid():
-            print('Aqui 3')
             data = Order()
             data.first_name = form.cleaned_data['first_name']
             data.last_name = form.cleaned_data['last_name']
@@ -109,7 +100,6 @@ def order_book(request):
             ordercode = get_random_string(5).upper()
             data.code = ordercode
             data.save()
-            print('Aqui 4')
             for rs in shopcart:
                 detail = OrderBook()
                 detail.order_id = data.id

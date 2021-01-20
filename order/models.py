@@ -28,13 +28,6 @@ class ShopCartForm(ModelForm):
         model = ShopCart
         fields = ['quantity']
 
-
-class ShopCartForm(ModelForm):
-    class Meta:
-        model = ShopCart
-        fields = ['quantity']
-
-
 class Order(models.Model):
     STATUS = (
         ('Novo', 'Novo'),

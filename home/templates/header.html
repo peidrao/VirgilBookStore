@@ -18,7 +18,9 @@
                         <button type="button" data-toggle="dropdown" data-loading-text="Loading..."
                             class="heading dropdown-toggle">
                             <span class="cart-icon pull-left flip"></span>
-                            <span id="cart-total">2 item(s) - $1,132.00</span></button>
+                            <span id="cart-total">
+                            <p>{{total_books}}</p>
+                            </span></button>
                         <ul class="dropdown-menu">
                             <li>
                                 <table class="table">
@@ -95,7 +97,6 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li><a class="home_link" title="Home" href="/"><span>Home</span></a></li>
-                    <li><a class="home_link" title="Home" href="index.html"><span>Home</span></a></li>
                     {% load mptt_tags %}
                     <li class="mega-menu dropdown"><a>Categorias</a>
                         <div class="dropdown-menu">

@@ -21,6 +21,11 @@ class ShopCart(models.Model):
     @property
     def amount(self):
         return (self.quantity * self.book.price)
+    
+    @property
+    def quantity_books(self):
+        return self.quantity
+
 
 
 class ShopCartForm(ModelForm):

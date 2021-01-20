@@ -5,7 +5,7 @@ import json
 from book.models import Book, Genre, Images, Comment
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm
-from order.models import Order
+from order.models import Order, ShopCart
 
 
 def index(request):
@@ -14,14 +14,18 @@ def index(request):
     books_latest = Book.objects.all().order_by('-id')[:8]
     current_user = request.user
     order = Order.objects.filter(user_id=current_user.id)
+    shopcart = ShopCart.objects.filter(user_id=current_user.id)
+    total_books = 0
+    for i in shopcart:
+        total_books = i.quantity + total_books
 
     context = {
         'books_latest': books_latest,
         'genre': genre,
         'banner': banner,
         'order': order,
+        'total_books': total_books,
     }
-
     return render(request, 'index.html', context)
 
 

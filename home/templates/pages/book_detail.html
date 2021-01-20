@@ -1,5 +1,5 @@
 {% extends 'home.html' %}
-
+{% block title %} VirigilStore - {{book.title}}  {% endblock  %}
 {% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
 {% block header  %} {% include 'header.html' %} {% endblock  %}
 {% comment %} {% block subheader  %} {% include 'subheader.html' %} {% endblock  %} {% endcomment %}
@@ -25,7 +25,7 @@
                         <div class="col-sm-6">
                             <div class="image">
                                 <img class="img-responsive" itemprop="image" id="bigpic" src="{{book.image.url}}"
-                                    title="Laptop Silver black" alt="Laptop Silver black"
+                                    title="{{book.title}}" alt="{{book.image.url}}"
                                     data-zoom-image="{{image.url}}" /> </div>
                             <div class="center-block text-center"><span class="zoom-gallery"><i
                                         class="fa fa-search"></i> Click image for Gallery</span></div>
@@ -35,7 +35,7 @@
                                 {% for image in images %}
                                 <a class="thumbnail" href="#" data-zoom-image="{{image.image.url}}"
                                     data-image="{{image.image.url}}">
-                                    <img src="{{image.image.url}}" id="zoom_01" alt="{{image.title}}" /></a>
+                                    <img src="{{image.image.url}}" id="zoom_01" title="{{image.title}}" alt="{{image.title}}" /></a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -85,7 +85,6 @@
                             <div class="rating" itemprop="aggregateRating" itemscope
                                 itemtype="http://schema.org/AggregateRating">
                                 <meta itemprop="ratingValue" content="0" />
-
                                 <p>
                                     <span class="fa fa-stack">
                                         <i class="fa fa-star{% if book.avaregereview < 1%}-o {% endif %}"></i>
@@ -128,22 +127,14 @@
                         </div>
                     </div>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-description" data-toggle="tab">Description</a></li>
                         <li><a href="#tab-specification" data-toggle="tab">Specification</a></li>
                         <li><a href="#tab-review" data-toggle="tab">Avaliações ({{book.countreview}})</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div itemprop="description" id="tab-description" class="tab-pane active">
-                            <div>
-                                {{book.detail|safe}}
-                            </div>
-                        </div>
                         <div id="tab-specification" class="tab-pane">
                             {{book.specification|safe}}
-
                         </div>
                         <div id="tab-review" class="tab-pane">
-
                             <div id="review">
                                 <div>
                                     {% for comment in comments %}
@@ -296,48 +287,11 @@
             <!--Middle Part End -->
             <!--Right Part Start -->
             <aside id="column-right" class="col-sm-3 hidden-xs">
-                <h3 class="subtitle">Bestsellers</h3>
-                <div class="side-item">
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/apple_cinema_30-50x50.jpg"
-                                    alt="Brand Fashion Cotton T-Shirt" title="Brand Fashion Cotton T-Shirt"
-                                    class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Brand Fashion Cotton T-Shirt</a></h4>
-                            <p class="price"><span class="price-new">$110.00</span> <span
-                                    class="price-old">$122.00</span> <span class="saving">-10%</span></p>
-                        </div>
-                    </div>
-                </div>
                 <div class="list-group">
-                    <h3 class="subtitle">Custom Content</h3>
-                    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here. </p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book. </p>
-                    <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                        essentially unchanged.</p>
-                </div>
-                <h3 class="subtitle">Specials</h3>
-                <div class="side-item">
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="image/product/macbook_pro_1-50x50.jpg"
-                                    alt=" Strategies for Acquiring Your Own Laptop "
-                                    title=" Strategies for Acquiring Your Own Laptop " class="img-responsive" /></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Strategies for Acquiring Your Own Laptop</a></h4>
-                            <p class="price"> <span class="price-new">$1,400.00</span> <span
-                                    class="price-old">$1,900.00</span> <span class="saving">-26%</span> </p>
-                        </div>
-                    </div>
-
+                    <h3 class="subtitle">Descrição do livro</h3>
+                    <p>{{book.description|safe}}</p>
                 </div>
             </aside>
-            <!--Right Part End -->
         </div>
     </div>
 </div>

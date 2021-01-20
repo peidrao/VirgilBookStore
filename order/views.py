@@ -61,7 +61,7 @@ def shopcart(request):
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
     total = 0
     for book in shopcart:
-        total += book.book.price * book.quantity
+        total = book.book.price * book.quantity
 
     context = {
         'genre': genre, 'shopcart': shopcart, 'total': total}

@@ -1,3 +1,4 @@
+import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -13,6 +14,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('allauth.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
+
     path('', include('home.urls')),
     path('home/', include('home.urls')),
     path('user/', include('user.urls')),

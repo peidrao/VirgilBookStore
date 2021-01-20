@@ -7,7 +7,6 @@ from home import views
 from user import views as UserViews
 from order import views as OrderViews
 
-
 app_name = 'Store'
 
 urlpatterns = [

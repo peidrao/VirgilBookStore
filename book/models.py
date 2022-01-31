@@ -1,4 +1,6 @@
 from django.utils.safestring import mark_safe
+from django.db.models.signals import pre_save
+from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.db.models import Avg, Count
 from django.urls import reverse
@@ -9,6 +11,10 @@ from mptt.models import MPTTModel
 from mptt.fields import TreeForeignKey
 
 from writer.models import Writer
+
+def slugify_pre_save(sender, instance, *args, **kwargs):
+    if instance.slug is None:
+        instance.slug = slugify(instance.title)
 
 
 class Genre(MPTTModel):
@@ -123,3 +129,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+pre_save.connect(slugify_pre_save, sender=Genre)

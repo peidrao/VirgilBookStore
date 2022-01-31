@@ -12,7 +12,7 @@ class Writer(models.Model):
     fullname = models.CharField(max_length=100, null=False)
     description = RichTextUploadingField()
     slug = models.SlugField(unique=True, null=False, blank=True)
-    image = models.FileField(upload_to='images/', null=False)
+    image = models.FileField(upload_to='images/writer', null=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

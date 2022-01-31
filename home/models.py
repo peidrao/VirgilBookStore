@@ -30,7 +30,7 @@ class ContactMessage(models.Model):
 class Banner(models.Model):
     title = models.CharField(max_length=30, null=False)
     description = models.CharField(max_length=150, null=False)
-    image = models.FileField(upload_to='banner/', null=False)
+    image = models.FileField(upload_to='images/banner', null=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

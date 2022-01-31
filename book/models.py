@@ -52,7 +52,7 @@ class Book(models.Model):
     description = RichTextUploadingField()
     keywords = models.CharField(max_length=255)
     publication_date = models.DateField()
-    image = models.FileField(upload_to='capa/', null=False)
+    image = models.FileField(upload_to='images/capa', null=False)
 
     price = models.FloatField()
     amount = models.IntegerField()

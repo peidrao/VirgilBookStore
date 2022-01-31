@@ -229,7 +229,9 @@ cython_debug/
 # mypy
 
 # Pyre type checker
-
+banner/
+images/
+capa/
 # pytype static type analyzer
 
 # Cython debug symbols

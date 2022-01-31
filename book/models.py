@@ -8,8 +8,6 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.models import MPTTModel
 from mptt.fields import TreeForeignKey
 
-# Create your models here.
-
 from writer.models import Writer
 
 
@@ -58,7 +56,6 @@ class Book(models.Model):
 
     price = models.FloatField()
     amount = models.IntegerField()
-    # detail = RichTextUploadingField()
     specification = RichTextUploadingField()
     slug = models.SlugField(unique=True, null=False)
 

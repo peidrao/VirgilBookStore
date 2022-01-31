@@ -1,10 +1,8 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect
 from django.contrib import messages
 
 from .models import Comment
 from .forms import CommentForm
-
-# Create your views here.
 
 
 def index(request):

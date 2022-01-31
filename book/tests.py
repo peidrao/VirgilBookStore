@@ -16,3 +16,6 @@ class GenreTestCase(TestCase):
 
     def test_create_genre(self):
         self.assertEqual(self.genre.title, 'Comedy')
+
+    def test_slug(self):
+        self.assertEqual(self.genre.slug, 'comedy')

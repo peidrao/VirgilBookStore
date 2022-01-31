@@ -21,7 +21,7 @@ class Genre(MPTTModel):
     parent = TreeForeignKey(
         'self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     title = models.CharField(max_length=100, null=False)
-    slug = models.SlugField(unique=True, null=False)
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

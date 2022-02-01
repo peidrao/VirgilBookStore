@@ -2,10 +2,8 @@ from django.utils.safestring import mark_safe
 from django.urls import reverse
 
 from django.db import models
-from django.template.defaultfilters import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
-# Create your models here.
 
 
 class Writer(models.Model):

@@ -30,7 +30,6 @@ def index(request):
 
 
 def book_detail(request, id, slug):
-    query = request.GET.get('q')
     genre = Genre.objects.all()
     book = Book.objects.get(pk=id)
     books = Book.objects.filter(genre_id=id)

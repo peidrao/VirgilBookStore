@@ -9,7 +9,6 @@ class BookTestCase(TestCase):
         pass
 
 
-
 class GenreTestCase(TestCase):
     def setUp(self):
         self.genre = Genre.objects.create(title='Comedy')

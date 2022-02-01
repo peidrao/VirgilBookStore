@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login as auth_login, logout as logout_func
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -12,9 +12,6 @@ from order.models import Order, OrderBook
 
 @login_required(login_url='/login')
 def index(request):
-    current_user = request.user
-
-    # profile = UserProfile.objects.get(user_id=current_user.id)
     genre = Genre.objects.all()
     context = {
         'genre': genre,
@@ -56,15 +53,13 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            current_user = request.user
-            userprofile = UserProfile.objects.get(user_id=current_user.id)
+            userprofile = UserProfile.objects.get(user_id=request.user.id)
             request.session['userimage'] = userprofile.image.url
             return HttpResponseRedirect('/profile')
         else:
             messages.warning(
                 request, 'Login Error!! Username or password incorect')
             return HttpResponseRedirect('/login')
-
     genre = Genre.objects.all()
     context = {'genre': genre}
     return render(request, 'login_page.html', context)

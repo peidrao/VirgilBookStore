@@ -1,6 +1,5 @@
 
 {% extends 'home.html' %}
-{% load socialaccount %}
 
 {% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
 {% block header  %} {% include 'header.html' %} {% endblock  %}
@@ -56,7 +55,6 @@
                         <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" /> 
                         <p class="text-center">ou</p>
                          <div class="mb-5">
-                    <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Logue-se com Google</a>     
                     </div>
                     </form>
                    

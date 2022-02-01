@@ -56,15 +56,15 @@ def addtoshopcart(request, id):
 
 
 def shopcart(request):
-    genre = Genre.objects.all()
-    current_user = request.user
-    shopcart = ShopCart.objects.filter(user_id=current_user.id)
+    shopcart = ShopCart.objects.filter(user_id=request.user.id)
     total = 0
     for book in shopcart:
         total = book.book.price * book.quantity
 
     context = {
-        'genre': genre, 'shopcart': shopcart, 'total': total}
+        'genre': Genre.objects.all(),
+        'shopcart': shopcart,
+        'total': total}
 
     return render(request, 'shopcart_books.html', context)
 

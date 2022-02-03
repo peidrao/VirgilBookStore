@@ -20,12 +20,12 @@
         <div id="top-links" class="">
           <ul>
             {% if user.id is not None %}
-            <li><a href="/profile"> {{user.first_name}} </a></li>
-            <li><a href="/logout"> Sair </a></li>
+            <li><a href="{% url 'user:profile' %}"> {{user.first_name}} </a></li>
+            <li><a href="{% url 'user:logout' %}"> Sair </a></li>
 
             {% else %}
-            <li><a href="/login/">Login</a></li>
-            <li><a href="/signup/">Registrar</a></li>
+            <li><a href="{% url 'user:login' %}">Login</a></li>
+            <li><a href="{% url 'user:signup' %}">Registrar</a></li>
             {% endif %}
           </ul>
         </div>
@@ -33,9 +33,3 @@
     </div>
   </nav>
 </div>
-
-{% comment %} <div class="d-flex justify-content-between">
-  <div>Pedro</div>
-  <div>Fonseca</div>
-
-</div> {% endcomment %}

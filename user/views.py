@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as log
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 
 from .models import UserProfile
 from .forms import SignUpForm
@@ -31,10 +32,10 @@ def signup_form(request):
             data.user_id = request.user.id
             data.save()
             messages.success(request, 'Conta criada com sucesso!')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('user:profile'))
         else:
             messages.warning(request, form.errors)
-            return HttpResponseRedirect('/signup')
+            return HttpResponseRedirect(reverse('user:signup'))
     
     context = {
         'genre': Genre.objects.all(),
@@ -49,11 +50,11 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             auth_login(request, user)
-            return HttpResponseRedirect('/profile/')
+            return HttpResponseRedirect(reverse('user:signup'))
         else:
             messages.warning(
                 request, 'Erro, usuário ou senha inválidos!')
-            return HttpResponseRedirect('/login/')
+            return HttpResponseRedirect(reverse('user:login'))
     
     context = {'genre': Genre.objects.all()}
     return render(request, 'login_page.html', context)
@@ -61,7 +62,7 @@ def login(request):
 
 def logout(request):
     logout_func(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('home:index'))
 
 
 @login_required(login_url='/login')
@@ -78,7 +79,7 @@ def user_comments(request):
 def user_deletecomment(request, id):
     Comment.objects.filter(user=request.user, id=id).delete()
     messages.success(request, 'Comentário deleteado!')
-    return HttpResponseRedirect('/user/comments')
+    return HttpResponseRedirect(reverse('user:user_comments'))
 
 
 @login_required(login_url='/login')

@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 import json
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 
 # Create your views here.
 from book.models import Book, Genre, Images, Comment
@@ -56,7 +57,7 @@ def contact(request):
             data.ip = request.META.get('REMOTE_ADDR')
 
             data.save()
-            return HttpResponseRedirect('/contact')
+            return HttpResponseRedirect(reverse('home:contact'))
 
     context = {
         'form':  ContactMessageForm()
@@ -68,14 +69,15 @@ def contact(request):
 def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
+        query = form.cleaned_data['query']
         if form.is_valid():
             context = {
-                'query': form.cleaned_data['query'],
+                'query': query,
                 'books': Book.objects.filter(title__icontains=query),
                 'genre': Genre.objects.all()
             }
             return render(request, 'pages/search_books.html', context)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('home:index'))
 
 
 def search_auto(request):

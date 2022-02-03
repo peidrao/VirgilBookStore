@@ -47,15 +47,13 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             auth_login(request, user)
-            userprofile = UserProfile.objects.get(user_id=request.user.id)
-            request.session['userimage'] = userprofile.image.url
-            return HttpResponseRedirect('/profile')
+            return HttpResponseRedirect('/profile/')
         else:
             messages.warning(
-                request, 'Login Error!! Username or password incorect')
-            return HttpResponseRedirect('/login')
+                request, 'Erro, usuário ou senha inválidos!')
+            return HttpResponseRedirect('/login/')
     
     context = {'genre': Genre.objects.all()}
     return render(request, 'login_page.html', context)

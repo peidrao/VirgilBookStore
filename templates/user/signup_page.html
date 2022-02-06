@@ -1,8 +1,8 @@
-{% extends 'home.html' %}
+{% extends 'base/home.html' %}
 
-{% block sidebar  %} {% include 'sidebar.html' %} {% endblock  %}
-{% block header  %} {% include 'header.html' %} {% endblock  %}
-{% comment %} {% block subheader  %} {% include 'subheader.html' %} {% endblock  %} {% endcomment %}
+{% block sidebar  %} {% include 'base/sidebar.html' %} {% endblock  %}
+{% block header  %} {% include 'base/header.html' %} {% endblock  %}
+{% comment %} {% block subheader  %} {% include 'base/subheader.html' %} {% endblock  %} {% endcomment %}
 {% block content  %} <div id="container">
     {% if messages %}
     {% for message in messages %}
@@ -75,4 +75,4 @@
     </div>
     </div>
 </div> {% endblock  %}
-{% block footer  %} {% include 'footer.html' %} {% endblock  %}
+{% block footer  %} {% include 'base/footer.html' %} {% endblock  %}

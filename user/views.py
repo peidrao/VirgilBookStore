@@ -15,7 +15,7 @@ def index(request):
     context = {
         'genre':  Genre.objects.all(),
     }
-    return render(request, 'profile_page.html', context)
+    return render(request, 'user/profile_page.html', context)
 
 
 def signup_form(request):
@@ -40,7 +40,7 @@ def signup_form(request):
     context = {
         'genre': Genre.objects.all(),
         'form': SignUpForm()}
-    return render(request, 'signup_page.html', context)
+    return render(request, 'user/signup_page.html', context)
 
 
 def login(request):
@@ -50,14 +50,14 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             auth_login(request, user)
-            return HttpResponseRedirect(reverse('user:signup'))
+            return HttpResponseRedirect(reverse('user:profile'))
         else:
             messages.warning(
                 request, 'Erro, usuário ou senha inválidos!')
             return HttpResponseRedirect(reverse('user:login'))
     
     context = {'genre': Genre.objects.all()}
-    return render(request, 'login_page.html', context)
+    return render(request, 'user/login_page.html', context)
 
 
 def logout(request):
@@ -72,7 +72,7 @@ def user_comments(request):
         'comments': Comment.objects.filter(user=request.user)
     }
 
-    return render(request, 'user_comments.html', context)
+    return render(request, 'user/user_comments.html', context)
 
 
 @login_required(login_url='/login')
@@ -89,7 +89,7 @@ def user_orders(request):
         'order': Order.objects.filter(user=request.user),
     }
 
-    return render(request, 'user_orders.html', context)
+    return render(request, 'user/user_orders.html', context)
 
 
 @login_required(login_url='/login')
@@ -99,7 +99,7 @@ def user_request(request):
         'order': Order.objects.filter(user=request.user),
     }
 
-    return render(request, 'user_request.html', context)
+    return render(request, 'user/user_request.html', context)
 
 
 @login_required(login_url='/login')
@@ -108,4 +108,4 @@ def user_order_book(request):
         'genre': Genre.objects.all(),
         'order': Order.objects.filter(user=request.user),
     }
-    return render(request, 'user_order_books.html', context)
+    return render(request, 'user/user_order_books.html', context)

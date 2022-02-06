@@ -34,7 +34,7 @@ def book_detail(request, id, slug):
         'comments': Comment.objects.filter(book_id=id, status='Verdade'),
     }
 
-    return render(request, 'pages/book_detail.html', context)
+    return render(request, 'books/book_detail.html', context)
 
 
 def book_genre(request, id, slug):
@@ -42,7 +42,7 @@ def book_genre(request, id, slug):
         'genre': Genre.objects.all(),  
         'books': Book.objects.filter(genre_id=id)
     }
-    return render(request, 'pages/book_genre.html', context)
+    return render(request, 'books/book_genre.html', context)
 
 
 def contact(request):

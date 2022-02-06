@@ -66,7 +66,7 @@ def shopcart(request):
         'shopcart': shopcart,
         'total': total}
 
-    return render(request, 'shopcart_books.html', context)
+    return render(request, 'order/shopcart_books.html', context)
 
 
 @login_required(login_url='/login')
@@ -137,4 +137,4 @@ def order_book(request):
                'form': form,
                'profile': profile}
 
-    return render(request, 'order_form.html', context)
+    return render(request, 'order/order_form.html', context)

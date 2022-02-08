@@ -33,7 +33,8 @@ class Genre(MPTTModel):
         return str(self.title)
 
     def get_absolute_url(self):
-        return reverse("genre_detail", kwargs={"slug": self.slug})
+        return reverse('book:book_genre', kwargs={"slug": self.slug})
+        
 
     def __str__(self):
         full_path = [self.title]

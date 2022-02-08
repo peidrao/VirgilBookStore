@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 # Create your views here.
-from book.models import Book, Genre, Images, Comment
+from book.models import Book, Genre
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm
 from order.models import Order, ShopCart
@@ -23,26 +23,6 @@ def index(request):
         'total_books': total_books,
     }
     return render(request, 'index.html', context)
-
-
-def book_detail(request, id, slug):
-    context = {
-        'genre': Genre.objects.all(),
-        'book': Book.objects.get(pk=id),
-        'images': Images.objects.filter(book_id=id),
-        'books': Book.objects.filter(genre_id=id),
-        'comments': Comment.objects.filter(book_id=id, status='Verdade'),
-    }
-
-    return render(request, 'books/book_detail.html', context)
-
-
-def book_genre(request, id, slug):
-    context = {
-        'genre': Genre.objects.all(),  
-        'books': Book.objects.filter(genre_id=id)
-    }
-    return render(request, 'books/book_genre.html', context)
 
 
 def contact(request):

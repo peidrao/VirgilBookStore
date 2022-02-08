@@ -7,14 +7,14 @@
                  <div class="box-category">
                      <ul id="cat_accordion">
                          {% recursetree genre %}
-                         <li><a href="/genre/{{node.id}}/{{node.title}}">{{node.title}}</a> <span class="down"></span>
+                         <li><a href="{{node.get_absolute_url}}">{{node.title}}</a> <span class="down"></span>
                          </li>
                          {% if not node.is_leaf_node %}
                          <ul>
                              <li> <a href="category.html"> {{children}} <span>&rsaquo;</span></a>
                                  <div class="dropdown-menu">
                                      <ul>
-                                         <li> <a href="/category/{{node.id}}/{{node.slug}}">New Sub Categories
+                                         <li> <a href="">New Sub Categories
                                              </a> </li>
                                      </ul>
                                  </div>
@@ -39,7 +39,7 @@
                      {% for item in books_latest %}
                      <div class="product-thumb">
                          <div class="image">
-                             <a href="/book/{{item.id}}/{{item.slug}}"><img src="{{item.image.url}}"
+                             <a href="{% url 'book:book_detail' item.id item.slug %}"><img src="{{item.image.url}}"
                                      alt="Hair Care Cream for Men" title="Hair Care Cream for Men"
                                      class="img-responsive" /></a>
                          </div>

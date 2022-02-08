@@ -7,10 +7,6 @@ from .models import Comment
 from .forms import CommentForm
 
 
-def index(request):
-    return HttpResponseRedirect('/')
-
-
 def add_comment(request, id):
     url = request.META.get('HTTP_REFERER')
     if request.method == 'POST':
@@ -44,9 +40,9 @@ def book_detail(request, id, slug):
     return render(request, 'books/book_detail.html', context)
 
 
-def book_genre(request, id, slug):
+def book_genre(request, slug):
     context = {
         'genre': Genre.objects.all(),  
-        'books': Book.objects.filter(genre_id=id)
+        'books': Book.objects.filter(slug=slug)
     }
     return render(request, 'books/book_genre.html', context)

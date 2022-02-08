@@ -1,6 +1,8 @@
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 
+
+from book.models import Book, Genre, Images, Comment
 from .models import Comment
 from .forms import CommentForm
 
@@ -28,3 +30,23 @@ def add_comment(request, id):
                 request, 'Sua avaliação foi envianda com sucesso!')
             return HttpResponseRedirect(url)
     return HttpResponseRedirect(url)
+
+
+def book_detail(request, id, slug):
+    context = {
+        'genre': Genre.objects.all(),
+        'book': Book.objects.get(pk=id),
+        'images': Images.objects.filter(book_id=id),
+        'books': Book.objects.filter(genre_id=id),
+        'comments': Comment.objects.filter(book_id=id, status='Verdade'),
+    }
+
+    return render(request, 'books/book_detail.html', context)
+
+
+def book_genre(request, id, slug):
+    context = {
+        'genre': Genre.objects.all(),  
+        'books': Book.objects.filter(genre_id=id)
+    }
+    return render(request, 'books/book_genre.html', context)

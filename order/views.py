@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.crypto import get_random_string
 from django.contrib import messages
@@ -8,10 +8,6 @@ from .models import ShopCart, ShopCartForm, Order, OrderBook
 from book.models import Genre, Book
 from user.models import UserProfile
 from .forms import OrderForm
-
-
-def index(request):
-    return HttpResponse('Teste')
 
 
 @login_required(login_url='/login')

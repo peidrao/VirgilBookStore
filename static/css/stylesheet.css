@@ -1,105 +1,3 @@
-/*
-//////////////////////////////////////////////////////////////////////////////////////////
-//										                                            	
-// Project:	MarketShop - Responsive E-Commerce HTML5 Template                                
-//		                                                                                
-// File: stylesheet.css             							                                    
-//											                                            
-// Version: 1.0										                                    
-//										                                            	
-// Description:                                                                        	
-//											                                           
-//		   Responsive E-Commerce HTML5 Template                              
-//		                                  							                
-//											                                           
-//											                                            
-//											                                            
-//											                                            
-// Author: Ami Bappy [amibappy77@gmail.com]						                       
-//                                                                                     
-// Github: https://github.com/amibappy                                                 
-//                                                                                     
-//        										                                       
-//  .______       .___      .______   .______   ____.  .____ 				           
-//  |   _  \      /   \     |   _  \  |   _  \  \   \  /   / 				           
-//  |  |_)  |    /  ^  \    |  |_)  | |  |_)  |  \   \/   /  				            
-//  |   _  <    /  /_\  \   |   ___/  |   ___/    \_    _/   				            
-//  |  |_)  |  /  _____  \  |  |      |  |          |  |     				            
-//  |______/  /__/     \__\ | _|      | _|          |__|     				           
-//                                                       				                
-//											                                           
-//////////////////////////////////////////////////////////////////////////////////////////
-//											                                           
-// Copyright (c) 2017 Bappy [amibappy77@gmail.com]					                    
-// All Rights Reserved.									                                
-//											                                            
-//////////////////////////////////////////////////////////////////////////////////////////
-//											                                            
-// Unauthorized copying of this file, via any medium is strictly prohibited	           
-// Proprietary and confidential								                           
-//											                                           
-//////////////////////////////////////////////////////////////////////////////////////////
-//											                                            
-// DO NOT REMOVE THIS AREA                                                             
-//                                                                                     
-////////////////////////////////////////////////////////////////////////////////////////// 
-*/
-
-
-
-
-
-/*-----------------------------------------------------------------------------------
-===================================================================================
- Table of Contents
-===================================================================================
- 
-1. General Styles
-2.  Layout
-3.  Header
-     3.1. Language & Currency
-     3.2. Top Links
-     3.3. Mini Cart
-     3.4. Search Bar
-4.  Menu
-5.  Feature box
-6.  Breadcrumb
-7.  Category Page
-     7.1. Refine Search Category
-     7.2. Grid-List Icon
-     7.3. Produc Thumb
-     7.4. Grid Product
-     7.5. List Product
-     7.6. Rating Star
-     7.7. Pagination 
-8.  Product Page
-9.  Product Item for Left and Right Panel
-10. Category Accordion
-11. buttons
-12. Tabs
-13. Static Banner
-14. Faq Page
-15. Sitemap Page
-16. Footer
-     16.1. Footer Links
-     16.2. Contact Block
-     16.3. Payments Types
-     16.4. Social Icon
-     16.5. Powered by Text
-     16.6. Back To Top
-17. Side Blocks
-     17.1. Facebook
-     17.2. Twitter
-     17.3. Custom Side block
-     17.4. Video Box
-18. Five Grid Columns
-19. Shortcodes
-20. Extra
--------------------------------------------------------------------------------------*/
-
-/*===================================================================================*/
-/*  1. General Styles
-/*===================================================================================*/
 html {
 	overflow: -moz-scrollbars-vertical;
 	margin:0;
@@ -188,7 +86,7 @@ a:focus { outline:none; }
 	position: relative;
 	padding:0px;
 }
-#header .htop { background:#3e7cb4; }
+#header .htop { background:#ce4257; }
 #header .header-row {
 	position:relative;
 	padding:35px 0;
@@ -293,7 +191,6 @@ a:focus { outline:none; }
 #header .links {
 	position: relative;
 	float:left;
-	border-right:1px dotted #5b9ad4;
 }
 #header .links > ul > li {
 	float:left;
@@ -338,14 +235,15 @@ a:focus { outline:none; }
 }
 #header #top-links > ul > li {
 	float:left;
-	border-left:1px dotted #5b9ad4;
 }
+
 #header #top-links > ul > li > a {
 	color:#fff;
 	text-transform:capitalize;
 	display: inline-block;
 	padding:0px 10px;
 }
+
 #header #top .links > ul > li, #header #top-links > ul > li, #language .btn-link span, #currency .btn-link span { line-height:35px; }
 #header #top-links > ul > li > a:hover, #header .links > ul > li > a:hover { text-decoration:underline; }
 .wrapper-box #header #top-links { border-right:none; }

@@ -56,13 +56,13 @@ class Book(models.Model):
 
     title = models.CharField(max_length=150, null=False)
     description = RichTextUploadingField()
-    keywords = models.CharField(max_length=255)
-    publication_date = models.DateField()
+    keywords = models.CharField(max_length=255, null=True, blank=True)
+    publication_date = models.DateField(auto_now_add=True)
     image = models.FileField(upload_to='images/capa', null=False)
 
     price = models.FloatField()
     amount = models.IntegerField()
-    specification = RichTextUploadingField()
+    specification = RichTextUploadingField(null=True, blank=True)
     slug = models.SlugField(unique=True, null=False)
 
     status = models.CharField(choices=STATUS, max_length=5)

@@ -16,7 +16,6 @@ def slugify_pre_save(sender, instance, *args, **kwargs):
     if instance.slug is None:
         instance.slug = slugify(instance.title)
 
-
 class Genre(MPTTModel):
     parent = TreeForeignKey(
         'self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)

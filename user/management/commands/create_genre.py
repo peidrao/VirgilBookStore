@@ -24,3 +24,5 @@ class Command(BaseCommand):
             Genre.objects.create(title="Religião")
         if not Genre.objects.filter(slug="economia").exists():
             Genre.objects.create(title="Econômia")
+        if not Genre.objects.filter(slug="filosofia").exists():
+            Genre.objects.create(title="Filosofia")

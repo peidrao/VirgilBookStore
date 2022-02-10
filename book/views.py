@@ -43,6 +43,7 @@ def book_detail(request, id, slug):
 def book_genre(request, slug):
     context = {
         'genre': Genre.objects.all(),  
-        'books': Book.objects.filter(slug=slug)
+        'books': Book.objects.filter(genre__slug=slug)
     }
+
     return render(request, 'books/book_genre.html', context)

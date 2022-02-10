@@ -89,86 +89,34 @@
             </div>
         </div>
     </header>
-    <!-- Header End-->
-    <!-- Main Menu Start-->
     <div class="container">
-        <nav id="menu" class="navbar">
-            <div class="navbar-header"> <span class="visible-xs visible-sm"> Menu <b></b></span></div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a class="home_link" title="Home" href="/"><span>Home</span></a></li>
-                    {% load mptt_tags %}
-                    <li class="mega-menu dropdown"><a>Categorias</a>
-                        <div class="dropdown-menu">
-                            {% recursetree genre %}
-
-                            <div class="column col-lg-2 col-md-3"> <a
-                                    href="/genre/{{node.id}}/{{node.slug}}">{{node.title}}</a>
-
-                                {% if not node.is_leaf_node %}
-                                <ul>
-                                    <li> <a href="category.html"> {{children}} <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li> <a href="/category/{{node.id}}/{{node.slug}}">New Sub Categories
-                                                    </a> </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                                {% endif %}
-                            </div>
-                            {% endrecursetree %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorias
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                         {% load mptt_tags %}
+                         {% recursetree genre %}
+                         <li>
+                            <a href="{{node.get_absolute_url}}" class="dropdown-item">{{node.title}}</a>
+                            <span class="down"></span>
+                         </li>
+                         {% endrecursetree %}
+                      </ul>
                     </li>
-                    <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>Custom Block</a>
-                        <div class="dropdown-menu custom_block">
-                            <ul>
-                                <li>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td><img alt="" src="image/banner/cms-block.jpg"></td>
-                                                <td><img alt="" src="image/banner/responsive.jpg"></td>
-                                                <td><img alt="" src="image/banner/cms-block.jpg"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <h4>CMS Blocks</h4>
-                                                </td>
-                                                <td>
-                                                    <h4>Responsive Template</h4>
-                                                </td>
-                                                <td>
-                                                    <h4>Dedicated Support</h4>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>This is a CMS block. You can insert any content (HTML, Text, Images)
-                                                    Here.</td>
-                                                <td>This is a CMS block. You can insert any content (HTML, Text, Images)
-                                                    Here.</td>
-                                                <td>This is a CMS block. You can insert any content (HTML, Text, Images)
-                                                    Here.</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong><a class="btn btn-primary btn-sm" href="#">Read
-                                                            More</a></strong></td>
-                                                <td><strong><a class="btn btn-primary btn-sm" href="#">Read
-                                                            More</a></strong></td>
-                                                <td><strong><a class="btn btn-primary btn-sm" href="#">Read
-                                                            More</a></strong></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
                     </li>
-                    <li class="contact-link"><a href="/contact">Contact Us</a></li>
-                    <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
-                </ul>
+                  </ul>
+                </div>
             </div>
         </nav>
     </div>
-    <!-- Main Menu End-->
 </div>

@@ -9,32 +9,89 @@
                          {% recursetree genre %}
                          <li><a href="{{node.get_absolute_url}}">{{node.title}}</a> <span class="down"></span>
                          </li>
-                         {% if not node.is_leaf_node %}
-                         <ul>
-                             <li> <a href="category.html"> {{children}} <span>&rsaquo;</span></a>
-                                 <div class="dropdown-menu">
-                                     <ul>
-                                         <li> <a href="">New Sub Categories
-                                             </a> </li>
-                                     </ul>
-                                 </div>
-                             </li>
-                         </ul>
-                         {% endif %}
                          {% endrecursetree %}
 
                      </ul>
                  </div>
              </aside>
              <div id="content" class="col-sm-9">
-                 <div class="slideshow single-slider owl-carousel">
-                     {% for item in banner %}
-                     <div class="item">
-                         <a href="#"><img class="img-responsive" src="{{item.image.url}}" alt="banner 1" /></a>
+                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+                 <h3 class="subtitle">Livros mais vendidos - <a class="viewall" href="category.html">view all</a></h3>
+                 <div class="owl-carousel latest_category_carousel">
+                     {% for item in books_latest %}
+                     <div class="product-thumb">
+                         <div class="image">
+                             <a href="{% url 'book:book_detail' item.id item.slug %}"><img src="{{item.image.url}}"
+                                     alt="Hair Care Cream for Men" title="Hair Care Cream for Men"
+                                     class="img-responsive" /></a>
+                         </div>
+                         <div class="caption">
+                             <h4><a href="/book/{{item.id}}/{{item.slug}}">{{item.title}}</a></h4>
+                             <p class="price"> R$ {{item.price}} </p>
+                             <div class="rating">
+                                 <span class="fa fa-stack">
+                                     <i class="fa fa-star{% if item.avaregereview < 1%}-o {% endif %}"></i>
+                                 </span>
+                                 <span class="fa fa-stack">
+                                     <i class="fa fa-star{% if item.avaregereview < 2%}-o {% endif %}"></i>
+                                 </span>
+                                 <span class="fa fa-stack">
+                                     <i class="fa fa-star{% if item.avaregereview < 3%}-o {% endif %}"></i>
+                                 </span>
+                                 <span class="fa fa-stack">
+                                     <i class="fa fa-star{% if item.avaregereview < 4%}-o {% endif %}"></i>
+                                 </span>
+                                 <span class="fa fa-stack">
+                                     <i class="fa fa-star{% if item.avaregereview < 5%}-o {% endif %}"></i>
+                                 </span>
+                             </div>
+                             <h4><a href="product.html">Hair Care Cream for Men</a></h4>
+                             <p class="price"> $134.00 </p>
+                             <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                         class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                         class="fa fa-star fa-stack-2x"></i><i
+                                         class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                         class="fa fa-star fa-stack-2x"></i><i
+                                         class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                         class="fa fa-star fa-stack-2x"></i><i
+                                         class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                         class="fa fa-star fa-stack-2x"></i><i
+                                         class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                         </div>
+                         <div class="button-group">
+                             <button class="btn-primary" type="button" onClick=""><span>Add to
+                                     Cart</span></button>
+                             <div class="add-to-links">
+                                 <button type="button" data-toggle="tooltip" title="Add to wishlist" onClick=""><i
+                                         class="fa fa-heart"></i></button>
+                                 <button type="button" data-toggle="tooltip" title="Add to compare" onClick=""><i
+                                         class="fa fa-exchange"></i></button>
+                             </div>
+                         </div>
                      </div>
                      {% endfor %}
                  </div>
-                 <h3 class="subtitle">Health &amp; Beauty - <a class="viewall" href="category.html">view all</a></h3>
+                <h3 class="subtitle">Livros recentes - <a class="viewall" href="category.html">view all</a></h3>
                  <div class="owl-carousel latest_category_carousel">
                      {% for item in books_latest %}
                      <div class="product-thumb">

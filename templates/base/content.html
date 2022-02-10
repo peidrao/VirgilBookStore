@@ -9,31 +9,33 @@
                          {% recursetree genre %}
                          <li><a href="{{node.get_absolute_url}}">{{node.title}}</a> <span class="down"></span>
                          </li>
-                         {% if not node.is_leaf_node %}
-                         <ul>
-                             <li> <a href="category.html"> {{children}} <span>&rsaquo;</span></a>
-                                 <div class="dropdown-menu">
-                                     <ul>
-                                         <li> <a href="">New Sub Categories
-                                             </a> </li>
-                                     </ul>
-                                 </div>
-                             </li>
-                         </ul>
-                         {% endif %}
                          {% endrecursetree %}
 
                      </ul>
                  </div>
              </aside>
              <div id="content" class="col-sm-9">
-                 <div class="slideshow single-slider owl-carousel">
-                     {% for item in banner %}
-                     <div class="item">
-                         <a href="#"><img class="img-responsive" src="{{item.image.url}}" alt="banner 1" /></a>
-                     </div>
-                     {% endfor %}
-                 </div>
+                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
                  <h3 class="subtitle">Health &amp; Beauty - <a class="viewall" href="category.html">view all</a></h3>
                  <div class="owl-carousel latest_category_carousel">
                      {% for item in books_latest %}

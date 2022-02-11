@@ -9,7 +9,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class Writer(models.Model):
     fullname = models.CharField(max_length=100, null=False)
-    description = RichTextUploadingField(null=True, blank=True)
+    description = RichTextUploadingField(null=True, blank=True  )
     slug = models.SlugField(unique=True, null=False, blank=True)
     image = models.FileField(upload_to='images/writer', null=False)
 

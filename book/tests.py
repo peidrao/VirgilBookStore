@@ -3,7 +3,6 @@ from django.test import TestCase
 from book.models import Genre
 
 
-
 class BookTestCase(TestCase):
     def setUp(self):
         pass

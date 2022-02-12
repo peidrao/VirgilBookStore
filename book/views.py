@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 
-
 from book.models import Book, Genre, Images, Comment
-from .models import Comment
+
+from .models import Comment 
 from .forms import CommentForm
 
 

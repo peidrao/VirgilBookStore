@@ -13,7 +13,7 @@ from order.models import Order
 @login_required(login_url='/login')
 def index(request):
     context = {
-        'genre':  Genre.objects.all(),
+        'genre': Genre.objects.all(),
     }
     return render(request, 'user/profile_page.html', context)
 
@@ -36,7 +36,7 @@ def signup_form(request):
         else:
             messages.warning(request, form.errors)
             return HttpResponseRedirect(reverse('user:signup'))
-    
+
     context = {
         'genre': Genre.objects.all(),
         'form': SignUpForm()}
@@ -55,7 +55,7 @@ def login(request):
             messages.warning(
                 request, 'Erro, usuário ou senha inválidos!')
             return HttpResponseRedirect(reverse('user:login'))
-    
+
     context = {'genre': Genre.objects.all()}
     return render(request, 'user/login_page.html', context)
 

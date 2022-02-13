@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.urls import reverse
 
 from .models import UserProfile
-from .forms import SignUpForm
+from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
 from book.models import Genre, Comment
 from order.models import Order
 
@@ -45,18 +45,21 @@ def signup_form(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            auth_login(request, user)
+        form = LoginAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
             return HttpResponseRedirect(reverse('user:profile'))
         else:
             messages.warning(
                 request, 'Erro, usuário ou senha inválidos!')
             return HttpResponseRedirect(reverse('user:login'))
 
-    context = {'genre': Genre.objects.all()}
+    context = {
+        'genre': Genre.objects.all(),
+        'form': LoginForm()
+        }
+
+
     return render(request, 'user/login_page.html', context)
 
 

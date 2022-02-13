@@ -1,7 +1,64 @@
 .navbar {
-	background-color: #EF6461!important;
+  background-color: #ef6461 !important;
 }
 
 .navbar-brand {
-	color: #fff!important;
+  color: #fff !important;
+}
+
+.price,
+.price-new {
+  color: #ef6461;
+}
+
+#header #cart .heading .cart-icon {
+  width: 20px;
+  height: 16px;
+  background: #ef6461;
+  position: relative;
+  margin-right: 5px;
+  margin-top: 8px;
+}
+
+#header #cart .heading .cart-icon:before {
+  clear: both;
+  content: " ";
+  display: block;
+  width: 14px;
+  height: 19px;
+  top: -8px;
+  left: 3px;
+  border: 2px solid #ef6461;
+  border-radius: 50%;
+  border-bottom: none;
+  position: absolute;
+}
+
+#header #cart .heading .cart-icon:after {
+  clear: both;
+  content: " ";
+  display: block;
+  width: 20px;
+  height: 2px;
+  bottom: -2px;
+  left: 0px;
+  border: 1px solid #ef6461;
+  border-top: none;
+  position: absolute;
+}
+
+.btn-primary {
+  background-color: #ef6461;
+  color: #ffffff;
+}
+
+a,
+a b {
+  color: #ef6461;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-item > .nav-link {
+  color: #fff!important;
 }

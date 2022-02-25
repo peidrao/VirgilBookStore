@@ -6,16 +6,13 @@ from django.urls import reverse
 
 from .models import UserProfile
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
-from book.models import Genre, Comment
+from book.models import Comment
 from order.models import Order
 
 
 @login_required(login_url='/login')
-def index(request):
-    context = {
-        'genre': Genre.objects.all(),
-    }
-    return render(request, 'user/profile_page.html', context)
+def index(request): 
+    return render(request, 'user/profile_page.html')
 
 
 def signup_form(request):
@@ -38,8 +35,8 @@ def signup_form(request):
             return HttpResponseRedirect(reverse('user:signup'))
 
     context = {
-        'genre': Genre.objects.all(),
-        'form': SignUpForm()}
+        'form': SignUpForm()
+    }
     return render(request, 'user/signup_page.html', context)
 
 
@@ -55,10 +52,8 @@ def login(request):
             return HttpResponseRedirect(reverse('user:login'))
 
     context = {
-        'genre': Genre.objects.all(),
         'form': LoginForm()
         }
-
 
     return render(request, 'user/login_page.html', context)
 
@@ -71,7 +66,6 @@ def logout(request):
 @login_required(login_url='/login')
 def user_comments(request):
     context = {
-        'genre': Genre.objects.all(),
         'comments': Comment.objects.filter(user=request.user)
     }
 
@@ -88,7 +82,6 @@ def user_deletecomment(request, id):
 @login_required(login_url='/login')
 def user_orders(request):
     context = {
-        'genre': Genre.objects.all(),
         'order': Order.objects.filter(user=request.user),
     }
 
@@ -98,7 +91,6 @@ def user_orders(request):
 @login_required(login_url='/login')
 def user_request(request):
     context = {
-        'genre': Genre.objects.all(),
         'order': Order.objects.filter(user=request.user),
     }
 
@@ -108,7 +100,6 @@ def user_request(request):
 @login_required(login_url='/login')
 def user_order_book(request):
     context = {
-        'genre': Genre.objects.all(),
         'order': Order.objects.filter(user=request.user),
     }
     return render(request, 'user/user_order_books.html', context)

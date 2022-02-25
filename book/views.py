@@ -1,8 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
-
-from book.models import Book, Genre, Images, Comment
-
+from book.models import Book, Images, Comment
 from .models import Comment 
 from .forms import CommentForm
 
@@ -30,7 +28,6 @@ def add_comment(request, id):
 
 def book_detail(request, id, slug):
     context = {
-        'genre': Genre.objects.all(),
         'book': Book.objects.get(pk=id),
         'images': Images.objects.filter(book_id=id),
         'books': Book.objects.filter(genre_id=id),
@@ -42,8 +39,8 @@ def book_detail(request, id, slug):
 
 def book_genre(request, slug):
     context = {
-        'genre': Genre.objects.all(),  
         'books': Book.objects.filter(genre__slug=slug)
     }
 
     return render(request, 'books/book_genre.html', context)
+

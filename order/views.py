@@ -5,7 +5,7 @@ from django.contrib import messages
 # Create your views here.
 from .models import ShopCart, ShopCartForm, Order, OrderBook
 
-from book.models import Genre, Book
+from book.models import Book
 from user.models import UserProfile
 from .forms import OrderForm
 
@@ -58,7 +58,6 @@ def shopcart(request):
         total = book.book.price * book.quantity
 
     context = {
-        'genre': Genre.objects.all(),
         'shopcart': shopcart,
         'total': total}
 
@@ -74,7 +73,6 @@ def delete_from_cart(request, id):
 
 @login_required(login_url='/login')
 def order_book(request):
-    genre = Genre.objects.all()
     current_user = request.user
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
     profile = UserProfile.objects.filter(user_id=current_user.id)
@@ -117,7 +115,6 @@ def order_book(request):
 
             context = {
                 'ordercode': ordercode,
-                'genre': genre,
             }
 
             return render(request, 'order_completed.html', context)
@@ -128,7 +125,6 @@ def order_book(request):
     form = OrderForm()
     profile = UserProfile.objects.get(user_id=current_user.id)
     context = {'shopcart': shopcart,
-               'genre': genre,
                'total': total,
                'form': form,
                'profile': profile}

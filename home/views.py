@@ -1,9 +1,8 @@
 import json
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-
 # Create your views here.
-from book.models import Book, Genre
+from book.models import Book
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm
 from order.models import Order, ShopCart
@@ -14,10 +13,8 @@ def index(request):
     total_books = 0
     for i in shopcart:
         total_books = i.quantity + total_books
-
     context = {
         'books_latest': Book.objects.all().order_by('-id')[:8],
-        'genre': Genre.objects.all(),
         'banner': Banner.objects.all(),
         'order': Order.objects.filter(user_id=request.user.id),
         'total_books': total_books,
@@ -54,7 +51,6 @@ def search(request):
             context = {
                 'query': query,
                 'books': Book.objects.filter(title__icontains=query),
-                'genre': Genre.objects.all()
             }
             return render(request, 'pages/search_books.html', context)
     return HttpResponseRedirect(reverse('home:index'))

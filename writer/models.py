@@ -1,10 +1,8 @@
-from hashlib import blake2b
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
-
 
 
 class Writer(models.Model):

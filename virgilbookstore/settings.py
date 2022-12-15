@@ -23,16 +23,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    # Apps
     'home',
-    'writer',
     'book',
     'order',
     'user',
-
-    'ckeditor',
-    'ckeditor_uploader',
-    'mptt'
 ]
 
 MIDDLEWARE = [
@@ -65,16 +59,8 @@ TEMPLATES = [
     },
 ]
 
-CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
-CKEDITOR_UPLOAD_PATH = 'images/'
-CKEDITOR_IMAGE_BACKEND = "pillow"
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': None,
-    },
-}
 
 LOGIN_REDIRECT_URL = '/'  # Redirecionar o usuário após o login
 SITE_ID = 1

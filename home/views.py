@@ -1,7 +1,6 @@
 import json
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-# Create your views here.
 from book.models import Book
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm

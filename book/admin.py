@@ -26,7 +26,7 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['image', 'title', 'image_thumbnail']
+    list_display = ['image', 'title',]
 
 
 class CommentAdmin(admin.ModelAdmin):

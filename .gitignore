@@ -243,10 +243,3 @@ capa/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-
-# End of https://www.toptal.com/developers/gitignore/api/django,python
-home/__pycache__/
-home/__pycache__/models.cpython-38.pyc
-home/__pycache__/apps.cpython-38.pyc
-home/__pycache__/admin.cpython-38.pyc
-home/__pycache__/__init__.cpython-38.pyc

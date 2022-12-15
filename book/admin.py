@@ -33,6 +33,18 @@ class GenreAdmin(DraggableMPTTAdmin):
     related_books_cumulative_count.short_description = 'Livros relacionados'
 
 
+class WriterAdmin(admin.ModelAdmin):
+    list_display = ['fullname', 'created_at', 'image_tag']
+    readonly_fields = ('image_tag',)
+    prepopulated_fields = {'slug': ('fullname',)}
+    search_fields = ['fullname']
+    ordering  = ['fullname']
+
+
+admin.site.register(Writer, WriterAdmin)
+
+
+
 @admin_thumbnails.thumbnail('image')
 class BookImageInline(admin.TabularInline):
     model = Images

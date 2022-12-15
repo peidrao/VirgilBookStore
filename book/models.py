@@ -6,27 +6,17 @@ from django.db.models import Avg, Count
 from django.urls import reverse
 from django.db import models
 
-from ckeditor_uploader.fields import RichTextUploadingField
-from mptt.models import MPTTModel
-from mptt.fields import TreeForeignKey
-
-from writer.models import Writer
 
 def slugify_pre_save(sender, instance, *args, **kwargs):
     if instance.slug is None:
         instance.slug = slugify(instance.title)
 
-class Genre(MPTTModel):
-    parent = TreeForeignKey(
-        'self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+class Genre(models.Model):
     title = models.CharField(max_length=100, null=False)
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class MPTTMeta:
-        order_insertion_by = ['title']
 
     def __str__(self):
         return str(self.title)
@@ -34,7 +24,6 @@ class Genre(MPTTModel):
     def get_absolute_url(self):
         return reverse('book:book_genre', kwargs={"slug": self.slug})
         
-
     def __str__(self):
         full_path = [self.title]
         k = self.parent
@@ -42,6 +31,28 @@ class Genre(MPTTModel):
             full_path.append(k.title)
             k = k.parent
         return ' / '.join(full_path[::-1])
+
+
+class Writer(models.Model):
+    fullname = models.CharField(max_length=100, null=False)
+    description = models.TextField(null=True, blank=True)
+    slug = models.SlugField(unique=True, null=False, blank=True)
+    image = models.FileField(upload_to='images/writer', null=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.fullname
+
+    def image_tag(self):
+        if self.image.url is not None:
+            return mark_safe('<img src={} height="50"  />'.format(self.image.url))
+        else:
+            return ""
+
+    def get_absolute_url(self):
+        return reverse("writer_detail", kwargs={"slug": self.slug})
 
 
 class Book(models.Model):
@@ -55,14 +66,14 @@ class Book(models.Model):
         Genre, on_delete=models.CASCADE, null=False)
 
     title = models.CharField(max_length=150, null=False)
-    description = RichTextUploadingField()
+    description = models.TextField(null=True, blank=True)
     keywords = models.CharField(max_length=255, null=True, blank=True)
     publication_date = models.DateField(auto_now_add=True)
     image = models.FileField(upload_to='images/capa', null=False)
 
     price = models.FloatField()
     amount = models.IntegerField()
-    specification = RichTextUploadingField(null=True, blank=True)
+    specification = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True, null=False)
 
     status = models.CharField(choices=STATUS, max_length=5)

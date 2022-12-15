@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  teste-postgres-compose:
+    image: postgres
+    environment:
+      POSTGRES_USER: virgil
+      POSTGRES_PASSWORD: virgil@2023
+      POSTGRES_DB: virgil_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - /home/peidrao/PostgreSQL
+    networks:
+      - postgres-compose-network
+
+networks:
+  postgres-compose-network:
+    driver: bridge

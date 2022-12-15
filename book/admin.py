@@ -1,39 +1,16 @@
-import admin_thumbnails
 from django.contrib import admin
-from mptt.admin import DraggableMPTTAdmin
 
-# Register your models here.
-from .models import Genre, Book, Images, Comment
+from .models import Book, Images, Comment, Writer
 
 
-class GenreAdmin(DraggableMPTTAdmin):
-    mptt_indent_field = "title"
-    list_display = ('tree_actions', 'indented_title',
-                    'related_books_count', 'related_books_cumulative_count')
-    list_display_links = ('indented_title',)
-    prepopulated_fields = {'slug': ('title',)}
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-
-        qs = Genre.objects.add_related_count(
-            qs, Book, 'genre', 'books_cumulative_count', cumulative=True)
-
-        qs = Genre.objects.add_related_count(
-            qs, Book, 'genre', 'books_count', cumulative=False)
-
-        return qs
-
-    def related_books_count(self, instance):
-        return instance.books_count
-    related_books_count.short_description = 'Livros desta categoria específica'
-
-    def related_books_cumulative_count(self, instance):
-        return instance.books_cumulative_count
-    related_books_cumulative_count.short_description = 'Livros relacionados'
+class WriterAdmin(admin.ModelAdmin):
+    list_display = ['fullname', 'created_at', 'image_tag']
+    readonly_fields = ('image_tag',)
+    prepopulated_fields = {'slug': ('fullname',)}
+    search_fields = ['fullname']
+    ordering  = ['fullname']
 
 
-@admin_thumbnails.thumbnail('image')
 class BookImageInline(admin.TabularInline):
     model = Images
     readonly_fields = ('id',)
@@ -48,9 +25,8 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-@admin_thumbnails.thumbnail('image')
 class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['image', 'title', 'image_thumbnail']
+    list_display = ['image', 'title',]
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -59,7 +35,7 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('subject', 'comment', 'user', 'book')
 
 
-admin.site.register(Genre, GenreAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Images, ImagesAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Writer, WriterAdmin)

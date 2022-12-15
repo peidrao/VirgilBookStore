@@ -23,16 +23,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    # Apps
     'home',
-    'writer',
     'book',
     'order',
     'user',
-
-    'ckeditor',
-    'ckeditor_uploader',
-    'mptt'
 ]
 
 MIDDLEWARE = [
@@ -65,16 +59,8 @@ TEMPLATES = [
     },
 ]
 
-CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
-CKEDITOR_UPLOAD_PATH = 'images/'
-CKEDITOR_IMAGE_BACKEND = "pillow"
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': None,
-    },
-}
 
 LOGIN_REDIRECT_URL = '/'  # Redirecionar o usuário após o login
 SITE_ID = 1
@@ -87,8 +73,12 @@ WSGI_APPLICATION = 'virgilbookstore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'virgil_db',
+        'USER': 'virgil',
+        'PASSWORD': 'virgil@2023',
+        'HOST': 'localhost',  # External IP: 187.94.99.230
+        'PORT': '5434'
     }
 }
 
@@ -136,3 +126,5 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'user.Profile'

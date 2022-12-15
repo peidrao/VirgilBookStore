@@ -1,10 +1,8 @@
-
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class Profile(AbstractUser):
     phone = models.CharField(max_length=15, blank=True)
     zip_code = models.CharField(max_length=10, blank=True)
     address = models.CharField(max_length=150, blank=True)

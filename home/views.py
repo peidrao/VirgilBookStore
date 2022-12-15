@@ -8,7 +8,7 @@ from order.models import Order, ShopCart
 
 
 def index(request):
-    shopcart = ShopCart.objects.filter(profile_id=request.user.id)
+    shopcart = ShopCart.objects.filter(profile=request.user)
     total_books = 0
     for i in shopcart:
         total_books = i.quantity + total_books

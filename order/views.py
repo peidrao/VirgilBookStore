@@ -2,18 +2,15 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.crypto import get_random_string
 from django.contrib import messages
-# Create your views here.
 from .models import ShopCart, ShopCartForm, Order, OrderBook
 
 from book.models import Book
-from user.models import Profile
 from .forms import OrderForm
 
 
 @login_required(login_url='/login')
 def addtoshopcart(request, id):
     url = request.META.get('HTTP_REFERER')
-    current_user = request.user
 
     checkproduct = ShopCart.objects.filter(book_id=id)
     if checkproduct:
@@ -30,7 +27,7 @@ def addtoshopcart(request, id):
                 data.save()
             else:
                 data = ShopCart()
-                data.profile_id = current_user.id
+                data.profile = request.user
                 data.book_id = id
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
@@ -43,7 +40,7 @@ def addtoshopcart(request, id):
             data.save()
         else:
             data = ShopCart()
-            data.profile_id = current_user.id
+            data.profile = request.user
             data.book_id = id
             data.quantity = 1
             data.save()  #
@@ -52,7 +49,7 @@ def addtoshopcart(request, id):
 
 
 def shopcart(request):
-    shopcart = ShopCart.objects.filter(profile_id=request.user.id)
+    shopcart = ShopCart.objects.filter(profile=request.user)
     total = 0
     for book in shopcart:
         total = book.book.price * book.quantity
@@ -74,8 +71,7 @@ def delete_from_cart(request, id):
 @login_required(login_url='/login')
 def order_book(request):
     current_user = request.user
-    shopcart = ShopCart.objects.filter(profile_id=current_user.id)
-    profile = Profile.objects.filter(id=current_user.id)
+    shopcart = ShopCart.objects.filter(profile=current_user)
     total = 0
     for item in shopcart:
         total += item.book.price * item.quantity
@@ -88,7 +84,7 @@ def order_book(request):
             data.address = form.cleaned_data['address']
             data.city = form.cleaned_data['city']
             data.phone = form.cleaned_data['phone']
-            data.profile_id = current_user.id
+            data.profile = current_user.id
             data.total = total
             data.ip = request.META.get('REMOTE_ADDR')
             ordercode = get_random_string(5).upper()
@@ -123,10 +119,9 @@ def order_book(request):
             return HttpResponseRedirect('/order/orderbook')
 
     form = OrderForm()
-    profile = Profile.objects.get(id=current_user.id)
     context = {'shopcart': shopcart,
                'total': total,
                'form': form,
-               'profile': profile}
+               'profile': current_user}
 
     return render(request, 'order/order_form.html', context)

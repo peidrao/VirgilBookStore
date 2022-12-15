@@ -17,8 +17,7 @@ def add_comment(request, id):
             data.ip = request.META.get('REMOTE_ADDR')
             data.book_id = id
 
-            current_user = request.user
-            data.profile_id = current_user.id
+            data.profile_id = request.user
             data.save()
             messages.success(
                 request, 'Sua avaliação foi envianda com sucesso!')
@@ -27,10 +26,11 @@ def add_comment(request, id):
 
 
 def book_detail(request, id, slug):
+    books = Book.objects.all()
     context = {
-        'book': Book.objects.get(pk=id),
+        'book': books.get(pk=id),
         'images': Images.objects.filter(book_id=id),
-        'books': Book.objects.filter(genre_id=id),
+        'books': books.filter(genre_id=id),
         'comments': Comment.objects.filter(book_id=id, status='Verdade'),
     }
 

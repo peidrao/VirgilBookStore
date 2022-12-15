@@ -1,21 +1,22 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
+from user.models import Profile
 
 
 class SignUpForm(UserCreationForm):
 
     class Meta:
-        model = User
+        model = Profile
         fields = ('username', 'email', 'first_name',
                   'last_name', 'password1', 'password2', )
 
 
 class LoginAuthenticationForm(AuthenticationForm):
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
+    def confirm_login_allowed(self, profile):
+        if not profile.is_active:
             raise forms.ValidationError("This account is inactive")
-        if user.username.startswith('b'):
+        if profile.username.startswith('b'):
             raise forms.ValidationError("Sorry, accounts starting with 'b' aren't welcome here.")
 
 
@@ -38,5 +39,5 @@ class LoginForm(forms.ModelForm):
             }))
 
     class Meta:
-        model = User
+        model = Profile
         fields = ('username', 'password')

@@ -78,7 +78,7 @@ DATABASES = {
         'USER': 'virgil',
         'PASSWORD': 'virgil@2023',
         'HOST': 'localhost',  # External IP: 187.94.99.230
-        'PORT': '5434'
+        'PORT': '5433'
     }
 }
 

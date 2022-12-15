@@ -1,10 +1,10 @@
 from django.utils.safestring import mark_safe
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
-from django.contrib.auth.models import User
 from django.db.models import Avg, Count
 from django.urls import reverse
 from django.db import models
+from user.models import Profile
 
 
 def slugify_pre_save(sender, instance, *args, **kwargs):
@@ -127,7 +127,7 @@ class Comment(models.Model):
     )
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     subject = models.CharField(max_length=100, blank=True)
     comment = models.CharField(max_length=255, blank=True)
 

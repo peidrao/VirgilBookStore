@@ -8,14 +8,14 @@ from order.models import Order, ShopCart
 
 
 def index(request):
-    shopcart = ShopCart.objects.filter(user_id=request.user.id)
+    shopcart = ShopCart.objects.filter(profile=request.user)
     total_books = 0
     for i in shopcart:
         total_books = i.quantity + total_books
     context = {
         'books_latest': Book.objects.all().order_by('-id')[:8],
         'banner': Banner.objects.all(),
-        'order': Order.objects.filter(user_id=request.user.id),
+        'order': Order.objects.filter(profile_id=request.user.id),
         'total_books': total_books,
     }
     return render(request, 'index.html', context)

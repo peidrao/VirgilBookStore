@@ -73,8 +73,12 @@ WSGI_APPLICATION = 'virgilbookstore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'virgil_db',
+        'USER': 'virgil',
+        'PASSWORD': 'virgil@2023',
+        'HOST': 'localhost',  # External IP: 187.94.99.230
+        'PORT': '5434'
     }
 }
 

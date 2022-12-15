@@ -12,6 +12,8 @@ db.sqlite3
 db.sqlite3-journal
 media
 
+home/
+
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
 # <django-project-name>/staticfiles/
@@ -243,3 +245,8 @@ capa/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 
 # End of https://www.toptal.com/developers/gitignore/api/django,python
+home/__pycache__/
+home/__pycache__/models.cpython-38.pyc
+home/__pycache__/apps.cpython-38.pyc
+home/__pycache__/admin.cpython-38.pyc
+home/__pycache__/__init__.cpython-38.pyc

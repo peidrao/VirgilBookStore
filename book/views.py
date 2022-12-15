@@ -18,7 +18,7 @@ def add_comment(request, id):
             data.book_id = id
 
             current_user = request.user
-            data.user_id = current_user.id
+            data.profile_id = current_user.id
             data.save()
             messages.success(
                 request, 'Sua avaliação foi envianda com sucesso!')
@@ -43,4 +43,3 @@ def book_genre(request, slug):
     }
 
     return render(request, 'books/book_genre.html', context)
-

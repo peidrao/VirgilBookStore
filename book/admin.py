@@ -32,7 +32,7 @@ class ImagesAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['subject', 'comment', 'status', 'created_at']
     list_filter = ['status']
-    readonly_fields = ('subject', 'comment', 'user', 'book')
+    readonly_fields = ('subject', 'comment', 'profile', 'book')
 
 
 admin.site.register(Book, BookAdmin)

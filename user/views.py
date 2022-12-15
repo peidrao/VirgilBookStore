@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 
-from .models import UserProfile
+from .models import Profile
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
 from book.models import Comment
 from order.models import Order
@@ -25,8 +25,7 @@ def signup_form(request):
             user = authenticate(username=username, password=password)
             auth_login(request, user)
 
-            data = UserProfile()
-            data.user_id = request.user.id
+            data = Profile()
             data.save()
             messages.success(request, 'Conta criada com sucesso!')
             return HttpResponseRedirect(reverse('user:profile'))
@@ -74,7 +73,7 @@ def user_comments(request):
 
 @login_required(login_url='/login')
 def user_deletecomment(request, id):
-    Comment.objects.filter(user=request.user, id=id).delete()
+    Comment.objects.filter(profile=request.user, id=id).delete()
     messages.success(request, 'Comentário deleteado!')
     return HttpResponseRedirect(reverse('user:user_comments'))
 
@@ -82,7 +81,7 @@ def user_deletecomment(request, id):
 @login_required(login_url='/login')
 def user_orders(request):
     context = {
-        'order': Order.objects.filter(user=request.user),
+        'order': Order.objects.filter(profile=request.user),
     }
 
     return render(request, 'user/user_orders.html', context)
@@ -91,7 +90,7 @@ def user_orders(request):
 @login_required(login_url='/login')
 def user_request(request):
     context = {
-        'order': Order.objects.filter(user=request.user),
+        'order': Order.objects.filter(profile=request.user),
     }
 
     return render(request, 'user/user_request.html', context)
@@ -100,6 +99,6 @@ def user_request(request):
 @login_required(login_url='/login')
 def user_order_book(request):
     context = {
-        'order': Order.objects.filter(user=request.user),
+        'order': Order.objects.filter(profile=request.user),
     }
     return render(request, 'user/user_order_books.html', context)

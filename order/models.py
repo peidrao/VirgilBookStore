@@ -1,13 +1,13 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
+from user.models import Profile
 
 # Create your models here.
 from book.models import Book
 
 
 class ShopCart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
 
@@ -43,7 +43,7 @@ class Order(models.Model):
         ('Cancelaram', 'Cancelaram'),
     )
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     code = models.CharField(max_length=5, editable=False)
 
     first_name = models.CharField(max_length=10, null=False)
@@ -64,7 +64,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.first_name
+        return self.profile.first_name
 
 
 class OrderBook(models.Model):
@@ -75,7 +75,7 @@ class OrderBook(models.Model):
     )
 
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     quantity = models.IntegerField()

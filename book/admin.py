@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Book, Images, Comment, Writer
+from .models import Book, Genre, Images, Comment, Writer
 
 
 class WriterAdmin(admin.ModelAdmin):
@@ -28,6 +28,10 @@ class BookAdmin(admin.ModelAdmin):
 class ImagesAdmin(admin.ModelAdmin):
     list_display = ['image', 'title',]
 
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ['title', 'slug',]
+
+
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['subject', 'comment', 'status', 'created_at']
@@ -39,3 +43,4 @@ admin.site.register(Book, BookAdmin)
 admin.site.register(Images, ImagesAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Writer, WriterAdmin)
+admin.site.register(Genre, GenreAdmin)

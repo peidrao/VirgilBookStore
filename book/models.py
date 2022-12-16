@@ -13,6 +13,7 @@ def slugify_pre_save(sender, instance, *args, **kwargs):
 
 class Genre(models.Model):
     title = models.CharField(max_length=100, null=False)
+    origin = models.ForeignKey('self', related_name='genre_origin', on_delete=models.SET_NULL, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -26,10 +27,10 @@ class Genre(models.Model):
         
     def __str__(self):
         full_path = [self.title]
-        k = self.parent
+        k = self.origin
         while k is not None:
             full_path.append(k.title)
-            k = k.parent
+            k = k.origin
         return ' / '.join(full_path[::-1])
 
 

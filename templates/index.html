@@ -1,7 +1,11 @@
-{% extends 'base/home.html' %}
+{% extends 'extends.html' %}
 
-{% block sidebar  %} {% include 'base/sidebar.html' %} {% endblock  %}
-{% block header  %} {% include 'base/header.html' %} {% endblock  %}
+{% block sidebar %} {% include 'base/sidebar.html' %} {% endblock %}
+{% block header %} {% include 'base/navbar.html' %} {% endblock %}
+{% block features %} {% include 'base/features.html' %} {% endblock %}
+{% block banners %} {% include 'base/banners.html' %} {% endblock %}
 
-{% block content  %} {% include 'base/content.html' %} {% endblock  %}
-{% block footer  %} {% include 'base/footer.html' %} {% endblock  %}
+{% block content %} {% include 'base/content.html' %} {% endblock %}
+{% block email %} {% include 'base/email.html' %} {% endblock %}
+{% block back_top %} {% include 'base/back_top.html' %} {% endblock %}
+{% block footer %} {% include 'base/footer.html' %} {% endblock %}

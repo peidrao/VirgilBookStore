@@ -18,3 +18,6 @@ make:
 
 test:
 	python manage.py test --keepdb
+
+commands:
+	python manage.py create_genre && python manage.py create_authors && python manage.py create_books

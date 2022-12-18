@@ -5,6 +5,7 @@ from django.db.models import Avg, Count
 from django.urls import reverse
 from django.db import models
 from user.models import Profile
+from django.utils.translation import gettext as _
 
 
 def slugify_pre_save(sender, instance, *args, **kwargs):
@@ -13,6 +14,7 @@ def slugify_pre_save(sender, instance, *args, **kwargs):
 
 class Genre(models.Model):
     title = models.CharField(max_length=100, null=False)
+    origin = models.ForeignKey('self', related_name='genre_origin', on_delete=models.SET_NULL, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -26,18 +28,18 @@ class Genre(models.Model):
         
     def __str__(self):
         full_path = [self.title]
-        k = self.parent
+        k = self.origin
         while k is not None:
             full_path.append(k.title)
-            k = k.parent
+            k = k.origin
         return ' / '.join(full_path[::-1])
 
 
 class Writer(models.Model):
     fullname = models.CharField(max_length=100, null=False)
     description = models.TextField(null=True, blank=True)
-    slug = models.SlugField(unique=True, null=False, blank=True)
-    image = models.FileField(upload_to='images/writer', null=False)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    image = models.FileField(upload_to='images/writer', null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -45,38 +47,30 @@ class Writer(models.Model):
     def __str__(self):
         return self.fullname
 
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src={} height="50"  />'.format(self.image.url))
-        else:
-            return ""
-
     def get_absolute_url(self):
         return reverse("writer_detail", kwargs={"slug": self.slug})
 
 
 class Book(models.Model):
-    STATUS = (
-        ('Sim', 'True'),
-        ('Não', 'False'),
-    )
+    class StatusChoice(models.IntegerChoices):
+        YES = 1, _('Yes')
+        NOT = 2, _('Not')
 
-    writer = models.ForeignKey(Writer, on_delete=models.CASCADE, null=False)
+    writer = models.ForeignKey(Writer, on_delete=models.SET_NULL, null=True)
     genre = models.ForeignKey(
-        Genre, on_delete=models.CASCADE, null=False)
+        Genre, on_delete=models.SET_NULL, null=True)
 
     title = models.CharField(max_length=150, null=False)
     description = models.TextField(null=True, blank=True)
     keywords = models.CharField(max_length=255, null=True, blank=True)
-    publication_date = models.DateField(auto_now_add=True)
-    image = models.FileField(upload_to='images/capa', null=False)
+    image = models.FileField(upload_to='images/capa', null=True)
 
     price = models.FloatField()
     amount = models.IntegerField()
     specification = models.TextField(null=True, blank=True)
-    slug = models.SlugField(unique=True, null=False)
+    slug = models.SlugField(unique=True, null=True)
 
-    status = models.CharField(choices=STATUS, max_length=5)
+    status = models.IntegerField(choices=StatusChoice.choices, default=StatusChoice.YES)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -86,12 +80,6 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("book_detail", kwargs={"slug": self.slug})
-
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src={} height="50" />'.format(self.image.url))
-        else:
-            return ""
 
     def avaregereview(self):
         reviews = Comment.objects.filter(
@@ -111,7 +99,7 @@ class Book(models.Model):
 
 
 class Images(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=50, blank=True)
     image = models.FileField(blank=True, upload_to='images/books')
 
@@ -120,20 +108,19 @@ class Images(models.Model):
 
 
 class Comment(models.Model):
-    STATUS = (
-        ('Nova', 'Nova'),
-        ('Verdade', 'Verdade'),
-        ('Falso', 'Falso'),
-    )
+    class StatusChoice(models.IntegerChoices):
+        NEW = 1, _('New')
+        READ = 2, _('Read')
+        TRASH = 3, _('Trash')
 
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     subject = models.CharField(max_length=100, blank=True)
     comment = models.CharField(max_length=255, blank=True)
 
     rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=50, blank=True)
-    status = models.CharField(choices=STATUS, max_length=10, default='Nova')
+    status = models.IntegerField(choices=StatusChoice.choices, default=StatusChoice.NEW)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

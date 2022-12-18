@@ -1,32 +1,23 @@
 from django.contrib import admin
 
-from .models import Book, Images, Comment, Writer
+from .models import Book, Genre, Images, Comment, Writer
 
 
 class WriterAdmin(admin.ModelAdmin):
-    list_display = ['fullname', 'created_at', 'image_tag']
-    readonly_fields = ('image_tag',)
+    list_display = ['fullname', 'created_at']
     prepopulated_fields = {'slug': ('fullname',)}
     search_fields = ['fullname']
     ordering  = ['fullname']
 
 
-class BookImageInline(admin.TabularInline):
-    model = Images
-    readonly_fields = ('id',)
-    extra = 1
-
-
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'genre', 'status', 'image_tag']
+    list_display = ['title', 'genre', 'status']
     list_filter = ['genre']
-    readonly_fields = ('image_tag',)
-    inlines = [BookImageInline]
     prepopulated_fields = {'slug': ('title',)}
 
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ['title', 'slug',]
 
-class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['image', 'title',]
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -36,6 +27,6 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Book, BookAdmin)
-admin.site.register(Images, ImagesAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Writer, WriterAdmin)
+admin.site.register(Genre, GenreAdmin)

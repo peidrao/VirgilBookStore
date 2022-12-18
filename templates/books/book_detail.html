@@ -1,301 +1,184 @@
-{% extends 'base/home.html' %}
-{% block title %} VirigilStore - {{book.title}}  {% endblock  %}
-{% block sidebar  %} {% include 'base/sidebar.html' %} {% endblock  %}
-{% block header  %} {% include 'base/header.html' %} {% endblock  %}
+{% extends 'extends.html' %}
 
-{% block content  %}
-<div id="container">
-    <div class="container">
-        <!-- Breadcrumb Start-->
-        <ul class="breadcrumb">
-            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/" itemprop="url"><span
-                        itemprop="title"><i class="fa fa-home"></i></span></a></li>
-            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="category.html" itemprop="url"><span
-                        itemprop="title">{{book.genre.title}}</span></a></li>
-            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="product.html" itemprop="url"><span
-                        itemprop="title">{{book.title}}</span></a></li>
-        </ul>
-        <!-- Breadcrumb End-->
-        <div class="row">
-            <!--Middle Part Start-->
-            <div id="content" class="col-sm-9">
-                <div itemscope itemtype="http://schema.org/Product">
-                    <h1 class="title" itemprop="name">{{book.title}}</h1>
-                    <div class="row product-info">
-                        <div class="col-sm-6">
-                            <div class="image">
-                                <img class="img-responsive" width="250px" itemprop="image" id="bigpic" src="{{book.image.url}}"
-                                    title="{{book.title}}" alt="{{book.image.url}}"
-                                    data-zoom-image="{{image.url}}" /> </div>
-                            <div class="center-block text-center"><span class="zoom-gallery"><i
-                                        class="fa fa-search"></i> Click image for Gallery</span></div>
+{% block sidebar %} {% include 'base/sidebar.html' %} {% endblock %}
+{% block header %} {% include 'base/navbar.html' %} {% endblock %}
 
-                            <div class="image-additional" id="gal1">
-                                 {% if images %}
-                                    {% for image in images %}
-                                    <a class="thumbnail" href="#" data-zoom-image="{{image.image.url}}"
-                                        data-image="{{image.image.url}}">
-                                        <img src="{{image.image.url}}" id="zoom_01" title="{{image.title}}" alt="{{image.title}}" /></a>
-                                    {% endfor %}
-                                 {% endif %}
-                            </div>
+{% block content %}
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="{{book.image.url}}" alt="Image">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">{{book.title}}</h3>
+            <div class="d-flex mb-3">
+                <div class="text-primary mr-2">
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star-half-alt"></small>
+                    <small class="far fa-star"></small>
+                </div>
+                <small class="pt-1">(50 Reviews)</small>
+            </div>
+            <h3 class="font-weight-semi-bold mb-4">R$ {{book.price}}</h3>
+            <p class="mb-4">{{book.description}}</p>
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control bg-secondary text-center" value="1">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-plus">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+            </div>
+            <div class="d-flex pt-2">
+                <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                <div class="d-inline-flex">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">Product Description</h4>
+                    <p>{{book.description}}</p>
+                </div>
+                <div class="tab-pane fade" id="tab-pane-2">
+                    <h4 class="mb-3">Additional Information</h4>
+                    <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0">
+                                    Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                </li>
+                            </ul>
                         </div>
-
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled description">
-                                <li><b>Categoria:</b> <a href="#"><span itemprop="brand">{{ book.genre.title }}</span></a></li>
-                                <li><b>Product Code:</b> <span itemprop="mpn">Product 17</span></li>
-                                <li><b>Reward Points:</b> 700</li>
-                                <li><b>Availability:</b> <span class="instock"> {% if book.amount > 0  %}In Stock
-                                        {% else %} Out of Stock {% endif %}</span>
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0">
+                                    Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                </li>
+                                <li class="list-group-item px-0">
+                                    Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
                                 </li>
                             </ul>
-                            <ul class="price-box">
-                                <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer"><span
-                                        class="price-old">555</span> <span itemprop="price">{{book.price}}<span
-                                            itemprop="availability" content="In Stock"></span></span>
-                                </li>
-                                <li></li>
-                                <li>Ex Tax: $950.00</li>
-                            </ul>
-                            <div id="product">
-                                <h3 class="subtitle">Available Options</h3>
-                                <div class="cart">
-                                    {% if messages %}
-                                    {% for message in messages  %}
-                                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                                        {{message}}
-                                    </div>
-                                    {% endfor %}
-
-                                    {% endif %}
-                                    <form action="/order/addtoshopcart/{{book.id}}" method="POST">
-                                        {% csrf_token %}
-                                        <div class="qty">
-
-                                            <input class="input" name="quantity" type="number" value="1" min="1"
-                                                max="{{ product.amount }}">
-
-                                        </div>
-                                        <button type="submit" id="button-cart" class="btn btn-primary btn-lg">Add to
-                                            Cart</button>
-                                    </form>
-                                </div>
-
-                            </div>
-                            <div class="rating" itemprop="aggregateRating" itemscope
-                                itemtype="http://schema.org/AggregateRating">
-                                <meta itemprop="ratingValue" content="0" />
-                                <p>
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if book.avaregereview < 1%}-o {% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if book.avaregereview < 2%}-o{% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if book.avaregereview < 3%}-o{% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if book.avaregereview < 4%}-o{% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if book.avaregereview < 5%}-o{% endif %}"></i>
-                                    </span>
-
-
-                                    <a href=""><span itemprop="reviewCount">{{book.countreview}} reviews</span></a>
-                                </p>
-                            </div>
-                            <hr>
-                            <!-- AddThis Button BEGIN -->
-                            <div class="addthis_toolbox addthis_default_style">
-                                <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-                                <a class="addthis_button_tweet"></a>
-                                <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-                                <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"
-                                    pi:pinit:url="http://www.addthis.com/features/pinterest"
-                                    pi:pinit:media="http://www.addthis.com/cms-content/images/features/pinterest-lg.png"></a>
-                                <a class="addthis_counter addthis_pill_style"></a>
-                            </div>
-                            <script type="text/javascript"
-                                src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-514863386b357649"></script>
-                            <!-- AddThis Button END -->
                         </div>
                     </div>
-                    <ul class="nav nav-tabs">
-                        <li><a href="#tab-specification" data-toggle="tab">Specification</a></li>
-                        <li><a href="#tab-review" data-toggle="tab">Avaliações ({{book.countreview}})</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div id="tab-specification" class="tab-pane">
-                            {{book.specification|safe}}
+                </div>
+                <div class="tab-pane fade" id="tab-pane-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
+                            <div class="media mb-4">
+                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                <div class="media-body">
+                                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                                    <div class="text-primary mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="tab-review" class="tab-pane">
-                            <div id="review">
-                                <div>
-                                    {% for comment in comments %}
-                                    <table class="table table-striped table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 50%;">
-                                                    <strong><span>{{comment.subject}}</span></strong></td>
-                                                <td class="text-right"><span>{{comment.created_at|date:"D m, Y"}}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <p>{{comment.comment}}</p>
-                                                    <div class="rating">
-                                                        <span class="fa fa-stack">
-                                                            <i
-                                                                class="fa fa-star{% if comment.rate < 1 %}-o{% endif %}"></i>
-                                                        </span>
-
-                                                        <span class="fa fa-stack">
-                                                            <i
-                                                                class="fa fa-star{% if comment.rate < 2 %}-o{% endif %}"></i>
-                                                        </span>
-
-                                                        <span class="fa fa-stack">
-                                                            <i
-                                                                class="fa fa-star{% if comment.rate < 3 %}-o{% endif %}"></i>
-                                                        </span>
-
-                                                        <span class="fa fa-stack">
-                                                            <i
-                                                                class="fa fa-star{% if comment.rate < 4 %}-o{% endif %}"></i>
-                                                        </span>
-
-                                                        <span class="fa fa-stack">
-                                                            <i
-                                                                class="fa fa-star{% if comment.rate < 5 %}-o{% endif %}"></i>
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    {% endfor %}
-
+                        <div class="col-md-6">
+                            <h4 class="mb-4">Leave a review</h4>
+                            <small>Your email address will not be published. Required fields are marked *</small>
+                            <div class="d-flex my-3">
+                                <p class="mb-0 mr-2">Your Rating * :</p>
+                                <div class="text-primary">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
                                 </div>
-                                <div class="text-right"></div>
                             </div>
-                            <h2>Write a review</h2>
-                            {% if messages %}
-                            {% for message in messages  %}
-                            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                                {{message}}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            {% endfor %}
-
-                            {% endif %}
-                            <form action="/book/addcomment/{{book.id}}" class="form-horizontal" method="POST">
-                                {% csrf_token %}
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label for="input-name" class="control-label">Assunto</label>
-                                        <input type="text" class="form-control" id="input-name" value="" name="subject">
-                                    </div>
+                            <form>
+                                <div class="form-group">
+                                    <label for="message">Your Review *</label>
+                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
                                 </div>
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label for="input-review" class="control-label">Your Review</label>
-                                        <textarea class="form-control" id="input-review" rows="5"
-                                            name="comment"></textarea>
-
-                                    </div>
+                                <div class="form-group">
+                                    <label for="name">Your Name *</label>
+                                    <input type="text" class="form-control" id="name">
                                 </div>
-                                <div class="form-group required">
-                                    <div class="col-sm-12">
-                                        <label class="control-label">Rating</label>
-                                        &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                        <input type="radio" value="1" name="rate"> &nbsp;
-                                        <input type="radio" value="2" name="rate"> &nbsp;
-                                        <input type="radio" value="3" name="rate"> &nbsp;
-                                        <input type="radio" value="4" name="rate"> &nbsp;
-                                        <input type="radio" value="5" name="rate"> &nbsp;Good
-                                    </div>
+                                <div class="form-group">
+                                    <label for="email">Your Email *</label>
+                                    <input type="email" class="form-control" id="email">
                                 </div>
-                                <div class="buttons">
-                                    <div class="pull-right">
-                                        <button class="btn btn-primary" id="button-review" type="submit">Enviar</button>
-                                    </div>
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <h3 class="subtitle">Generos Parecidos</h3>
-                    <div class="owl-carousel related_pro">
-
-
-                        {% for item in books %}
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{{item.image.url}}"
-                                        alt="Ideapad Yoga 13-59341124 Laptop" title="Ideapad Yoga 13-59341124 Laptop"
-                                        class="img-responsive" /></a>
-                            </div>
-                            <div class="caption">
-                                <h4><a href="/book/{{item.id}}/{{item.slug}}">{{item.title}}</a></h4>
-                                <p class="price"> R$ {{item.price}} </p>
-                                <div class="rating">
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if item.avaregereview < 1%}-o {% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if item.avaregereview < 2%}-o{% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if item.avaregereview < 3%}-o{% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if item.avaregereview < 4%}-o{% endif %}"></i>
-                                    </span>
-
-                                    <span class="fa fa-stack">
-                                        <i class="fa fa-star{% if item.avaregereview < 5%}-o{% endif %}"></i>
-
-                                </div>
-                            </div>
-                            <div class="button-group">
-                                <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span></button>
-                                <div class="add-to-links">
-                                    <button type="button" data-toggle="tooltip" title="Add to wishlist" onClick=""><i
-                                            class="fa fa-heart"></i></button>
-                                    <button type="button" data-toggle="tooltip" title="Add to compare" onClick=""><i
-                                            class="fa fa-exchange"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-
-
-                    </div>
                 </div>
             </div>
-            <!--Middle Part End -->
-            <!--Right Part Start -->
-            <aside id="column-right" class="col-sm-3 hidden-xs">
-                <div class="list-group">
-                    <h3 class="subtitle">Descrição do livro</h3>
-                    <p>{{book.description|safe}}</p>
-                </div>
-            </aside>
         </div>
     </div>
 </div>
-
-{% endblock  %}
-{% block footer  %} {% include 'base/footer.html' %} {% endblock  %}
+<!-- Shop Detail End -->
+{% endblock %}
+{% block back_top %} {% include 'base/back_top.html' %} {% endblock %}
+{% block footer %} {% include 'base/footer.html' %} {% endblock %}

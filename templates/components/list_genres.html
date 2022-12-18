@@ -1,0 +1,16 @@
+{% for genre in genres %}
+{% if genre.genre_origin.all %}
+<div class="nav-item dropdown">
+    <a href="{% url 'book:books_by_genre' genre.slug %}" class="nav-link" data-toggle="dropdown">{{genre.title}}<i class="fa fa-angle-down float-right mt-1"></i></a>
+    <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+
+        {% for children in genre.genre_origin.all %}
+        <a href="{% url 'book:books_by_genre' children.slug %}" class="dropdown-item">{{children.title}}</a>
+        {% endfor %}
+
+    </div>
+</div>
+{% else %}
+<a href="{% url 'book:books_by_genre' genre.slug %}" class="nav-item nav-link">{{genre.title}}</a>
+{% endif %}
+{% endfor %}

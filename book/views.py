@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from book.models import Book, Images, Comment
 from django.shortcuts import get_object_or_404
-from .models import Comment 
+from .models import Comment, Genre 
 from .forms import CommentForm
 from django.views import generic
 
@@ -15,6 +15,14 @@ class BookDetailView(generic.DetailView):
         book = get_object_or_404(Book, pk=kwargs['pk'])
         context = {'book': book}
         return render(request, 'books/book_detail.html', context)
+
+class BookByGenreView(generic.DetailView):
+    def get(self, request, *args , **kwargs):
+        genre = get_object_or_404(Genre, slug=kwargs['slug'])
+        
+        books = Book.objects.filter(genre=genre)
+        context = {'books': books, 'genre': genre}
+        return render(request, 'books/book_genre.html', context=context)
 
 
 def add_comment(request, id):

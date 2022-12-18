@@ -4,8 +4,7 @@ from .models import Book, Genre, Images, Comment, Writer
 
 
 class WriterAdmin(admin.ModelAdmin):
-    list_display = ['fullname', 'created_at', 'image_tag']
-    readonly_fields = ('image_tag',)
+    list_display = ['fullname', 'created_at']
     prepopulated_fields = {'slug': ('fullname',)}
     search_fields = ['fullname']
     ordering  = ['fullname']

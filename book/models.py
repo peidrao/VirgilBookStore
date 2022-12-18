@@ -47,12 +47,6 @@ class Writer(models.Model):
     def __str__(self):
         return self.fullname
 
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src={} height="50"  />'.format(self.image.url))
-        else:
-            return ""
-
     def get_absolute_url(self):
         return reverse("writer_detail", kwargs={"slug": self.slug})
 

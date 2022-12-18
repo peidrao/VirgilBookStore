@@ -1,10 +1,31 @@
 import json
+import django
+
+from rest_framework import generics
+
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.views import generic
 from book.models import Book
+from home.serializers import BookHomeSerializer
 from .models import ContactMessage, Banner
 from .forms import ContactMessageForm, SearchForm
 from order.models import Order, ShopCart
+
+
+class HomeView(generic.ListView):
+    queryset = Book.objects.all()
+    template_name = 'index.html'
+
+    def get_queryset(self):
+        queryset = self.queryset.order_by('-created_at')[:8]
+        return queryset
+        
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['books'] = self.get_queryset()
+        return context
+
 
 
 def index(request):

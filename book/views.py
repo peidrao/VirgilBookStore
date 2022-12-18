@@ -1,8 +1,20 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from book.models import Book, Images, Comment
+from django.shortcuts import get_object_or_404
 from .models import Comment 
 from .forms import CommentForm
+from django.views import generic
+
+
+
+class BookDetailView(generic.DetailView):
+    queryset = Book.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        book = get_object_or_404(Book, pk=kwargs['pk'])
+        context = {'book': book}
+        return render(request, 'books/book_detail.html', context)
 
 
 def add_comment(request, id):

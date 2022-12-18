@@ -10,5 +10,5 @@ urlpatterns = [
     # path('search_auto/', views.search_auto, name='search_auto'),
     # path('contact/', views.contact, name='contact'),
     
-    path('', views.HomeView.as_view(), name='contact'),
+    path('', views.HomeView.as_view(), name='home'),
 ]

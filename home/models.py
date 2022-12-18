@@ -26,9 +26,10 @@ class ContactMessage(models.Model):
 
 
 class Banner(models.Model):
-    title = models.CharField(max_length=30, null=False)
-    description = models.CharField(max_length=150, null=False)
+    title = models.CharField(max_length=100, null=False)
+    description = models.CharField(max_length=250, null=False)
     image = models.FileField(upload_to='images/banner', null=False)
+    is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

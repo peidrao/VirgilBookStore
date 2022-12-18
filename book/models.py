@@ -63,7 +63,6 @@ class Book(models.Model):
     title = models.CharField(max_length=150, null=False)
     description = models.TextField(null=True, blank=True)
     keywords = models.CharField(max_length=255, null=True, blank=True)
-    publication_date = models.DateField(auto_now_add=True)
     image = models.FileField(upload_to='images/capa', null=True)
 
     price = models.FloatField()
@@ -81,12 +80,6 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("book_detail", kwargs={"slug": self.slug})
-
-    def image_tag(self):
-        if self.image.url is not None:
-            return mark_safe('<img src={} height="50" />'.format(self.image.url))
-        else:
-            return ""
 
     def avaregereview(self):
         reviews = Comment.objects.filter(

@@ -32,7 +32,7 @@ class Command(BaseCommand):
             history = Genre.objects.create(title="História")
             if not Genre.objects.filter(slug='historia-do-brasil').exists():
                 Genre.objects.create(title="História do Brasil", origin=history)
-            if not Genre.objects.filter(slug='historia-do-0ocidente').exists():
+            if not Genre.objects.filter(slug='historia-do-ocidente').exists():
                 Genre.objects.create(title="História do Ocidente", origin=history)
             if not Genre.objects.filter(slug='historia-africana').exists():
                 Genre.objects.create(title="História Africana", origin=history)

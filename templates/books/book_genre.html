@@ -1,124 +1,43 @@
-{% extends 'base/home.html' %}
+{% extends 'extends.html' %}
 
-{% block sidebar  %} {% include 'base/sidebar.html' %} {% endblock  %}
-{% block header  %} {% include 'base/header.html' %} {% endblock  %}
+{% block sidebar %} {% include 'base/sidebar.html' %} {% endblock %}
+{% block header %} {% include 'base/navbar.html' %} {% endblock %}
 
-{% block content  %}
-<div id="container">
-    <div class="container">
-        <!-- Breadcrumb Start-->
-        <ul class="breadcrumb">
-            <li><a href="/"><i class="fa fa-home"></i></a></li>
+{% block content %}
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Categoria: {{genre.title}}</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        {% for book in books %}
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 
-            {% for book in books  %}
-            <li><a href="category.html">{{book.genre.title}}</a></li>
-            {% endfor %}
-        </ul>
-        <!-- Breadcrumb End-->
-        <div class="row">
-            <!--Left Part Start -->
-            
-            <!--Left Part End -->
-            <!--Middle Part Start-->
-            <div id="content" class="col-sm-9">
-                <h1 class="title">{{genre.name}}</h1>
-                <h3 class="subtitle">Refine Search</h3>
-                <div class="product-filter">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-5">
-                            <div class="btn-group">
-                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip"
-                                    title="List"><i class="fa fa-th-list"></i></button>
-                                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip"
-                                    title="Grid"><i class="fa fa-th"></i></button>
-                            </div>
-                            <a href="compare.html" id="compare-total">Product Compare (0)</a>
-                        </div>
-                        <div class="col-sm-2 text-right">
-                            <label class="control-label" for="input-sort">Sort By:</label>
-                        </div>
-                        <div class="col-md-3 col-sm-2 text-right">
-                            <select id="input-sort" class="form-control col-sm-3">
-                                <option value="" selected="selected">Default</option>
-                                <option value="">Name (A - Z)</option>
-                                <option value="">Name (Z - A)</option>
-                                <option value="">Price (Low &gt; High)</option>
-                                <option value="">Price (High &gt; Low)</option>
-                                <option value="">Rating (Highest)</option>
-                                <option value="">Rating (Lowest)</option>
-                                <option value="">Model (A - Z)</option>
-                                <option value="">Model (Z - A)</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-1 text-right">
-                            <label class="control-label" for="input-limit">Show:</label>
-                        </div>
-                        <div class="col-sm-2 text-right">
-                            <select id="input-limit" class="form-control">
-                                <option value="" selected="selected">20</option>
-                                <option value="">25</option>
-                                <option value="">50</option>
-                                <option value="">75</option>
-                                <option value="">100</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row products-category">
-
-                    {% for book in books %}
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="/book/{{book.id}}/{{book.slug}}"><img src="{{book.image.url}}"
-                                        alt="{{book.title}}" title="{{book.title}}" class="img-responsive" /></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="/book/{{book.id}}/{{book.slug}}"> {{book.title}} </a></h4>
-                                    <p class="description"> Latest Intel mobile architecture Powered by the most
-                                        advanced mobile processors from Intel, t..</p>
-                                    <p class="price"> <span class="price-new">R${{book.price}}</span> <span
-                                            class="price-old">R$100,00</span> <span class="saving">-26%</span> <span
-                                            class="price-tax">{{book.price}}</span> </p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to
-                                            Cart</span></button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                            onClick=""><i class="fa fa-heart"></i> <span>Add to Wish
-                                                List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                            onClick=""><i class="fa fa-exchange"></i> <span>Compare this
-                                                Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-
-
+                    {% if book.image %}
+                    <img class="img-fluid w-100" src="{{book.image.url}}" alt="">
+                    {% else %}
+                    <img class="img-fluid w-100" src="{{book.image}}" alt="">
+                    {% endif %}
 
                 </div>
-                <div class="row">
-                    <div class="col-sm-6 text-left">
-                        <ul class="pagination">
-                            <li class="active"><span>1</span></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">&gt;</a></li>
-                            <li><a href="#">&gt;|</a></li>
-                        </ul>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">{{book.title}}</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>${{book.price}}</h6>
+                        <h6 class="text-muted ml-2"><del>$123.00</del></h6>
                     </div>
-                    <div class="col-sm-6 text-right">Showing 1 to 12 of 15 (2 Pages)</div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="{% url 'book:book_detail' book.id %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Veja mais detalhes</a>
+                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Adicione ao carrinho</a>
                 </div>
             </div>
-            <!--Middle Part End -->
         </div>
+        {% endfor %}
     </div>
 </div>
-{% endblock  %}
-{% block footer  %} {% include 'base/footer.html' %} {% endblock  %}
+{% endblock %}
+
+{% block back_top %} {% include 'base/back_top.html' %} {% endblock %}
+{% block footer %} {% include 'base/footer.html' %} {% endblock %}

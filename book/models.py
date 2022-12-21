@@ -1,4 +1,4 @@
-from django.utils.safestring import mark_safe
+
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.db.models import Avg, Count

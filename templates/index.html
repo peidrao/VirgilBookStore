@@ -1,4 +1,5 @@
 {% extends 'extends.html' %}
+{% load static %}
 
 {% block sidebar %} {% include 'base/sidebar.html' %} {% endblock %}
 {% block header %} {% include 'base/navbar_home.html' %} {% endblock %}
@@ -9,3 +10,8 @@
 {% block email %} {% include 'base/email.html' %} {% endblock %}
 {% block back_top %} {% include 'base/back_top.html' %} {% endblock %}
 {% block footer %} {% include 'base/footer.html' %} {% endblock %}
+{% block dependencies %}
+
+{% include 'components/dependecies.html' %}
+<script src="{% static 'js/services/home.js' %}"></script>
+{% endblock %}

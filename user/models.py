@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 
 class Profile(AbstractUser):
@@ -14,3 +15,9 @@ class Profile(AbstractUser):
 
     def user_name(self):
         return self.first_name + ' ' + self.last_name + ' [' + self.username + '] '
+
+
+class ProfileOffer(models.Model):
+    email = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)

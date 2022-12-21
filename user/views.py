@@ -1,11 +1,13 @@
+import json
 from django.contrib.auth import authenticate, login as auth_login, logout as logout_func
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Profile
+from .models import Profile, ProfileOffer
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
 from book.models import Comment
 from order.models import Order
@@ -65,7 +67,14 @@ def logout(request):
 
 @csrf_exempt
 def add_profile_offers(request):
-    import pdb ; pdb.set_trace()
+    if request.method == 'POST':
+        data = json.load(request)
+        if data.get('email'):
+            ProfileOffer.objects.get_or_create(email=data.get('email'))
+            return JsonResponse({'message': 'E-mail adicionado com sucesso'}, status=200)
+        else:
+            return JsonResponse({'message': 'Erro'}, status=400)
+
 
 @login_required(login_url='/login')
 def user_comments(request):

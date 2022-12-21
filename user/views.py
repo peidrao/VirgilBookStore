@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Profile
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
@@ -61,6 +62,10 @@ def logout(request):
     logout_func(request)
     return HttpResponseRedirect(reverse('home:index'))
 
+
+@csrf_exempt
+def add_profile_offers(request):
+    import pdb ; pdb.set_trace()
 
 @login_required(login_url='/login')
 def user_comments(request):

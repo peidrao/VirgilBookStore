@@ -21,3 +21,10 @@ class ProfileOffer(models.Model):
     email = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
+
+
+class ProfileNewsletter(models.Model):
+    email = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)

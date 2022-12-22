@@ -67,24 +67,13 @@ def logout(request):
     return HttpResponseRedirect(reverse('home:index'))
 
 
-# @csrf_exempt
-# def add_profile_offers(request):
-#     if request.method == 'POST':
-#         data = json.load(request)
-#         if data.get('email'):
-#             ProfileOffer.objects.get_or_create(email=data.get('email'))
-#             return JsonResponse({'message': 'E-mail adicionado com sucesso'}, status=200)
-#         else:
-#             return JsonResponse({'message': 'Erro'}, status=400)
-
-
 class AddProfileOffersView(views.APIView):
     queryset = ProfileOffer.objects.all()
     
     def post(self, request):
         if request.data.get('email'):
             self.queryset.get_or_create(email=request.data.get('email'))
-            return Response({'message': 'E-mail adicionado com sucesso'}, status=status.HTTP_201_CREATED)
+            return Response({'message': 'E-mail adicionado para ofertas da Loja'}, status=status.HTTP_201_CREATED)
         else:
             return JsonResponse({'message': 'Erro'}, status=status.HTTP_400_BAD_REQUEST)
 

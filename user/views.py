@@ -7,7 +7,7 @@ from django.urls import reverse
 from rest_framework import views, status
 from rest_framework.response import Response
 
-from .models import Profile, ProfileOffer
+from .models import Profile, ProfileNewsletter, ProfileOffer
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
 from book.models import Comment
 from order.models import Order
@@ -73,7 +73,20 @@ class AddProfileOffersView(views.APIView):
             self.queryset.get_or_create(email=request.data.get('email'))
             return Response({'message': 'E-mail adicionado para ofertas da Loja'}, status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({'message': 'Erro'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Erro'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddProfileNewsletterView(views.APIView):
+    queryset = ProfileNewsletter.objects.all()
+    
+    def post(self, request):
+        if request.data.get('email'):
+            name = request.data.get('name')
+            self.queryset.get_or_create(email=request.data.get('email'), name=name)
+            return Response({'message': 'E-mail adicionado na Newsletter'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Erro'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @login_required(login_url='/login')

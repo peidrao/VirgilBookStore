@@ -22,3 +22,11 @@ $(".button-offers").click((e) => {
     },
   });
 });
+
+$(".form-newsletter").on("submit", (e) => {
+  e.preventDefault();
+
+  var formValues = $(".form-newsletter").serializeArray();
+
+  console.log(formValues);
+});

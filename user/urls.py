@@ -18,5 +18,6 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     
     # path('profile_offers/', views.add_profile_offers, name='profile_offers')
-    path('profile_offers/', views.AddProfileOffersView.as_view(), name='profile_offers')
+    path('profile_offers/', views.AddProfileOffersView.as_view(), name='profile_offers'),
+    path('profile_newsletter/', views.AddProfileNewsletterView.as_view(), name='profile_newsletter'),
 ]

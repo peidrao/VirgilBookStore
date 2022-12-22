@@ -10,7 +10,7 @@ $(".button-offers").click((e) => {
     type: "POST",
     dataType: "json",
     url: "/user/profile_offers/",
-    data: JSON.stringify({ email: email }),
+    data: { email: email },
     success: function (response) {
       console.log(response);
     },

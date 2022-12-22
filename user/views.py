@@ -1,11 +1,9 @@
-import json
 from django.contrib.auth import authenticate, login as auth_login, logout as logout_func
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import views, status
 from rest_framework.response import Response
 

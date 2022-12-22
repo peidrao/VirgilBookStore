@@ -1,7 +1,3 @@
-$(document).ready(function () {
-  console.log("Oi");
-});
-
 $(".button-offers").click((e) => {
   e.preventDefault();
   const email = $(".input-offers").val();
@@ -10,9 +6,16 @@ $(".button-offers").click((e) => {
     type: "POST",
     dataType: "json",
     url: "/user/profile_offers/",
-    data: JSON.stringify({ email: email }),
+    data: { email: email },
     success: function (response) {
-      console.log(response);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: response.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      $(".input-offers").val("");
     },
     error: function (err) {
       console.log(err.responseJSON);

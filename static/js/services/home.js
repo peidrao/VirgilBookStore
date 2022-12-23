@@ -11,6 +11,7 @@ $(".button-offers").click((e) => {
       Swal.fire({
         position: "center",
         icon: "success",
+        iconColor: "#D19C97",
         title: response.message,
         showConfirmButton: false,
         timer: 1500,
@@ -23,10 +24,32 @@ $(".button-offers").click((e) => {
   });
 });
 
-$(".form-newsletter").on("submit", (e) => {
+$("#form-newsletter").on("submit", (e) => {
   e.preventDefault();
 
-  var formValues = $(".form-newsletter").serializeArray();
+  let formData = $("#form-newsletter").serializeArray();
+  formData.shift();
 
-  console.log(formValues);
+  console.log(formData);
+
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "/user/profile_newsletter/",
+    data: formData,
+    success: function (response) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        iconColor: "#D19C97",
+        title: response.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      $("#form-newsletter")[0].reset();
+    },
+    error: function (err) {
+      console.log(err.responseJSON);
+    },
+  });
 });

@@ -80,8 +80,8 @@ class AddProfileNewsletterView(views.APIView):
     queryset = ProfileNewsletter.objects.all()
     
     def post(self, request):
-        if request.data.get('email'):
-            name = request.data.get('name')
+        name = request.data.get('name')
+        if name:
             self.queryset.get_or_create(email=request.data.get('email'), name=name)
             return Response({'message': 'E-mail adicionado na Newsletter'}, status=status.HTTP_201_CREATED)
         else:

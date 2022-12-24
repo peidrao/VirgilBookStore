@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from .models import Comment, Genre 
 from .forms import CommentForm
 from django.views import generic
-
+from virgilbookstore.permissions import AdministratorPermission
 
 
 class BookDetailView(generic.DetailView):
@@ -16,6 +16,7 @@ class BookDetailView(generic.DetailView):
         context = {'book': book}
         return render(request, 'books/book_detail.html', context)
 
+
 class BookByGenreView(generic.DetailView):
     def get(self, request, *args , **kwargs):
         genre = get_object_or_404(Genre, slug=kwargs['slug'])
@@ -23,6 +24,15 @@ class BookByGenreView(generic.DetailView):
         books = Book.objects.filter(genre=genre)
         context = {'books': books, 'genre': genre}
         return render(request, 'books/book_genre.html', context=context)
+
+
+class ManagerBoksView(AdministratorPermission, generic.ListView):
+    queryset = Book.objects.all()
+
+    def get(self, request, *args , **kwargs):        
+        books = Book.objects.all()
+        context = {'books': books}
+        return render(request, 'books/books.html', context=context)
 
 
 def add_comment(request, id):

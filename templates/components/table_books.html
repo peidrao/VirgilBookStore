@@ -1,0 +1,32 @@
+<div class="col-lg-9 table-responsive mb-5">
+    <table class="table table-bordered text-center mb-0">
+        <thead class="bg-secondary text-dark">
+            <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Preco</th>
+                <th>Quantidade</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th>Acoes</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+
+            {% for book in books %}
+            <tr>
+                <td class="align-middle">{{book.id}}</td>
+                <td class="align-middle">{{book.title}}</td>
+                <td class="align-middle">{{book.price}}</td>
+                <td class="align-middle">{{book.amount}}</td>
+                <td class="align-middle">{{book.status}}</td>
+                <td class="align-middle">{{book.created_at}}</td>
+                <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+            </tr>
+            {% endfor %}
+
+
+
+        </tbody>
+    </table>
+</div>

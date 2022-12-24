@@ -1,0 +1,30 @@
+<div class="col-lg-3">
+    <div class="card border-secondary">
+        <div class="card-header bg-secondary border-0">
+            <h4 class="font-weight-semi-bold m-0">
+                <a href="{% url 'user:dashboard' %}">Dashboard</a>
+            </h4>
+        </div>
+        <div class="card-body">
+            <h5 class="font-weight-medium mb-3">Perfil</h5>
+            <div class="d-flex">
+                <p>Atualizar Informacoes</p>
+            </div>
+            <div class="d-flex">
+                <p>Atualizar senha</p>
+            </div>
+            <hr class="mt-1">
+            <h5 class="font-weight-medium mb-3">Livros</h5>
+            <div class="d-flex">
+                <a href="{% url 'book:books' %}">Livros</a>
+            </div>
+            <div class="d-flex">
+                <p>Adicionar Livros</p>
+            </div>
+            <hr class="mt-1">
+            <div class="d-flex">
+                <a href="{% url 'user:logout' %}">Sair</a>
+            </div>
+        </div>
+    </div>
+</div>

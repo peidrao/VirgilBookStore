@@ -1,0 +1,8 @@
+{% extends 'extends.html' %}
+{% load static %}
+{% block sidebar %} {% include 'base/sidebar.html' %} {% endblock %}
+{% block content %}
+{% include 'components/dashboard_nav.html' %}
+{% endblock content %}
+
+{% block dependencies %} {% include 'components/dependecies.html' %} {% endblock %}

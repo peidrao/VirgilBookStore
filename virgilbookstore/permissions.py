@@ -8,3 +8,10 @@ class LoginRequiredPermission(AccessMixin):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('home:home'))
         return super().dispatch(request, *args, **kwargs)
+
+
+class AdministratorPermission(AccessMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return
+        return super().dispatch(request, *args, **kwargs)

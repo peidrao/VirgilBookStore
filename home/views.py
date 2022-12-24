@@ -1,17 +1,11 @@
 import json
-import django
-
-from rest_framework import generics
 
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
 from book.models import Book
-from home.serializers import BookHomeSerializer
-from .models import ContactMessage, Banner
+from .models import ContactMessage
 from .forms import ContactMessageForm, SearchForm
-from order.models import Order, ShopCart
-
 
 class HomeView(generic.ListView):
     queryset = Book.objects.all()
@@ -25,17 +19,6 @@ class HomeView(generic.ListView):
         context =  super().get_context_data(**kwargs)
         context['books'] = self.get_queryset()
         return context
-
-
-
-def index(request):
-    context = {
-        'books_latest': Book.objects.all().order_by('-id')[:8],
-        'banner': Banner.objects.all(),
-        'order': Order.objects.filter(profile_id=request.user.id),
-        'total_books': 0,
-    }
-    return render(request, 'index.html', context)
 
 
 def contact(request):

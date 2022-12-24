@@ -1,12 +1,15 @@
-from django.contrib.auth import authenticate, login as auth_login, logout as logout_func
-from django.http import JsonResponse
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from rest_framework import views, status
 from rest_framework.response import Response
+from django.views import generic
+from django.contrib.auth.views import LogoutView
+from django.views.generic import RedirectView
 
+from virgilbookstore.permissions import LoginRequiredPermission
 from .models import Profile, ProfileNewsletter, ProfileOffer
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
 from book.models import Comment
@@ -45,9 +48,11 @@ def signup_form(request):
 def login(request):
     if request.method == 'POST':
         form = LoginAuthenticationForm(request, data=request.POST)
+        
         if form.is_valid():
             auth_login(request, form.get_user())
-            return HttpResponseRedirect(reverse('user:profile'))
+            
+            return HttpResponseRedirect(reverse('user:dashboard'))
         else:
             messages.warning(
                 request, 'Erro, usuário ou senha inválidos!')
@@ -57,12 +62,7 @@ def login(request):
         'form': LoginForm()
         }
 
-    return render(request, 'user/login_page.html', context)
-
-
-def logout(request):
-    logout_func(request)
-    return HttpResponseRedirect(reverse('home:index'))
+    return render(request, 'pages/login.html', context)
 
 
 class AddProfileOffersView(views.APIView):
@@ -87,6 +87,21 @@ class AddProfileNewsletterView(views.APIView):
         else:
             return Response({'message': 'Erro'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class DashBoardProfile(LoginRequiredPermission, generic.TemplateView):
+    queryset = Profile.objects.all()
+    template_name = 'pages/dashboard.html'
+
+
+class LogoutView(RedirectView):
+    permanent = False
+    query_string = True
+    pattern_name = 'home:home'
+
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            logout(self.request)
+        return super(LogoutView, self).get_redirect_url(*args, **kwargs)
 
 
 @login_required(login_url='/login')

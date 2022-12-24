@@ -15,9 +15,9 @@ urlpatterns = [
     path('signup/', views.signup_form, name='signup'),
     path('login/', views.login, name='login'),
     path('profile/', views.index, name='profile'),
-    path('logout/', views.logout, name='logout'),
     
-    # path('profile_offers/', views.add_profile_offers, name='profile_offers')
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('dashboard/', views.DashBoardProfile.as_view(), name='dashboard'),
     path('profile_offers/', views.AddProfileOffersView.as_view(), name='profile_offers'),
     path('profile_newsletter/', views.AddProfileNewsletterView.as_view(), name='profile_newsletter'),
 ]

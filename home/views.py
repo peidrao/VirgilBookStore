@@ -28,14 +28,14 @@ class HomeView(generic.ListView):
 
 
 
-def index(request):
-    context = {
-        'books_latest': Book.objects.all().order_by('-id')[:8],
-        'banner': Banner.objects.all(),
-        'order': Order.objects.filter(profile_id=request.user.id),
-        'total_books': 0,
-    }
-    return render(request, 'index.html', context)
+# def index(request):
+#     context = {
+#         'books_latest': Book.objects.all().order_by('-id')[:8],
+#         'banner': Banner.objects.all(),
+#         'order': Order.objects.filter(profile_id=request.user.id),
+#        'total_books': 0,
+#     }
+#     return render(request, 'index.html', context)
 
 
 def contact(request):

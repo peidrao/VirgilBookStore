@@ -45,6 +45,7 @@ def signup_form(request):
 def login(request):
     if request.method == 'POST':
         form = LoginAuthenticationForm(request, data=request.POST)
+        
         if form.is_valid():
             auth_login(request, form.get_user())
             return HttpResponseRedirect(reverse('user:profile'))
@@ -57,7 +58,7 @@ def login(request):
         'form': LoginForm()
         }
 
-    return render(request, 'user/login_page.html', context)
+    return render(request, 'pages/login.html', context)
 
 
 def logout(request):

@@ -30,8 +30,6 @@ $("#form-newsletter").on("submit", (e) => {
   let formData = $("#form-newsletter").serializeArray();
   formData.shift();
 
-  console.log(formData);
-
   $.ajax({
     type: "POST",
     dataType: "json",

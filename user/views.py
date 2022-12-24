@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.urls import reverse
 from rest_framework import views, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django.views import generic
 from django.contrib.auth.views import LogoutView
 from django.views.generic import RedirectView
@@ -91,6 +92,28 @@ class AddProfileNewsletterView(views.APIView):
 class DashBoardProfile(LoginRequiredPermission, generic.TemplateView):
     queryset = Profile.objects.all()
     template_name = 'pages/dashboard.html'
+
+
+class UpdateProfileView(generic.TemplateView):
+    template_name = 'user/user_update_password.html'
+
+
+class UpdatePasswordService(views.APIView):
+    queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+
+    def post(self, request):
+        profile = request.user
+        password = self.request.data['password']
+
+        if password:
+            profile.set_password(password)
+            profile.save()
+            return Response({'message': 'Senha alterada com sucesso'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Houve problema a salvar sua senha'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
 
 
 class LogoutView(RedirectView):

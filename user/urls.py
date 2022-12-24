@@ -20,4 +20,7 @@ urlpatterns = [
     path('dashboard/', views.DashBoardProfile.as_view(), name='dashboard'),
     path('profile_offers/', views.AddProfileOffersView.as_view(), name='profile_offers'),
     path('profile_newsletter/', views.AddProfileNewsletterView.as_view(), name='profile_newsletter'),
+   
+    path('update_password/', views.UpdateProfileView.as_view(), name='update_password'),
+    path('update_password_service/', views.UpdatePasswordService.as_view(), name='update_password_service'),
 ]

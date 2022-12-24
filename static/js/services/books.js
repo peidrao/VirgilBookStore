@@ -1,5 +1,3 @@
-
-
 $(".remove-book").on("click", (e) => {
   e.preventDefault();
   let book_id = e.currentTarget.id;
@@ -8,7 +6,6 @@ $(".remove-book").on("click", (e) => {
     "X-CSRFToken": getCookie("csrftoken"),
   };
 
-  console.log(headers);
   Swal.fire({
     title: "Tem certeza que deseja remover este livro?",
     icon: "warning",

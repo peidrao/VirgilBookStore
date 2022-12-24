@@ -69,6 +69,7 @@ class Book(models.Model):
     amount = models.IntegerField()
     specification = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True, null=True)
+    is_publish = models.BooleanField(default=False)
 
     status = models.IntegerField(choices=StatusChoice.choices, default=StatusChoice.YES)
 

@@ -1,3 +1,4 @@
+from django import views
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from book.models import Book, Images, Comment
@@ -5,6 +6,9 @@ from django.shortcuts import get_object_or_404
 from .models import Comment, Genre 
 from .forms import CommentForm
 from django.views import generic
+from rest_framework import generics, status, permissions
+from rest_framework.response import Response
+
 from virgilbookstore.permissions import AdministratorPermission
 
 
@@ -34,6 +38,10 @@ class ManagerBoksView(AdministratorPermission, generic.ListView):
         context = {'books': books}
         return render(request, 'books/books.html', context=context)
 
+
+class ManageRemoveBook(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
 
 def add_comment(request, id):
     url = request.META.get('HTTP_REFERER')

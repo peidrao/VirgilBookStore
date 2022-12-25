@@ -102,7 +102,7 @@ class AccountsListView(AdministratorPermission, generic.ListView):
         return render(request, self.template_name, context)
 
 
-class UpdateProfileView(generic.TemplateView):
+class UpdatePasswordView(generic.TemplateView):
     template_name = 'user/user_update_password.html'
 
 
@@ -120,6 +120,16 @@ class UpdatePasswordService(views.APIView):
             profile.save()
             return Response({'message': 'Senha alterada com sucesso'}, status=status.HTTP_200_OK)
         return Response({'message': 'Houve problema a salvar sua senha'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileUpdateView(generic.TemplateView):
+    template_name = 'user/user_update.html'
+
+    def get(self, request):
+        context = {'profile': request.user}
+        return render(request, self.template_name, context)
+        
+
 
 
 class LogoutView(RedirectView):

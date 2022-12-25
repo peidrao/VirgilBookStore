@@ -10,7 +10,7 @@ from django.views import generic
 from django.contrib.auth.views import LogoutView
 from django.views.generic import RedirectView
 
-from virgilbookstore.permissions import LoginRequiredPermission
+from virgilbookstore.permissions import AdministratorPermission, LoginRequiredPermission
 from .models import Profile, ProfileNewsletter, ProfileOffer
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
 from book.models import Comment
@@ -90,8 +90,16 @@ class AddProfileNewsletterView(views.APIView):
 
 
 class DashBoardProfile(LoginRequiredPermission, generic.TemplateView):
-    queryset = Profile.objects.all()
     template_name = 'pages/dashboard.html'
+
+
+class AccountsListView(AdministratorPermission, generic.ListView):
+    queryset = Profile.objects.all()
+    template_name = 'user/accounts_table.html'
+
+    def get(self, request):
+        context = {'profiles': self.queryset.all()}
+        return render(request, self.template_name, context)
 
 
 class UpdateProfileView(generic.TemplateView):
@@ -112,8 +120,6 @@ class UpdatePasswordService(views.APIView):
             profile.save()
             return Response({'message': 'Senha alterada com sucesso'}, status=status.HTTP_200_OK)
         return Response({'message': 'Houve problema a salvar sua senha'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        
 
 
 class LogoutView(RedirectView):
@@ -125,45 +131,3 @@ class LogoutView(RedirectView):
         if self.request.user.is_authenticated:
             logout(self.request)
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)
-
-
-@login_required(login_url='/login')
-def user_comments(request):
-    context = {
-        'comments': Comment.objects.filter(user=request.user)
-    }
-
-    return render(request, 'user/user_comments.html', context)
-
-
-@login_required(login_url='/login')
-def user_deletecomment(request, id):
-    Comment.objects.filter(profile=request.user, id=id).delete()
-    messages.success(request, 'Comentário deleteado!')
-    return HttpResponseRedirect(reverse('user:user_comments'))
-
-
-@login_required(login_url='/login')
-def user_orders(request):
-    context = {
-        'order': Order.objects.filter(profile=request.user),
-    }
-
-    return render(request, 'user/user_orders.html', context)
-
-
-@login_required(login_url='/login')
-def user_request(request):
-    context = {
-        'order': Order.objects.filter(profile=request.user),
-    }
-
-    return render(request, 'user/user_request.html', context)
-
-
-@login_required(login_url='/login')
-def user_order_book(request):
-    context = {
-        'order': Order.objects.filter(profile=request.user),
-    }
-    return render(request, 'user/user_order_books.html', context)

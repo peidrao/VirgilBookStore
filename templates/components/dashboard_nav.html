@@ -6,31 +6,31 @@
             </h4>
         </div>
         <div class="card-body">
-            <h5 class="font-weight-medium mb-3">Perfil</h5>
+            <h5 class="font-weight-medium mb-3">Profile</h5>
             <div class="d-flex">
-                <p>Atualizar Informacoes</p>
+                <p>Update Profile</p>
             </div>
             <div class="d-flex">
-                <a href="{% url 'user:update_password' %}">Atualizar senha</a>
+                <a href="{% url 'user:update_password' %}">Update Password</a>
             </div>
             <hr class="mt-1">
             {% if request.user.is_superuser %}
-            <h5 class="font-weight-medium mb-3">Livros</h5>
+            <h5 class="font-weight-medium mb-3">Books</h5>
             <div class="d-flex">
-                <a href="{% url 'book:books' %}">Livros</a>
+                <a href="{% url 'book:books' %}">Books</a>
             </div>
             <div class="d-flex">
-                <p>Adicionar Livros</p>
+                <p>Add Books</p>
             </div>
             <hr class="mt-1">
-            <h5 class="font-weight-medium mb-3">Contas</h5>
+            <h5 class="font-weight-medium mb-3">Accounts</h5>
             <div class="d-flex">
-                <a href="{% url 'user:accounts' %}">Contas</a>
+                <a href="{% url 'user:accounts' %}">Accounts</a>
             </div>
             <hr class="mt-1">
             {% endif %}
             <div class="d-flex">
-                <a href="{% url 'user:logout' %}">Sair</a>
+                <a href="{% url 'user:logout' %}">Logout</a>
             </div>
         </div>
     </div>

@@ -14,6 +14,7 @@
                 <a href="{% url 'user:update_password' %}">Atualizar senha</a>
             </div>
             <hr class="mt-1">
+            {% if request.user.is_superuser %}
             <h5 class="font-weight-medium mb-3">Livros</h5>
             <div class="d-flex">
                 <a href="{% url 'book:books' %}">Livros</a>
@@ -22,6 +23,12 @@
                 <p>Adicionar Livros</p>
             </div>
             <hr class="mt-1">
+            <h5 class="font-weight-medium mb-3">Contas</h5>
+            <div class="d-flex">
+                <a href="{% url 'user:accounts' %}">Contas</a>
+            </div>
+            <hr class="mt-1">
+            {% endif %}
             <div class="d-flex">
                 <a href="{% url 'user:logout' %}">Sair</a>
             </div>

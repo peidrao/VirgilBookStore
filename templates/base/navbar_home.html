@@ -38,6 +38,7 @@
                         <a href="{% url 'user:login' %}" class="nav-item nav-link">Login</a>
                         <a href="" class="nav-item nav-link">Register</a>
                         {% else %}
+                        <a href="{% url 'user:dashboard' %}" class="nav-item nav-link">Perfil</a>
                         <a href="{% url 'user:logout' %}" class="nav-item nav-link">Sair</a>
                         {% endif %}
                     </div>

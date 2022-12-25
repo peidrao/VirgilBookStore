@@ -1,17 +1,19 @@
 <div class="col-lg-10 table-responsive mb-5">
+    <div class="d-flex flex-row-reverse">
+        <button class="btn btn-primary col-4 mb-2" type="submit">Add Book</button>
+    </div>
     <table class="table table-bordered text-center mb-0">
         <thead class="bg-secondary text-dark">
             <tr>
                 <th>ID</th>
-                <th>Titulo</th>
-                <th>Preco</th>
-                <th>Quantidade</th>
-                <th>Data</th>
-                <th>Acoes</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Creation Date</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody class="align-middle">
-
             {% for book in books %}
             <tr>
                 <td class="align-middle">{{book.id}}</td>

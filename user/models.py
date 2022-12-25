@@ -9,6 +9,7 @@ class Profile(AbstractUser):
     address = models.CharField(max_length=150, blank=True)
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=50, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.username

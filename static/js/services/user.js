@@ -9,12 +9,13 @@ $(".button-update-password").on("click", (e) => {
   let payload = {
     password: new_password,
   };
-  if (password.length < 7) {
+
+  if (new_password.length < 7) {
     Swal.fire({
       position: "center",
-      icon: "success",
+      icon: "warning",
       iconColor: "#D19C97",
-      title: response.message,
+      title: "A senha precisa ser maior que 8 caracteres",
       showConfirmButton: false,
       timer: 1500,
     });

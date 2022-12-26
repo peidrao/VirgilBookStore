@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from rest_framework import views, status
+from rest_framework import views, status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.views import generic
@@ -126,7 +126,8 @@ class ProfileUpdateView(generic.TemplateView):
     def get(self, request):
         context = {'profile': request.user}
         return render(request, self.template_name, context)
-        
+
+
 class ProfileUpdateService(views.APIView):
     queryset = Profile.objects.all()
     permission_classes = (IsAuthenticated,)
@@ -144,6 +145,10 @@ class ProfileUpdateService(views.APIView):
             return Response({'message': 'Profile updated successfully'}, status=status.HTTP_200_OK)
         return Response({'message': 'There were problems updating your profile'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ProfileRemoveService(generics.DestroyAPIView):
+    queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
 
 
 class LogoutView(RedirectView):

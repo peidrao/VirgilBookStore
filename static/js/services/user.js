@@ -73,3 +73,37 @@ $("#form-profile-update").on("submit", (e) => {
     },
   });
 });
+
+$(".remove-profile").on("click", (e) => {
+  e.preventDefault();
+  let profile_id = e.currentTarget.id;
+  let headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to remove this user?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "DELETE",
+        dataType: "json",
+        headers: headers,
+        url: `/user/profile/remove/${profile_id}`,
+        success: function (response) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          location.reload();
+        },
+        error: function (err) {
+          console.log(err.responseJSON);
+        },
+      });
+    }
+  });
+});

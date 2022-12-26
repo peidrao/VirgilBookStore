@@ -43,3 +43,33 @@ $(".button-update-password").on("click", (e) => {
     });
   }
 });
+
+$("#form-profile-update").on("submit", (e) => {
+  e.preventDefault();
+
+  let formData = $("#form-profile-update").serializeArray();
+  let token = formData.shift()["value"];
+
+  formData[4]["value"] = true ? formData[4]["value"] == "on" : false;
+
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    headers: { "X-CSRFToken": token },
+    url: "/user/profile_update/",
+    data: formData,
+    success: function (response) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        iconColor: "#D19C97",
+        title: response.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    },
+    error: function (err) {
+      console.log(err.responseJSON);
+    },
+  });
+});

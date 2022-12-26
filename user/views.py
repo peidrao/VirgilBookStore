@@ -13,8 +13,6 @@ from django.views.generic import RedirectView
 from virgilbookstore.permissions import AdministratorPermission, LoginRequiredPermission
 from .models import Profile, ProfileNewsletter, ProfileOffer
 from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
-from book.models import Comment
-from order.models import Order
 
 
 @login_required(login_url='/login')
@@ -129,6 +127,22 @@ class ProfileUpdateView(generic.TemplateView):
         context = {'profile': request.user}
         return render(request, self.template_name, context)
         
+class ProfileUpdateService(views.APIView):
+    queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        data = request.data
+        email = request.data.get('email')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+        phone = request.data.get('phone')
+        is_active = True if data.get('is_active') == 'true' else False
+        
+        if data:
+            Profile.objects.filter(id=request.user.id).update(email=email, first_name=first_name, last_name=last_name, phone=phone, is_active=is_active)
+            return Response({'message': 'Profile updated successfully'}, status=status.HTTP_200_OK)
+        return Response({'message': 'There were problems updating your profile'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

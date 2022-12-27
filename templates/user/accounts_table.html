@@ -29,7 +29,7 @@
                         <td class="align-middle">{{profile.created_at}}</td>
                         <td class="align-middle">
                             <button class="btn btn-sm btn-primary remove-profile" id="{{profile.id}}" value="{{profile.id}}"><i class="fa fa-trash"></i></button>
-                            <button class="btn btn-sm btn-primary update-profile" id={{profile.id}} value="{{profile.id}}"><i class="fa fa-pen"></i></button>
+                            <a href="{% url 'user:update_profile' %}?id={{profile.id}}" class="btn btn-sm btn-primary update-profile" id={{profile.id}} value={{profile.id}}><i class="fa fa-pen"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -44,5 +44,5 @@
 {% block dependencies %}
 {% include 'components/dependecies.html' %}
 
-<script src="{% static 'js/services/books.js' %}"></script>
+<script src="{% static 'js/services/user.js' %}"></script>
 {% endblock %}

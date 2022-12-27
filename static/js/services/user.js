@@ -49,14 +49,13 @@ $("#form-profile-update").on("submit", (e) => {
 
   let formData = $("#form-profile-update").serializeArray();
   let token = formData.shift()["value"];
-
-  formData[4]["value"] = true ? formData[4]["value"] == "on" : false;
+  let profileId = formData.shift()["value"];
 
   $.ajax({
     type: "POST",
     dataType: "json",
     headers: { "X-CSRFToken": token },
-    url: "/user/profile_update/",
+    url: `/user/profile_update/${profileId}`,
     data: formData,
     success: function (response) {
       Swal.fire({
@@ -71,5 +70,39 @@ $("#form-profile-update").on("submit", (e) => {
     error: function (err) {
       console.log(err.responseJSON);
     },
+  });
+});
+
+$(".remove-profile").on("click", (e) => {
+  e.preventDefault();
+  let profile_id = e.currentTarget.id;
+  let headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to remove this user?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "DELETE",
+        dataType: "json",
+        headers: headers,
+        url: `/user/profile/remove/${profile_id}`,
+        success: function (response) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          location.reload();
+        },
+        error: function (err) {
+          console.log(err.responseJSON);
+        },
+      });
+    }
   });
 });

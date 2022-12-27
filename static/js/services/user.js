@@ -49,14 +49,13 @@ $("#form-profile-update").on("submit", (e) => {
 
   let formData = $("#form-profile-update").serializeArray();
   let token = formData.shift()["value"];
-
-  formData[4]["value"] = true ? formData[4]["value"] == "on" : false;
+  let profileId = formData.shift()["value"];
 
   $.ajax({
     type: "POST",
     dataType: "json",
     headers: { "X-CSRFToken": token },
-    url: "/user/profile_update/",
+    url: `/user/profile_update/${profileId}`,
     data: formData,
     success: function (response) {
       Swal.fire({

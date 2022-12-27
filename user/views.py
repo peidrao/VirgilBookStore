@@ -124,7 +124,13 @@ class ProfileUpdateView(generic.TemplateView):
     template_name = 'user/user_update.html'
 
     def get(self, request):
-        context = {'profile': request.user}
+        context = {}
+        query = self.request.build_absolute_uri().split('id=')
+        if len(query) > 1:
+            context['profile'] = Profile.objects.get(id=query[1])
+        else:
+            context['profile'] = request.user
+
         return render(request, self.template_name, context)
 
 
@@ -132,16 +138,16 @@ class ProfileUpdateService(views.APIView):
     queryset = Profile.objects.all()
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
+    def post(self, request, pk):
         data = request.data
         email = request.data.get('email')
         first_name = request.data.get('first_name')
         last_name = request.data.get('last_name')
         phone = request.data.get('phone')
-        is_active = True if data.get('is_active') == 'true' else False
-        
+        is_active = False if not data.get('is_active') else True
+
         if data:
-            Profile.objects.filter(id=request.user.id).update(email=email, first_name=first_name, last_name=last_name, phone=phone, is_active=is_active)
+            Profile.objects.filter(id=pk).update(email=email, first_name=first_name, last_name=last_name, phone=phone, is_active=is_active)
             return Response({'message': 'Profile updated successfully'}, status=status.HTTP_200_OK)
         return Response({'message': 'There were problems updating your profile'}, status=status.HTTP_400_BAD_REQUEST)
 

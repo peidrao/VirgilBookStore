@@ -1,9 +1,8 @@
-from django import views
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from book.models import Book, Images, Comment
 from django.shortcuts import get_object_or_404
-from .models import Comment, Genre 
+from .models import Comment, Genre, Writer 
 from .forms import CommentForm
 from django.views import generic
 from rest_framework import generics, status, permissions
@@ -42,6 +41,18 @@ class ManagerBoksView(AdministratorPermission, generic.ListView):
 class ManageRemoveBook(generics.DestroyAPIView):
     queryset = Book.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class ManagerBookAddView(generic.TemplateView):
+    template_name = 'books/book_add.html'
+
+    def get(self, request):
+        context = {
+            'genres': Genre.objects.all(),
+            'writers': Writer.objects.all(),
+        }
+       
+        return render(request, self.template_name, context)
 
 def add_comment(request, id):
     url = request.META.get('HTTP_REFERER')

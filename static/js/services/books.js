@@ -33,3 +33,10 @@ $(".remove-book").on("click", (e) => {
     }
   });
 });
+
+$("#form-book-create").on("submit", (e) => {
+  e.preventDefault();
+  var formData = new FormData($(this));
+
+  console.log(formData);
+});

@@ -10,4 +10,6 @@ urlpatterns = [
     path('book/<str:slug>/', views.BookByGenreView.as_view(), name='books_by_genre'),
     path('books/', views.ManagerBoksView.as_view(), name='books'),
     path('book/remove/<int:pk>', views.ManageRemoveBook.as_view(), name='remove'),
+
+    path('add/', views.ManagerBookAddView.as_view(), name='book_add'),
 ]

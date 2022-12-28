@@ -36,7 +36,31 @@ $(".remove-book").on("click", (e) => {
 
 $("#form-book-create").on("submit", (e) => {
   e.preventDefault();
-  var formData = new FormData($(this));
+  let form = $("#form-book-create").serialize();
+  // form.shift();
 
-  console.log(formData);
+  let headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+
+  console.log(form["amount"]);
+
+  // console.log(headers);
+  $.ajax({
+    type: "POST",
+    headers: headers,
+    dataType: "json",
+    data: form,
+    url: "/book/create",
+    success: function (response) {
+      Swal.fire("Success!", "Book successfully added", "success");
+    },
+    error: function (err) {
+      Swal.fire({
+        title: "error",
+        icon: "warning",
+        text: err.responseJSON,
+      });
+    },
+  });
 });

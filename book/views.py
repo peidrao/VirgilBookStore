@@ -2,10 +2,12 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from book.models import Book, Images, Comment
 from django.shortcuts import get_object_or_404
+
+from book.serializers import BookSerializer
 from .models import Comment, Genre, Writer 
 from .forms import CommentForm
 from django.views import generic
-from rest_framework import generics, status, permissions
+from rest_framework import generics, status, permissions, views
 from rest_framework.response import Response
 
 from virgilbookstore.permissions import AdministratorPermission
@@ -53,6 +55,34 @@ class ManagerBookAddView(generic.TemplateView):
         }
        
         return render(request, self.template_name, context)
+
+
+class ManagerBookAddService(views.APIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer 
+    permission_classes = (permissions.IsAuthenticated,)
+    
+
+    def post(self, request, *args, **kwargs):
+        is_publish = True if request.data.get('is_publish') == 'on' else False
+        amount = 0 if request.data.get('amount') == '' else int(request.data.get('amount')) 
+        data = {
+                'writer': int(request.data.get('writer', None)),
+                'genre': int(request.data.get('genre', None)),
+                'title': request.data.get('title'),
+                'description': request.data.get('description'),
+                'price': request.data.get('price'),
+                'keywords': request.data.get('keywords'),
+                'amount': amount,
+                'is_publish': is_publish,
+            }
+        
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 def add_comment(request, id):
     url = request.META.get('HTTP_REFERER')

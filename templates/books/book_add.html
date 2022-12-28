@@ -8,7 +8,7 @@
     <div class="row px-xl-5">
         {% block dashboard_nav %} {% include 'components/dashboard_nav.html' %} {% endblock %}
         <div class="col-lg-10 table-responsive mb-5">
-            <form id="form-book-create" enctype="multipart/form-data">
+            <form id="form-book-create" method="POST">
                 {% csrf_token %}
 
                 <div class="form-group">

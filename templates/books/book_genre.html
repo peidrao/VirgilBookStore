@@ -14,7 +14,7 @@
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 
-                    {% if book.image %}
+                    {% if book.image and book.image.url %}
                     <img class="img-fluid w-100" src="{{book.image.url}}" alt="">
                     {% else %}
                     <img class="img-fluid w-100" src="{{book.image}}" alt="">

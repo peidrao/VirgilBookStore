@@ -12,7 +12,7 @@ class HomeView(generic.ListView):
     template_name = 'index.html'
 
     def get_queryset(self):
-        queryset = self.queryset.order_by('-created_at')[:8]
+        queryset = self.queryset.exclude(image__in=['', None]).order_by('-created_at')[:8]
         return queryset
         
     def get_context_data(self, **kwargs):

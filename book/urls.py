@@ -12,4 +12,5 @@ urlpatterns = [
     path('book/remove/<int:pk>', views.ManageRemoveBook.as_view(), name='remove'),
 
     path('add/', views.ManagerBookAddView.as_view(), name='book_add'),
+    path('book/create', views.ManagerBookAddService.as_view(),  name='book_create'),
 ]

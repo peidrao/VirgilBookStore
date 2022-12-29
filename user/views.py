@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.views import generic
 from django.contrib.auth.views import LogoutView
 from django.views.generic import RedirectView
+from home.models import Banner
 
 from virgilbookstore.permissions import AdministratorPermission, LoginRequiredPermission
 from .models import Profile, ProfileNewsletter, ProfileOffer
@@ -166,3 +167,14 @@ class LogoutView(RedirectView):
         if self.request.user.is_authenticated:
             logout(self.request)
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)
+
+
+class ManagerBannersView(generic.TemplateView):
+    template_name = 'user/manager_banners.html'
+
+    def get(self, request):
+        context = {
+            'banners': Banner.objects.all(),
+        }
+       
+        return render(request, self.template_name, context)

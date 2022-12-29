@@ -22,4 +22,6 @@ urlpatterns = [
     path('profile/remove/<int:pk>', views.ProfileRemoveService.as_view(), name='remove_profile_service'),
 
     path('accounts/', views.AccountsListView.as_view(), name='accounts'),
+
+    path('banners/', views.ManagerBannersView.as_view(), name='banners'),
 ]

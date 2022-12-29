@@ -13,6 +13,9 @@
             <div class="d-flex">
                 <a href="{% url 'user:update_password' %}">Update Password</a>
             </div>
+            <div class="d-flex">
+                <a href="{% url 'user:banners' %}">Banners</a>
+            </div>
             <hr class="mt-1">
             {% if request.user.is_superuser %}
             <h5 class="font-weight-medium mb-3">Books</h5>

@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
+from book.helpers import create_book_payload
 from book.models import Book, Images, Comment
 from django.shortcuts import get_object_or_404
 
@@ -35,7 +36,7 @@ class ManagerBoksView(AdministratorPermission, generic.ListView):
     queryset = Book.objects.all()
 
     def get(self, request, *args, **kwargs):
-        books = Book.objects.all()
+        books = Book.objects.all().order_by("created_at")
         context = {"books": books}
         return render(request, "books/books.html", context=context)
 
@@ -64,22 +65,9 @@ class ManagerBookAddService(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        is_publish = True if request.data.get("is_publish") == "on" else False
-        amount = (
-            0 if request.data.get("amount") == "" else int(request.data.get("amount"))
-        )
-        data = {
-            "writer": int(request.data.get("writer", None)),
-            "genre": int(request.data.get("genre", None)),
-            "title": request.data.get("title"),
-            "description": request.data.get("description"),
-            "price": request.data.get("price"),
-            "keywords": request.data.get("keywords"),
-            "amount": amount,
-            "is_publish": is_publish,
-        }
+        payload = create_book_payload(request)
 
-        serializer = self.serializer_class(data=data)
+        serializer = self.serializer_class(data=payload)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -94,6 +82,24 @@ class ManagerBookExportService(views.APIView):
         books = self.queryset.all().values("id", "title")
 
         return Response(books, status=status.HTTP_200_OK)
+
+
+class ManagerBookUpdateService(generics.UpdateAPIView):
+    queryset = Book.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def update(self, request, *args, **kwargs):
+        book = self.get_object()
+        payload = create_book_payload(request)
+        if book:
+            self.queryset.filter(id=book.id).update(**payload)
+            return Response(
+                {"message": "Successfully updated book"}, status=status.HTTP_200_OK
+            )
+        return Response(
+            {"message": "There was an error in the update"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 def add_comment(request, id):

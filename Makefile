@@ -22,6 +22,5 @@ test:
 pre-commit:
 	pre-commit run --all-files
 
-
 commands:
 	python manage.py create_genre && python manage.py create_authors && python manage.py create_books

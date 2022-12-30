@@ -83,3 +83,34 @@ $(".button-export-csv").on("click", () => {
     },
   });
 });
+
+$("#form-book-update").on("submit", (e) => {
+  e.preventDefault();
+  let form = $("#form-book-update").serializeArray();
+  let token = form.shift().value;
+  let id = form.shift().value;
+
+  let headers = {
+    "X-CSRFToken": token,
+  };
+  console.log(id);
+  console.log(token);
+
+  $.ajax({
+    type: "PATCH",
+    headers: headers,
+    dataType: "json",
+    data: form,
+    url: `/book/update/service/${id}/`,
+    success: function (response) {
+      Swal.fire("Success!", "Book successfully added", "success");
+    },
+    error: function (err) {
+      Swal.fire({
+        title: "error",
+        icon: "warning",
+        text: err.responseJSON,
+      });
+    },
+  });
+});

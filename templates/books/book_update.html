@@ -8,8 +8,9 @@
     <div class="row px-xl-5">
         {% block dashboard_nav %} {% include 'components/dashboard_nav.html' %} {% endblock %}
         <div class="col-lg-10 table-responsive mb-5">
-            <form id="form-book-create" method="POST">
+            <form id="form-book-update" method="PUT">
                 {% csrf_token %}
+                <input type="hidden" name="id" value="{{book.id}}">
                 {% block form_book %} {% include 'components/form_book.html' %} {% endblock %}
 
                 <button type="submit" class="btn btn-primary">Update book</button>

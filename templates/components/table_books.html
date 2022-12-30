@@ -24,7 +24,7 @@
                 <td class="align-middle">{{book.created_at}}</td>
                 <td class="align-middle">
                     <button class="btn btn-sm btn-primary remove-book" id="{{book.id}}" value="{{book.id}}"><i class="fa fa-trash"></i></button>
-                    <button class="btn btn-sm btn-primary update-book" id={{book.id}} value="{{book.id}}"><i class="fa fa-pen"></i></button>
+                    <a class="btn btn-sm btn-primary update-book" href="{% url 'book:book_update' book.id %}"><i class="fa fa-pen"></i></a>
                 </td>
             </tr>
             {% endfor %}

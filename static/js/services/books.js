@@ -37,15 +37,11 @@ $(".remove-book").on("click", (e) => {
 $("#form-book-create").on("submit", (e) => {
   e.preventDefault();
   let form = $("#form-book-create").serialize();
-  // form.shift();
 
   let headers = {
     "X-CSRFToken": getCookie("csrftoken"),
   };
 
-  console.log(form["amount"]);
-
-  // console.log(headers);
   $.ajax({
     type: "POST",
     headers: headers,
@@ -54,6 +50,29 @@ $("#form-book-create").on("submit", (e) => {
     url: "/book/create",
     success: function (response) {
       Swal.fire("Success!", "Book successfully added", "success");
+    },
+    error: function (err) {
+      Swal.fire({
+        title: "error",
+        icon: "warning",
+        text: err.responseJSON,
+      });
+    },
+  });
+});
+
+$(".button-export-csv").on("click", () => {
+  let headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+
+  $.ajax({
+    type: "GET",
+    headers: headers,
+    dataType: "json",
+    url: "/book/export",
+    success: function (response) {
+      console.log(response);
     },
     error: function (err) {
       Swal.fire({

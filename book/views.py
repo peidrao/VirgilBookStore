@@ -4,7 +4,7 @@ from book.models import Book, Images, Comment
 from django.shortcuts import get_object_or_404
 
 from book.serializers import BookSerializer
-from .models import Comment, Genre, Writer 
+from .models import Comment, Genre
 from .forms import CommentForm
 from django.views import generic
 from rest_framework import generics, status, permissions, views
@@ -40,21 +40,24 @@ class ManagerBoksView(AdministratorPermission, generic.ListView):
         return render(request, 'books/books.html', context=context)
 
 
-class ManageRemoveBook(generics.DestroyAPIView):
-    queryset = Book.objects.all()
-    permission_classes = (permissions.IsAuthenticated,)
-
-
 class ManagerBookAddView(generic.TemplateView):
     template_name = 'books/book_add.html'
 
-    def get(self, request):
-        context = {
-            'genres': Genre.objects.all(),
-            'writers': Writer.objects.all(),
-        }
-       
-        return render(request, self.template_name, context)
+
+class ManagerBookUpdateView(generic.TemplateView):
+    template_name = 'books/book_update.html'
+    queryset = Book.objects.all()
+
+    def get(self, request, pk):
+        book = self.queryset.get(pk=pk)
+        return render(request, self.template_name, {'book': book})
+
+
+
+
+class ManageRemoveBook(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ManagerBookAddService(views.APIView):

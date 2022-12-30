@@ -52,7 +52,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'home.context_processors.get_genres',
-                'home.context_processors.get_banners'
+                'home.context_processors.get_banners',
+                'home.context_processors.get_writers',
             ],
         },
     },

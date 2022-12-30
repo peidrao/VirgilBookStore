@@ -9,47 +9,103 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('book', '0001_initial'),
+        ("book", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Order',
+            name="Order",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.CharField(editable=False, max_length=5)),
-                ('first_name', models.CharField(max_length=10)),
-                ('last_name', models.CharField(max_length=10)),
-                ('phone', models.CharField(blank=True, max_length=11)),
-                ('address', models.CharField(blank=True, max_length=150)),
-                ('city', models.CharField(max_length=100)),
-                ('total', models.FloatField()),
-                ('status', models.CharField(choices=[('Novo', 'Novo'), ('Aceitaram', 'Aceitaram'), ('Prepararam', 'Prepararam'), ('Enviaram', 'Enviaram'), ('Concluído', 'Concluído'), ('Cancelaram', 'Cancelaram')], default='Novo', max_length=10)),
-                ('ip', models.CharField(blank=True, max_length=20)),
-                ('adminnote', models.CharField(blank=True, max_length=100)),
-                ('usernote', models.CharField(blank=True, max_length=250)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("code", models.CharField(editable=False, max_length=5)),
+                ("first_name", models.CharField(max_length=10)),
+                ("last_name", models.CharField(max_length=10)),
+                ("phone", models.CharField(blank=True, max_length=11)),
+                ("address", models.CharField(blank=True, max_length=150)),
+                ("city", models.CharField(max_length=100)),
+                ("total", models.FloatField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("Novo", "Novo"),
+                            ("Aceitaram", "Aceitaram"),
+                            ("Prepararam", "Prepararam"),
+                            ("Enviaram", "Enviaram"),
+                            ("Concluído", "Concluído"),
+                            ("Cancelaram", "Cancelaram"),
+                        ],
+                        default="Novo",
+                        max_length=10,
+                    ),
+                ),
+                ("ip", models.CharField(blank=True, max_length=20)),
+                ("adminnote", models.CharField(blank=True, max_length=100)),
+                ("usernote", models.CharField(blank=True, max_length=250)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='OrderBook',
+            name="OrderBook",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField()),
-                ('price', models.FloatField()),
-                ('amount', models.FloatField()),
-                ('status', models.CharField(choices=[('Novo', 'Novo'), ('Aceitaram', 'Aceitaram'), ('Cancelaram', 'Cancelaram')], default='Novo', max_length=10)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("quantity", models.IntegerField()),
+                ("price", models.FloatField()),
+                ("amount", models.FloatField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("Novo", "Novo"),
+                            ("Aceitaram", "Aceitaram"),
+                            ("Cancelaram", "Cancelaram"),
+                        ],
+                        default="Novo",
+                        max_length=10,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='ShopCart',
+            name="ShopCart",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField()),
-                ('book', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='book.book')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("quantity", models.IntegerField()),
+                (
+                    "book",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="book.book",
+                    ),
+                ),
             ],
         ),
     ]

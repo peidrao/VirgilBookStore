@@ -16,31 +16,31 @@ class ShopCart(models.Model):
 
     @property
     def price(self):
-        return (self.book.price)
+        return self.book.price
 
     @property
     def amount(self):
-        return (self.quantity * self.book.price)
-    
+        return self.quantity * self.book.price
+
     @property
     def quantity_books(self):
         return self.quantity
 
 
-
 class ShopCartForm(ModelForm):
     class Meta:
         model = ShopCart
-        fields = ['quantity']
+        fields = ["quantity"]
+
 
 class Order(models.Model):
     STATUS = (
-        ('Novo', 'Novo'),
-        ('Aceitaram', 'Aceitaram'),
-        ('Prepararam', 'Prepararam'),
-        ('Enviaram', 'Enviaram'),
-        ('Concluído', 'Concluído'),
-        ('Cancelaram', 'Cancelaram'),
+        ("Novo", "Novo"),
+        ("Aceitaram", "Aceitaram"),
+        ("Prepararam", "Prepararam"),
+        ("Enviaram", "Enviaram"),
+        ("Concluído", "Concluído"),
+        ("Cancelaram", "Cancelaram"),
     )
 
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
@@ -54,7 +54,7 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
 
     total = models.FloatField()
-    status = models.CharField(choices=STATUS, max_length=10, default='Novo')
+    status = models.CharField(choices=STATUS, max_length=10, default="Novo")
 
     ip = models.CharField(blank=True, max_length=20)
     adminnote = models.CharField(blank=True, max_length=100)
@@ -69,9 +69,9 @@ class Order(models.Model):
 
 class OrderBook(models.Model):
     STATUS = (
-        ('Novo', 'Novo'),
-        ('Aceitaram', 'Aceitaram'),
-        ('Cancelaram', 'Cancelaram'),
+        ("Novo", "Novo"),
+        ("Aceitaram", "Aceitaram"),
+        ("Cancelaram", "Cancelaram"),
     )
 
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -82,7 +82,7 @@ class OrderBook(models.Model):
     price = models.FloatField()
     amount = models.FloatField()
 
-    status = models.CharField(choices=STATUS, max_length=10, default='Novo')
+    status = models.CharField(choices=STATUS, max_length=10, default="Novo")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

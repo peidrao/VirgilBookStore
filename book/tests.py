@@ -10,10 +10,10 @@ class BookTestCase(TestCase):
 
 class GenreTestCase(TestCase):
     def setUp(self):
-        self.genre = Genre.objects.create(title='Comedy')
+        self.genre = Genre.objects.create(title="Comedy")
 
     def test_create_genre(self):
-        self.assertEqual(self.genre.title, 'Comedy')
+        self.assertEqual(self.genre.title, "Comedy")
 
     def test_slug(self):
-        self.assertEqual(self.genre.slug, 'comedy')
+        self.assertEqual(self.genre.slug, "comedy")

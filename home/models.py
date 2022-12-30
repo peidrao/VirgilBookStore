@@ -4,9 +4,9 @@ from django.db import models
 
 class ContactMessage(models.Model):
     STATUS = (
-        ('New', 'New'),
-        ('Read', 'Read'),
-        ('Closed', 'Closed'),
+        ("New", "New"),
+        ("Read", "Read"),
+        ("Closed", "Closed"),
     )
 
     name = models.CharField(max_length=30, blank=True)
@@ -14,7 +14,7 @@ class ContactMessage(models.Model):
     email = models.CharField(max_length=100, blank=True)
     message = models.TextField(max_length=300, blank=True)
 
-    status = models.CharField(max_length=6, choices=STATUS, default='New')
+    status = models.CharField(max_length=6, choices=STATUS, default="New")
     ip = models.CharField(max_length=20, blank=True)
     note = models.CharField(max_length=250, blank=True)
 
@@ -28,7 +28,7 @@ class ContactMessage(models.Model):
 class Banner(models.Model):
     title = models.CharField(max_length=100, null=False)
     description = models.CharField(max_length=250, null=False)
-    image = models.FileField(upload_to='images/banner', null=False)
+    image = models.FileField(upload_to="images/banner", null=False)
     is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

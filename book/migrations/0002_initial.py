@@ -11,23 +11,29 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('book', '0001_initial'),
+        ("book", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='comment',
-            name='profile',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="comment",
+            name="profile",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
-            model_name='book',
-            name='genre',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='book.genre'),
+            model_name="book",
+            name="genre",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="book.genre"
+            ),
         ),
         migrations.AddField(
-            model_name='book',
-            name='writer',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='book.writer'),
+            model_name="book",
+            name="writer",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="book.writer"
+            ),
         ),
     ]

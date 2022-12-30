@@ -82,7 +82,17 @@ class ManagerBookAddService(views.APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+    
+
+class ManagerBookExportService(views.APIView):
+    queryset = Book.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        books = self.queryset.all().values('id', 'title')
+
+        return Response(books, status=status.HTTP_200_OK)
+
 
 def add_comment(request, id):
     url = request.META.get('HTTP_REFERER')

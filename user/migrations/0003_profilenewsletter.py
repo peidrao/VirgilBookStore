@@ -7,18 +7,26 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0002_profileoffer'),
+        ("user", "0002_profileoffer"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProfileNewsletter',
+            name="ProfileNewsletter",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.CharField(max_length=100)),
-                ('name', models.CharField(max_length=100)),
-                ('is_active', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("email", models.CharField(max_length=100)),
+                ("name", models.CharField(max_length=100)),
+                ("is_active", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(default=django.utils.timezone.now)),
             ],
         ),
     ]

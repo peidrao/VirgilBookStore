@@ -15,7 +15,7 @@ class Profile(AbstractUser):
         return self.username
 
     def user_name(self):
-        return self.first_name + ' ' + self.last_name + ' [' + self.username + '] '
+        return self.first_name + " " + self.last_name + " [" + self.username + "] "
 
 
 class ProfileOffer(models.Model):

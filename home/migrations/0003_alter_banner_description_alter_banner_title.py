@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0002_banner_is_active'),
+        ("home", "0002_banner_is_active"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='banner',
-            name='description',
+            model_name="banner",
+            name="description",
             field=models.CharField(max_length=250),
         ),
         migrations.AlterField(
-            model_name='banner',
-            name='title',
+            model_name="banner",
+            name="title",
             field=models.CharField(max_length=100),
         ),
     ]

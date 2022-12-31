@@ -6,7 +6,6 @@ $(".remove-wishlist").on("click", (e) => {
     "X-CSRFToken": getCookie("csrftoken"),
   };
 
-  console.log(wishlistId);
   Swal.fire({
     title: "Are you sure you want to remove this book",
     icon: "warning",
@@ -25,6 +24,7 @@ $(".remove-wishlist").on("click", (e) => {
         success: function (response) {
           console.log(response);
           Swal.fire("Success!", response, "success");
+          window.location.reload();
         },
         error: function (err) {
           console.log(err.responseJSON);

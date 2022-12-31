@@ -1,6 +1,6 @@
 from book.models import Genre, Writer
 from home.models import Banner
-from market.models import WishList
+from market.models import CartItem, WishList
 
 
 def get_genres(request):
@@ -25,3 +25,7 @@ def get_wishlist_count(request):
             profile=request.user, is_active=True
         ).count()
     }
+
+
+def get_cart_count(request):
+    return {"cart": CartItem.objects.filter(profile=request.user).count()}

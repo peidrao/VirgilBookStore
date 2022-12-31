@@ -138,3 +138,35 @@ $(".add-to-wishlist").on("click", (e) => {
     },
   });
 });
+
+$(".add-to-cart").on("click", (e) => {
+  let headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+  let url = window.location.href;
+  let bookId = url.split("/")[4];
+  let amount = $(".input-amount").val();
+
+  const payload = {
+    id: bookId,
+    amount: amount,
+  };
+
+  $.ajax({
+    type: "POST",
+    headers: headers,
+    dataType: "json",
+    data: payload,
+    url: `/cart/add/`,
+    success: function (response) {
+      Swal.fire("Success!", response.message, "success");
+    },
+    error: function (err) {
+      Swal.fire({
+        title: "error",
+        icon: "warning",
+        text: err.responseJSON.message,
+      });
+    },
+  });
+});

@@ -93,8 +93,6 @@ $("#form-book-update").on("submit", (e) => {
   let headers = {
     "X-CSRFToken": token,
   };
-  console.log(id);
-  console.log(token);
 
   $.ajax({
     type: "PATCH",
@@ -110,6 +108,32 @@ $("#form-book-update").on("submit", (e) => {
         title: "error",
         icon: "warning",
         text: err.responseJSON,
+      });
+    },
+  });
+});
+
+$(".add-to-wishlist").on("click", (e) => {
+  let url = window.location.href;
+  let bookId = url.split("/")[4];
+
+  let headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+
+  $.ajax({
+    type: "POST",
+    headers: headers,
+    dataType: "json",
+    url: `/wishlist/add/${bookId}`,
+    success: function (response) {
+      Swal.fire("Success!", response.message, "success");
+    },
+    error: function (err) {
+      Swal.fire({
+        title: "error",
+        icon: "warning",
+        text: err.responseJSON.message,
       });
     },
   });

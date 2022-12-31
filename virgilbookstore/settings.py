@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "book",
     "order",
     "user",
+    "market",
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ TEMPLATES = [
                 "home.context_processors.get_genres",
                 "home.context_processors.get_banners",
                 "home.context_processors.get_writers",
+                "home.context_processors.get_wishlist_count",
             ],
         },
     },

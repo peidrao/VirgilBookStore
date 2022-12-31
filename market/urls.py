@@ -17,4 +17,6 @@ urlpatterns = [
         name="wishlist_remove",
     ),
     path("wishlist/", views.WishListView.as_view(), name="wishlist"),
+    path("cart/", views.CartView.as_view(), name="cart"),
+    path("cart/add/", views.CartAddService.as_view(), name="cart_add"),
 ]

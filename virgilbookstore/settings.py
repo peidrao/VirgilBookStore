@@ -53,6 +53,7 @@ TEMPLATES = [
                 "home.context_processors.get_banners",
                 "home.context_processors.get_writers",
                 "home.context_processors.get_wishlist_count",
+                "home.context_processors.get_cart_count",
             ],
         },
     },

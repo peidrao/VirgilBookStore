@@ -82,8 +82,8 @@ $(".btn-plus").click(function () {
     data: { action: "plus" },
     headers: headers,
     success: function (response) {
-      $(".total-price").text(response.total);
-      $(`#book-total-price-${id}`).text(response.price);
+      $(".total-price").text(`R$ ${response.total}`);
+      $(`#book-total-price-${id}`).text(`R$ ${response.price}`);
     },
     error: function (err) {
       console.log(err.responseJSON);

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from django.views import generic
 
-from market.models import Cart, CartItem, WishList
+from market.models import Cart, CartItem, Coupon, WishList
 from book.models import Book
 
 
@@ -160,3 +160,37 @@ class CartDetailsService(generics.RetrieveUpdateDestroyAPIView):
         cart_item.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CouponsListView(generic.ListView):
+    template_name = "pages/coupons.html"
+    queryset = Coupon.objects.all().order_by("created_at")
+
+
+class CouponsUpdateView(generic.DetailView):
+    template_name = "market/coupons_update.html"
+    queryset = Coupon.objects.all()
+
+
+class CouponsAddView(generic.TemplateView):
+    template_name = "market/coupons_add.html"
+
+
+class CouponUpdateStatusService(generics.UpdateAPIView):
+    queryset = Coupon.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request, *args, **kwargs):
+        coupon = self.get_object()
+        is_active = request.data.get("checked")
+
+        if is_active == "false":
+            is_active = False
+        else:
+            is_active = True
+
+        coupon.is_active = is_active
+        coupon.save()
+        return Response(
+            {"message": "Coupon updated successfully"}, status=status.HTTP_200_OK
+        )

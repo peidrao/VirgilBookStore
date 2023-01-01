@@ -42,9 +42,9 @@ class CartItem(models.Model):
 
 
 class Coupon(models.Model):
-    value = models.CharField(max_length=18)
+    name = models.CharField(max_length=18)
     discount = models.IntegerField()
     is_active = models.BooleanField(null=True)
-    created_at = models.BooleanField(null=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)

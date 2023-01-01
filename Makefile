@@ -24,3 +24,6 @@ pre-commit:
 
 commands:
 	python manage.py create_genre && python manage.py create_authors && python manage.py create_books
+
+upgrade-libs:
+	pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from django.views import generic
 
-from market.models import Cart, CartItem, WishList
+from market.models import Cart, CartItem, Coupon, WishList
 from book.models import Book
 
 
@@ -160,3 +160,17 @@ class CartDetailsService(generics.RetrieveUpdateDestroyAPIView):
         cart_item.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CouponsListView(generic.ListView):
+    template_name = "pages/coupons.html"
+    queryset = Coupon.objects.all()
+
+
+class CouponsUpdateView(generic.DetailView):
+    template_name = "market/coupons_update.html"
+    queryset = Coupon.objects.all()
+
+
+class CouponsAddView(generic.TemplateView):
+    template_name = "market/coupons_add.html"

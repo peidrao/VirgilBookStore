@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework import generics, views, status
+from django.db.models import Sum
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -121,3 +122,41 @@ class CartView(generic.ListView):
         }
 
         return render(request, self.template_name, context)
+
+
+class CartDetailsService(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CartItem.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def update(self, request, pk, *args, **kwargs):
+        action = request.data.get("action")
+
+        cart_item = self.queryset.get(id=pk)
+        if action == "plus":
+            cart_item.amount += 1
+        if action == "minus":
+            cart_item.amount -= 1
+            if cart_item.amount == 0:
+                cart_item.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+        cart_item.price = cart_item.book.price * cart_item.amount
+        cart_item.save()
+
+        cart = cart_item.cart
+        total = cart.cart_item.aggregate(total=Sum("price"))["total"]
+        cart.total = total
+        cart.save()
+
+        response = {"price": cart_item.price, "total": cart.total}
+        return Response(response, status=status.HTTP_200_OK)
+
+    def delete(self, request, *args, **kwargs):
+        cart_item = self.get_object()
+        cart = Cart.objects.get(profile=request.user)
+
+        cart.total -= cart_item.price
+        cart.save()
+        cart_item.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

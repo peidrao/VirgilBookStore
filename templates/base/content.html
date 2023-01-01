@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <a href="{% url 'book:book_detail' book.id %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Veja mais detalhes</a>
-                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Adicione ao carrinho</a>
+                    <button id={{book.id}} class="btn btn-sm text-dark p-0 add-to-cart"><i class="fas fa-shopping-cart text-primary mr-1"></i>Adicione ao carrinho</button>
                 </div>
             </div>
         </div>

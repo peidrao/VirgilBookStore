@@ -1,10 +1,10 @@
+import json
+
 from django.shortcuts import render
 from django.db.models import Sum
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-
 from django.views import generic
 
 from market.models import Cart, CartItem, Coupon, WishList
@@ -190,6 +190,22 @@ class CouponUpdateStatusService(generics.UpdateAPIView):
             is_active = True
 
         coupon.is_active = is_active
+        coupon.save()
+        return Response(
+            {"message": "Coupon updated successfully"}, status=status.HTTP_200_OK
+        )
+
+
+class CouponDetails(generics.UpdateAPIView):
+    queryset = Coupon.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request, *args, **kwargs):
+        data = request.body.decode("UTF-8")
+        data = json.loads(data)
+        coupon = self.get_object()
+        coupon.name = data.get("name")
+        coupon.discount = int(data.get("discount"))
         coupon.save()
         return Response(
             {"message": "Coupon updated successfully"}, status=status.HTTP_200_OK

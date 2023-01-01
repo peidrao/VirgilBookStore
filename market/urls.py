@@ -32,4 +32,9 @@ urlpatterns = [
         views.CouponsUpdateView.as_view(),
         name="coupon_update",
     ),
+    path(
+        "coupons/<int:pk>",
+        views.CouponDetails.as_view(),
+        name="coupon_details",
+    ),
 ]

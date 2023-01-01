@@ -1,0 +1,20 @@
+{% extends 'extends.html' %}
+{% load static %}
+
+{% block sidebar %} {% include 'base/sidebar.html' %} {% endblock %}
+{% block content %}
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        {% block dashboard_nav %} {% include 'components/dashboard_nav.html' %} {% endblock %}
+        {% block table_books %} {% include 'components/table_coupons.html' %} {% endblock %}
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block dependencies %}
+{% include 'components/dependecies.html' %}
+
+<script src="{% static 'js/services/coupons.js' %}"></script>
+{% endblock %}

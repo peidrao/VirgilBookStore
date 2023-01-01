@@ -23,6 +23,11 @@ urlpatterns = [
     path("coupons/add/", views.CouponsAddView.as_view(), name="coupon_add"),
     path("coupons/", views.CouponsListView.as_view(), name="coupon"),
     path(
+        "coupons/<int:pk>/update/status",
+        views.CouponUpdateStatusService.as_view(),
+        name="coupon_update_status",
+    ),
+    path(
         "coupons/<int:pk>/update",
         views.CouponsUpdateView.as_view(),
         name="coupon_update",

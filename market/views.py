@@ -164,7 +164,7 @@ class CartDetailsService(generics.RetrieveUpdateDestroyAPIView):
 
 class CouponsListView(generic.ListView):
     template_name = "pages/coupons.html"
-    queryset = Coupon.objects.all()
+    queryset = Coupon.objects.all().order_by("created_at")
 
 
 class CouponsUpdateView(generic.DetailView):
@@ -174,3 +174,23 @@ class CouponsUpdateView(generic.DetailView):
 
 class CouponsAddView(generic.TemplateView):
     template_name = "market/coupons_add.html"
+
+
+class CouponUpdateStatusService(generics.UpdateAPIView):
+    queryset = Coupon.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request, *args, **kwargs):
+        coupon = self.get_object()
+        is_active = request.data.get("checked")
+
+        if is_active == "false":
+            is_active = False
+        else:
+            is_active = True
+
+        coupon.is_active = is_active
+        coupon.save()
+        return Response(
+            {"message": "Coupon updated successfully"}, status=status.HTTP_200_OK
+        )

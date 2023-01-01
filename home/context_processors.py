@@ -20,12 +20,18 @@ def get_writers(request):
 
 
 def get_wishlist_count(request):
-    return {
-        "wishlist": WishList.objects.filter(
+    data = {}
+    if request.user.is_authenticated:
+        data["wishlist"] = WishList.objects.filter(
             profile=request.user, is_active=True
         ).count()
-    }
+    else:
+        data["wishlist"] = 0
+
+    return data
 
 
 def get_cart_count(request):
-    return {"cart": CartItem.objects.filter(profile=request.user).count()}
+    if request.user.is_authenticated:
+        return {"cart": CartItem.objects.filter(profile=request.user).count()}
+    return {"cart": 0}

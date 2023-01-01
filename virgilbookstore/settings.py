@@ -1,11 +1,11 @@
 from pathlib import Path
 import os
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = config("SECRET_KEY")
 
-SECRET_KEY = "*csysrzb&f+f(tq&jkaq(=o-o@u^zs75&@qir998c71*m11wp"
-
-DEBUG = True
+DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -68,11 +68,11 @@ WSGI_APPLICATION = "virgilbookstore.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "virgil_db",
-        "USER": "virgil",
-        "PASSWORD": "virgil@2023",
-        "HOST": "localhost",
-        "PORT": "5433",
+        "NAME": config("DATABASE_NAME"),
+        "USER": config("DATABASE_USER"),
+        "PASSWORD": config("DATABASE_PASS"),
+        "HOST": config("DATABASE_HOST"),
+        "PORT": config("DATABASE_PORT"),
     }
 }
 

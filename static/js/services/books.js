@@ -140,12 +140,15 @@ $(".add-to-wishlist").on("click", (e) => {
 });
 
 $(".add-to-cart").on("click", (e) => {
+  let bookId = e.currentTarget.id;
   let headers = {
     "X-CSRFToken": getCookie("csrftoken"),
   };
-  let url = window.location.href;
-  let bookId = url.split("/")[4];
   let amount = $(".input-amount").val();
+
+  if (!amount) {
+    amount = 1;
+  }
 
   const payload = {
     id: bookId,

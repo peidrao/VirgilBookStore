@@ -62,12 +62,13 @@
                 </tbody>
             </table>
         </div>
+
         <div class="col-lg-4">
             <form class="mb-5" action="">
                 <div class="input-group">
-                    <input type="text" class="form-control p-4" placeholder="Coupon Code">
+                    <input type="text" class="form-control p-4 input-apply-cuppon" placeholder="Coupon Code">
                     <div class="input-group-append">
-                        <button class="btn btn-primary">Apply Coupon</button>
+                        <button class="btn btn-primary buttton-apply-cuppon">Apply Coupon</button>
                     </div>
                 </div>
             </form>
@@ -81,14 +82,21 @@
                         <h6 class="font-weight-medium total-price">R$ {{cart.total}} </h6>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium">Discount</h6>
+                        <h6 class="font-weight-medium discount-price">
+                            R$
+                            {% if cart.total_discount %}
+                            {{ cart.total_discount }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold total-price">R$ {{cart.total}}</h5>
+                        <h5 class="font-weight-bold total-price">R$ {{cart.total_discount}}</h5>
                     </div>
                     <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                 </div>
@@ -106,5 +114,6 @@
 
 {% include 'components/dependecies.html' %}
 <script src="{% static 'js/services/market.js' %}"></script>
+<script src="{% static 'js/services/coupons.js' %}"></script>
 
 {% endblock %}

@@ -115,3 +115,36 @@ $(".remove-discount").on("click", (e) => {
     }
   });
 });
+
+$(".buttton-apply-cuppon").on("click", (e) => {
+  e.preventDefault();
+  let coupon = $(".input-apply-cuppon").val();
+
+  headers = {
+    "X-CSRFToken": getCookie("csrftoken"),
+  };
+
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "/coupons/apply",
+    data: { coupon: coupon },
+    headers: headers,
+    success: function (response) {
+      Swal.fire({
+        title: "Success",
+        icon: "success",
+        text: "coupon applied",
+      });
+      $(".discount-price").text(`R$ ${response.discount}`);
+      $(".total-price").text(`R$ ${response.total_price}`);
+    },
+    error: function (err) {
+      Swal.fire({
+        title: "error",
+        icon: "warning",
+        text: err.responseJSON.message,
+      });
+    },
+  });
+});

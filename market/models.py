@@ -22,6 +22,8 @@ class Cart(models.Model):
         Profile, related_name="cart_profile", on_delete=models.SET_NULL, null=True
     )
     total = models.FloatField(default=0)
+    discount = models.IntegerField(default=0, null=True)
+    total_discount = models.FloatField(default=0)
 
 
 class CartItem(models.Model):

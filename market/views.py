@@ -9,6 +9,7 @@ from django.views import generic
 
 from market.models import Cart, CartItem, Coupon, WishList
 from book.models import Book
+from market.serializers import CouponSerializer
 
 
 class WishListAddService(generics.CreateAPIView):
@@ -196,7 +197,7 @@ class CouponUpdateStatusService(generics.UpdateAPIView):
         )
 
 
-class CouponDetails(generics.UpdateAPIView):
+class CouponDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Coupon.objects.all()
     permission_classes = (IsAuthenticated,)
 
@@ -210,3 +211,16 @@ class CouponDetails(generics.UpdateAPIView):
         return Response(
             {"message": "Coupon updated successfully"}, status=status.HTTP_200_OK
         )
+
+
+class CouponsAddService(generics.CreateAPIView):
+    queryset = Coupon.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CouponSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

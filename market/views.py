@@ -224,3 +224,26 @@ class CouponsAddService(generics.CreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CouponApplyService(generics.CreateAPIView):
+    queryset = Coupon.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        coupon = request.data.get("coupon")
+        if not self.queryset.filter(name=coupon, is_active=True).exists():
+            return Response(
+                {"message": "Invalid coupon"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        coupon = self.queryset.get(name=coupon)
+
+        cart = Cart.objects.get(profile=request.user)
+        total_discount = cart.total * (coupon.discount / 100)
+        cart.discount = total_discount
+        cart.total_discount = cart.total - total_discount
+        cart.save()
+
+        context = {"discount": total_discount, "total_price": cart.total_discount}
+        return Response(context, status=status.HTTP_200_OK)

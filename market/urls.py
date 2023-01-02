@@ -42,4 +42,9 @@ urlpatterns = [
         views.CouponDetails.as_view(),
         name="coupon_details",
     ),
+    path(
+        "coupons/apply",
+        views.CouponApplyService.as_view(),
+        name="coupon_apply",
+    ),
 ]

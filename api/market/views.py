@@ -27,7 +27,6 @@ class WishListAddService(generics.CreateAPIView):
                 {"message": "book added to wishlist"}, status=status.HTTP_200_OK
             )
         else:
-
             return Response(
                 {"message": "It's already on the wish list"},
                 status=status.HTTP_400_BAD_REQUEST,

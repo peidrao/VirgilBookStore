@@ -22,9 +22,6 @@ class Genre(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return str(self.title)
-
     def get_absolute_url(self):
         return reverse("book:book_genre", kwargs={"slug": self.slug})
 
@@ -94,7 +91,7 @@ class Book(models.Model):
 
     def countreview(self):
         reviews = Comment.objects.filter(book=self).aggregate(count=Count("id"))
-        cnt = 0
+        ctn = 0
         if reviews["count"] is not None:
             ctn = int(reviews["count"])
         return ctn

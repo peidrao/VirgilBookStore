@@ -1,11 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from book.helpers import create_book_payload
-from book.models import Book, Images, Comment
+from book.models import Book, Images, Comment, Genre
 from django.shortcuts import get_object_or_404
 
 from book.serializers import BookSerializer
-from .models import Comment, Genre
 from .forms import CommentForm
 from django.views import generic
 from rest_framework import generics, status, permissions, views

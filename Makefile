@@ -1,5 +1,5 @@
 run:
-	python manage.py runserver 127.0.0.1:8001
+	python manage.py runserver
 
 shell:
 	python manage.py shell
@@ -25,5 +25,3 @@ pre-commit:
 commands:
 	python manage.py create_genre && python manage.py create_authors && python manage.py create_books
 
-upgrade-libs:
-	pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U

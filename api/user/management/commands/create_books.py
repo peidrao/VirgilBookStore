@@ -5,31 +5,31 @@ from book.models import Book, Genre, Writer
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        art = Genre.objects.get(slug="arte")
-        comedy = Genre.objects.get(slug="comedia")
-        math = Genre.objects.get(slug="matematica")
+        Genre.objects.get(slug="arte")
+        Genre.objects.get(slug="comedia")
+        Genre.objects.get(slug="matematica")
         fiction = Genre.objects.get(slug="ficcao")
         poetry = Genre.objects.get(slug="poesia")
         policy = Genre.objects.get(slug="politica")
         religion = Genre.objects.get(slug="religiao")
-        economy = Genre.objects.get(slug="economia")
+        Genre.objects.get(slug="economia")
         philosophy = Genre.objects.get(slug="filosofia")
-        medieval_philosophy = Genre.objects.get(slug="filosofia-medieval")
-        stoic_philosophy = Genre.objects.get(slug="filosofia-estoica")
-        history = Genre.objects.get(slug="historia")
-        brazil_history = Genre.objects.get(slug="historia-do-brasil")
+        Genre.objects.get(slug="filosofia-medieval")
+        Genre.objects.get(slug="filosofia-estoica")
+        Genre.objects.get(slug="historia")
+        Genre.objects.get(slug="historia-do-brasil")
         western_history = Genre.objects.get(slug="historia-do-ocidente")
-        africa_history = Genre.objects.get(slug="historia-africana")
+        Genre.objects.get(slug="historia-africana")
 
         jrrt = Writer.objects.get(fullname="J. R. R. Tolkien")
         oc = Writer.objects.get(fullname="Olavo de Carvalho")
         ta = Writer.objects.get(fullname="Tomás de Aquino")
         rg = Writer.objects.get(fullname="René Guénon")
         da = Writer.objects.get(fullname="Dante Alighieri")
-        a = Writer.objects.get(fullname="Aristóteles")
+        Writer.objects.get(fullname="Aristóteles")
         omc = Writer.objects.get(fullname="Otto Maria Carpeaux")
         mfs = Writer.objects.get(fullname="Mário Ferreira dos Santos")
-        csl = Writer.objects.create(fullname="C. S. Lewis")
+        Writer.objects.create(fullname="C. S. Lewis")
 
         if not Book.objects.filter(title="Inferno").exists():
             Book.objects.create(

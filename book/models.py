@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.db import models
 
 from book.choices import BookStatusChoice, CommentStatusChoice
+from book.helper import unique_slugify
 from user.models import Profile
 
 
@@ -24,6 +25,11 @@ class Genre(models.Model):
     def __str__(self):
         return f'{self.title} - {self.slug}'
 
+    def save(self, *args, **kwargs):
+        if not self.slug and self.title:
+            unique_slugify(self, self.title)
+        super().save(*args, **kwargs)
+
 
 class Writer(models.Model):
     fullname = models.CharField(max_length=100, null=False)
@@ -39,6 +45,11 @@ class Writer(models.Model):
 
     def get_absolute_url(self):
         return reverse("writer_detail", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug and self.title:
+            unique_slugify(self, self.title)
+        super().save(*args, **kwargs)
 
 
 class Book(models.Model):
@@ -63,6 +74,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug and self.title:
+            unique_slugify(self, self.title)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("book_detail", kwargs={"slug": self.slug})
@@ -108,10 +124,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.subject
-
-
-def book_pre_save(sender, instance, **kwargs):
-    if not instance.slug and instance.title:
-        instance.slug = slugify(instance.title)
-
-pre_save.connect(book_pre_save, sender=Book)

@@ -21,7 +21,7 @@ class Genre(models.Model):
         return reverse("book:book_genre", kwargs={"slug": self.slug})
 
     def __str__(self):
-        return f'{self.title} - {self.slug}'
+        return f"{self.title} - {self.slug}"
 
     def save(self, *args, **kwargs):
         if not self.slug and self.title:
@@ -127,7 +127,9 @@ class Comment(models.Model):
 
     rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=50, blank=True)
-    status = models.CharField(choices=CommentStatusChoice, default=CommentStatusChoice.PENDING)
+    status = models.CharField(
+        choices=CommentStatusChoice, default=CommentStatusChoice.PENDING
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

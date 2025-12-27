@@ -1,5 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import messages
+from django.shortcuts import render
 from book.models import Book, Images, Comment, Genre
 from django.shortcuts import get_object_or_404
 

@@ -1,82 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Livraria Premium - Sua próxima leitura está aqui</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Ajustes mínimos */
-    .smooth-scroll { scroll-behavior: smooth; }
-    .overflow-x-auto::-webkit-scrollbar { height: 8px; }
-    .overflow-x-auto::-webkit-scrollbar-track { background: #f1f1f1; }
-    .overflow-x-auto::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-  </style>
-</head>
-<body class="bg-gray-50 smooth-scroll">
-  
-  <!-- Header -->
-  <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-4">
-      <div class="flex items-center justify-between gap-4">
-        <!-- Logo -->
-        <a href="/index.html" class="text-2xl font-bold text-amber-800 hover:text-amber-900 transition-colors">
-          📚 Livraria Premium
-        </a>
-        
-        <!-- Search - Desktop -->
-        <div class="hidden md:flex flex-1 max-w-2xl">
-          <div class="relative w-full">
-            <input 
-              type="search" 
-              placeholder="Buscar livros, autores, ISBN..." 
-              class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-              aria-label="Buscar livros"
-            >
-            <button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-amber-700" aria-label="Buscar">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Nav Links -->
-        <nav class="hidden lg:flex items-center gap-6">
-          <a href="/books.html" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Categorias</a>
-          <a href="/books.html?filter=ofertas" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Ofertas</a>
-          <a href="/books.html?filter=novidades" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Novidades</a>
-          <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Ajuda</a>
-        </nav>
-        
-        <!-- Cart -->
-        <a href="/cart.html" class="relative p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Carrinho de compras">
-          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-          </svg>
-          <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
-        </a>
-      </div>
-      
-      <!-- Search - Mobile -->
-      <div class="md:hidden mt-3">
-        <div class="relative">
-          <input 
-            type="search" 
-            placeholder="Buscar livros..." 
-            class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-            aria-label="Buscar livros"
-          >
-          <button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" aria-label="Buscar">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
+{% extends "base.html" %}
+{% block title %}Livraria Premium - Sua próxima leitura está aqui{% endblock %}
+{% block content %}
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-amber-50 to-orange-50 py-12 md:py-20">
     <div class="container mx-auto px-4">
@@ -99,118 +23,13 @@
     </div>
   </section>
 
-
   <!-- Destaques Section -->
   <section class="py-12 md:py-16">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold text-gray-900 mb-8">Destaques da Semana</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        
-        <!-- Book Card 1 -->
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="/book.html?id=1" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book1/300/400" alt="Capa do livro O Senhor dos Anéis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-25%</span>
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm md:text-base">O Senhor dos Anéis</h3>
-              <p class="text-sm text-gray-600 mb-2">J.R.R. Tolkien</p>
-              <div class="flex items-center mb-2">
-                <div class="flex text-yellow-400 text-xs">★★★★★</div>
-                <span class="text-xs text-gray-500 ml-1">(4.9)</span>
-              </div>
-              <div class="flex items-baseline gap-2">
-                <span class="text-lg font-bold text-amber-700">R$ 89,90</span>
-                <span class="text-sm text-gray-400 line-through">R$ 119,90</span>
-              </div>
-            </div>
-          </a>
-          <div class="px-4 pb-4">
-            <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        </article>
-
-        <!-- Book Card 2 -->
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="/book.html?id=2" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book2/300/400" alt="Capa do livro 1984" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded mb-2">Novo</span>
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm md:text-base">1984</h3>
-              <p class="text-sm text-gray-600 mb-2">George Orwell</p>
-              <div class="flex items-center mb-2">
-                <div class="flex text-yellow-400 text-xs">★★★★★</div>
-                <span class="text-xs text-gray-500 ml-1">(4.8)</span>
-              </div>
-              <div class="flex items-baseline gap-2">
-                <span class="text-lg font-bold text-amber-700">R$ 54,90</span>
-              </div>
-            </div>
-          </a>
-          <div class="px-4 pb-4">
-            <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        </article>
-
-        <!-- Book Card 3 -->
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="/book.html?id=3" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book3/300/400" alt="Capa do livro Harry Potter" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm md:text-base">Harry Potter e a Pedra Filosofal</h3>
-              <p class="text-sm text-gray-600 mb-2">J.K. Rowling</p>
-              <div class="flex items-center mb-2">
-                <div class="flex text-yellow-400 text-xs">★★★★★</div>
-                <span class="text-xs text-gray-500 ml-1">(5.0)</span>
-              </div>
-              <div class="flex items-baseline gap-2">
-                <span class="text-lg font-bold text-amber-700">R$ 49,90</span>
-              </div>
-            </div>
-          </a>
-          <div class="px-4 pb-4">
-            <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        </article>
-
-        <!-- Book Card 4 -->
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="/book.html?id=4" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book4/300/400" alt="Capa do livro Cem Anos de Solidão" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-15%</span>
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm md:text-base">Cem Anos de Solidão</h3>
-              <p class="text-sm text-gray-600 mb-2">Gabriel García Márquez</p>
-              <div class="flex items-center mb-2">
-                <div class="flex text-yellow-400 text-xs">★★★★★</div>
-                <span class="text-xs text-gray-500 ml-1">(4.7)</span>
-              </div>
-              <div class="flex items-baseline gap-2">
-                <span class="text-lg font-bold text-amber-700">R$ 59,90</span>
-                <span class="text-sm text-gray-400 line-through">R$ 69,90</span>
-              </div>
-            </div>
-          </a>
-          <div class="px-4 pb-4">
-            <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        </article>
-
+        <!-- ...cards... -->
+        ...existing code...
       </div>
     </div>
   </section>
@@ -220,37 +39,8 @@
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold text-gray-900 mb-8">Explore por Categoria</h2>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        
-        <a href="/books.html?category=ficcao" class="group p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg hover:shadow-lg transition-all text-center">
-          <div class="text-4xl mb-3">📖</div>
-          <h3 class="font-semibold text-gray-900 group-hover:text-amber-700">Ficção</h3>
-        </a>
-
-        <a href="/books.html?category=fantasia" class="group p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg hover:shadow-lg transition-all text-center">
-          <div class="text-4xl mb-3">🧙</div>
-          <h3 class="font-semibold text-gray-900 group-hover:text-purple-700">Fantasia</h3>
-        </a>
-
-        <a href="/books.html?category=romance" class="group p-6 bg-gradient-to-br from-red-50 to-pink-50 rounded-lg hover:shadow-lg transition-all text-center">
-          <div class="text-4xl mb-3">❤️</div>
-          <h3 class="font-semibold text-gray-900 group-hover:text-red-700">Romance</h3>
-        </a>
-
-        <a href="/books.html?category=suspense" class="group p-6 bg-gradient-to-br from-gray-50 to-slate-50 rounded-lg hover:shadow-lg transition-all text-center">
-          <div class="text-4xl mb-3">🔍</div>
-          <h3 class="font-semibold text-gray-900 group-hover:text-gray-700">Suspense</h3>
-        </a>
-
-        <a href="/books.html?category=autoajuda" class="group p-6 bg-gradient-to-br from-green-50 to-teal-50 rounded-lg hover:shadow-lg transition-all text-center">
-          <div class="text-4xl mb-3">🌱</div>
-          <h3 class="font-semibold text-gray-900 group-hover:text-green-700">Autoajuda</h3>
-        </a>
-
-        <a href="/books.html?category=biografias" class="group p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg hover:shadow-lg transition-all text-center">
-          <div class="text-4xl mb-3">👤</div>
-          <h3 class="font-semibold text-gray-900 group-hover:text-blue-700">Biografias</h3>
-        </a>
-
+        <!-- ...categorias... -->
+        ...existing code...
       </div>
     </div>
   </section>
@@ -262,43 +52,89 @@
         <h2 class="text-3xl font-bold text-gray-900">Mais Vendidos</h2>
         <a href="/books.html?sort=bestsellers" class="text-amber-700 hover:text-amber-800 font-medium">Ver todos →</a>
       </div>
-      
       <div class="overflow-x-auto pb-4 -mx-4 px-4">
         <div class="flex gap-4 md:gap-6" style="width: max-content;">
-          
-          <!-- Book Card -->
-          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group w-40 md:w-48 flex-shrink-0">
-            <a href="/book.html?id=5" class="block">
-              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-                <img src="https://picsum.photos/seed/book5/300/400" alt="Capa do livro O Hobbit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              </div>
-              <div class="p-3">
-                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Hobbit</h3>
-                <p class="text-xs text-gray-600 mb-2">J.R.R. Tolkien</p>
-                <div class="flex items-center mb-2">
-                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
-                </div>
-                <div class="text-base font-bold text-amber-700">R$ 44,90</div>
-              </div>
-            </a>
-          </article>
+          <!-- ...mais vendidos... -->
+          ...existing code...
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group w-40 md:w-48 flex-shrink-0">
-            <a href="/book.html?id=6" class="block">
-              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-                <img src="https://picsum.photos/seed/book6/300/400" alt="Capa do livro O Pequeno Príncipe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              </div>
-              <div class="p-3">
-                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Pequeno Príncipe</h3>
-                <p class="text-xs text-gray-600 mb-2">Antoine de Saint-Exupéry</p>
-                <div class="flex items-center mb-2">
-                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
-                </div>
-                <div class="text-base font-bold text-amber-700">R$ 29,90</div>
-              </div>
-            </a>
-          </article>
+  <!-- Newsletter Section -->
+  <section class="py-12 md:py-16 bg-gradient-to-r from-amber-700 to-orange-600">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Receba nossas novidades</h2>
+        <p class="text-amber-50 mb-6">Cadastre-se e ganhe 10% de desconto na primeira compra!</p>
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <div class="flex-1">
+            <label for="newsletter-email" class="sr-only">E-mail</label>
+            <input 
+              type="email" 
+              id="newsletter-email" 
+              placeholder="Seu melhor e-mail" 
+              required
+              class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
+              aria-label="E-mail para newsletter"
+            >
+          </div>
+          <button type="submit" class="bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg transition-colors whitespace-nowrap">
+            Cadastrar
+          </button>
+        </form>
+        <p id="newsletter-message" class="mt-4 text-sm text-amber-50 hidden"></p>
+      </div>
+    </div>
+  </section>
 
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <!-- ...footer... -->
+        ...existing code...
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-sm">
+        <p>&copy; 2025 Livraria Premium. Todos os direitos reservados.</p>
+        <div class="flex justify-center gap-4 mt-4 flex-wrap">
+          <a href="#" class="hover:text-amber-400 transition-colors">Termos de Uso</a>
+          <span>|</span>
+          <a href="#" class="hover:text-amber-400 transition-colors">Política de Privacidade</a>
+          <span>|</span>
+          <a href="#" class="hover:text-amber-400 transition-colors">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TypeScript para Newsletter -->
+  <script type="module">
+    // Newsletter form validation and submission
+    const newsletterForm = document.getElementById('newsletter-form');
+    const newsletterEmail = document.getElementById('newsletter-email');
+    const newsletterMessage = document.getElementById('newsletter-message');
+
+    newsletterForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = newsletterEmail.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        newsletterMessage.textContent = '❌ Por favor, insira um e-mail válido.';
+        newsletterMessage.classList.remove('hidden');
+        newsletterMessage.classList.add('text-red-200');
+        return;
+      }
+      newsletterMessage.textContent = '✅ Cadastro realizado! Verifique seu e-mail para confirmar.';
+      newsletterMessage.classList.remove('hidden', 'text-red-200');
+      newsletterMessage.classList.add('text-green-200');
+      newsletterEmail.value = '';
+      setTimeout(() => {
+        newsletterMessage.classList.add('hidden');
+      }, 5000);
+    });
+  </script>
+{% endblock %}
           <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group w-40 md:w-48 flex-shrink-0">
             <a href="/book.html?id=7" class="block">
               <div class="aspect-[3/4] bg-gray-200 overflow-hidden">

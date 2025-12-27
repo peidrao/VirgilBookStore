@@ -6,6 +6,7 @@ class Command(BaseCommand):
     """
     Comando para criar gêneros e sub-gêneros de forma estruturada.
     """
+
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS("Iniciando a criação de gêneros..."))
 
@@ -17,7 +18,7 @@ class Command(BaseCommand):
             ("Poesia", None),
             ("Política", None),
             ("Religião", None),
-            ("Economia", None), # Corrigido de "Econômia"
+            ("Economia", None),  # Corrigido de "Econômia"
             ("Filosofia", None),
             ("Filosofia Medieval", "Filosofia"),
             ("Filosofia Estóica", "Filosofia"),
@@ -41,15 +42,18 @@ class Command(BaseCommand):
                     parent_obj = created_genres[parent_title]
                 else:
                     # Garante que o pai exista antes de criar o filho
-                    parent_obj, created = Genre.objects.get_or_create(title=parent_title)
+                    parent_obj, created = Genre.objects.get_or_create(
+                        title=parent_title
+                    )
                     created_genres[parent_title] = parent_obj
                     if created:
-                        self.stdout.write(self.style.SUCCESS(f'Gênero "{parent_obj.title}" criado.'))
+                        self.stdout.write(
+                            self.style.SUCCESS(f'Gênero "{parent_obj.title}" criado.')
+                        )
 
             # Cria ou obtém o gênero, associando ao pai se houver
             genre, created = Genre.objects.get_or_create(
-                title=title,
-                defaults={'origin': parent_obj}
+                title=title, defaults={"origin": parent_obj}
             )
             created_genres[title] = genre
 
@@ -60,8 +64,14 @@ class Command(BaseCommand):
                 if genre.origin != parent_obj:
                     genre.origin = parent_obj
                     genre.save()
-                    self.stdout.write(self.style.WARNING(f'Gênero "{title}" atualizado com o pai "{parent_title}".'))
+                    self.stdout.write(
+                        self.style.WARNING(
+                            f'Gênero "{title}" atualizado com o pai "{parent_title}".'
+                        )
+                    )
                 else:
-                    self.stdout.write(self.style.WARNING(f'Gênero "{title}" já existe.'))
+                    self.stdout.write(
+                        self.style.WARNING(f'Gênero "{title}" já existe.')
+                    )
 
         self.stdout.write(self.style.SUCCESS("Criação de gêneros finalizada."))

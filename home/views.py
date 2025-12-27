@@ -4,8 +4,7 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
 from book.models import Book
-from .models import ContactMessage
-from .forms import ContactMessageForm, SearchForm
+from .forms import SearchForm
 
 
 class HomeView(generic.ListView):

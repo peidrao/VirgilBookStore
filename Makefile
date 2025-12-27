@@ -4,6 +4,12 @@ run:
 shell:
 	python3 manage.py shell
 
+populate:
+	python3 manage.py 0_create_superuser
+	python3 manage.py 1_create_genre
+	python3 manage.py 2_create_authors
+	python3 manage.py 3_create_books
+
 makemessages:
 	django-admin makemessages --all --ignore venv
 
@@ -28,4 +34,3 @@ pre-commit:
 
 commands:
 	python3 manage.py create_genre && python manage.py create_authors && python manage.py create_books
-

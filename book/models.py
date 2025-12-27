@@ -1,5 +1,3 @@
-from django.db.models.signals import pre_save
-from django.utils.text import slugify
 from django.db.models import Avg, Count
 from django.urls import reverse
 from django.db import models
@@ -30,6 +28,9 @@ class Genre(models.Model):
             unique_slugify(self, self.title)
         super().save(*args, **kwargs)
 
+    class Meta:
+        db_table = "genres"
+
 
 class Writer(models.Model):
     fullname = models.CharField(max_length=100, null=False)
@@ -50,6 +51,9 @@ class Writer(models.Model):
         if not self.slug and self.title:
             unique_slugify(self, self.title)
         super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = "writers"
 
 
 class Book(models.Model):
@@ -99,6 +103,9 @@ class Book(models.Model):
             ctn = int(reviews["count"])
         return ctn
 
+    class Meta:
+        db_table = "books"
+
 
 class Images(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
@@ -107,6 +114,9 @@ class Images(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        db_table = "book_images"
 
 
 class Comment(models.Model):
@@ -124,3 +134,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.subject
+
+    class Meta:
+        db_table = "comments"

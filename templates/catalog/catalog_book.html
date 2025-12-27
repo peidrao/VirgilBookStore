@@ -1,0 +1,27 @@
+<article
+        class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+    <a href="book.html?id=1" class="block">
+        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+            <img src="https://picsum.photos/seed/book1/300/400" alt="O Senhor dos Anéis"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4">
+            <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-25%</span>
+            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm"> {{ book.title }} </h3>
+            <p class="text-xs text-gray-600 mb-2">{{ book.writer.fullname }}</p>
+            <div class="flex items-center mb-2">
+                <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                <span class="text-xs text-gray-500 ml-1">(523)</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-base md:text-lg font-bold text-amber-700">R$ 89,90</span>
+                <span class="text-xs text-gray-400 line-through">R$ 119,90</span>
+            </div>
+        </div>
+    </a>
+    <div class="px-4 pb-4">
+        <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+            Adicionar
+        </button>
+    </div>
+</article>

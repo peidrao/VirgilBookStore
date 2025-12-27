@@ -10,8 +10,7 @@ const Navbar = () => {
       <div className="flex justify-between">
         <div className="flex">
           <div className="bg-red-400 p-4 text-white">
-          VirgilBook<span className="uppercase font-bold">Store</span>
-
+            VirgilBook<span className="uppercase font-bold">Store</span>
           </div>
           <div className="flex p-4 text-slate-400 justify-center uppercase font-semibold">
             <a className={isCategory ? "text-white" : "pr-4 hover:text-white"}>

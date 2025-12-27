@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.core.management.base import BaseCommand
 from book.models import Book, Genre, Writer
 
@@ -6,42 +7,30 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Usando get_or_create para garantir que os objetos existam e evitar duplicação
         genres = {
-            "arte": Genre.objects.get_or_create(title="Arte", slug="arte")[0],
-            "comedia": Genre.objects.get_or_create(title="Comédia", slug="comedia")[0],
-            "matematica": Genre.objects.get_or_create(
-                title="Matemática", slug="matematica"
-            )[0],
-            "ficcao": Genre.objects.get_or_create(title="Ficção", slug="ficcao")[0],
-            "poesia": Genre.objects.get_or_create(title="Poesia", slug="poesia")[0],
-            "politica": Genre.objects.get_or_create(title="Política", slug="politica")[
-                0
-            ],
-            "religiao": Genre.objects.get_or_create(title="Religião", slug="religiao")[
-                0
-            ],
-            "economia": Genre.objects.get_or_create(title="Economia", slug="economia")[
-                0
-            ],
-            "filosofia": Genre.objects.get_or_create(
-                title="Filosofia", slug="filosofia"
-            )[0],
+            "arte": Genre.objects.get_or_create(title="Arte")[0],
+            "comedia": Genre.objects.get_or_create(title="Comédia")[0],
+            "matematica": Genre.objects.get_or_create(title="Matemática")[0],
+            "ficcao": Genre.objects.get_or_create(title="Ficção")[0],
+            "poesia": Genre.objects.get_or_create(title="Poesia")[0],
+            "politica": Genre.objects.get_or_create(title="Política")[0],
+            "religiao": Genre.objects.get_or_create(title="Religião")[0],
+            "economia": Genre.objects.get_or_create(title="Economia")[0],
+            "filosofia": Genre.objects.get_or_create(title="Filosofia")[0],
             "filosofia-medieval": Genre.objects.get_or_create(
-                title="Filosofia Medieval", slug="filosofia-medieval"
+                title="Filosofia Medieval"
             )[0],
             "filosofia-estoica": Genre.objects.get_or_create(
-                title="Filosofia Estóica", slug="filosofia-estoica"
+                title="Filosofia Estóica"
             )[0],
-            "historia": Genre.objects.get_or_create(title="História", slug="historia")[
-                0
-            ],
+            "historia": Genre.objects.get_or_create(title="História")[0],
             "historia-do-brasil": Genre.objects.get_or_create(
-                title="História do Brasil", slug="historia-do-brasil"
+                title="História do Brasil"
             )[0],
             "historia-do-ocidente": Genre.objects.get_or_create(
-                title="História do Ocidente", slug="historia-do-ocidente"
+                title="História do Ocidente"
             )[0],
             "historia-africana": Genre.objects.get_or_create(
-                title="História Africana", slug="historia-africana"
+                title="História Africana"
             )[0],
         }
 
@@ -77,8 +66,8 @@ class Command(BaseCommand):
                 "writer": writers["Dante Alighieri"],
                 "genre": genres["poesia"],
                 "description": "O Inferno é a primeira parte da Divina Comédia de Dante Alighieri, sendo as outras duas o Purgatório e o Paraíso.",
-                "price": 50,
-                "status": 1,
+                "price": Decimal("50.00"),
+                "status": "NEW",
                 "amount": 12,
             },
             {
@@ -86,8 +75,8 @@ class Command(BaseCommand):
                 "writer": writers["Dante Alighieri"],
                 "genre": genres["poesia"],
                 "description": "Purgatório é a segunda parte da Divina Comédia de Dante Alighieri. Está dividido em trinta e três cantos.",
-                "price": 20,
-                "status": 1,
+                "price": Decimal("20.00"),
+                "status": "NEW",
                 "amount": 40,
             },
             {
@@ -95,8 +84,8 @@ class Command(BaseCommand):
                 "writer": writers["Dante Alighieri"],
                 "genre": genres["poesia"],
                 "description": "Paraíso é a terceira e última parte da Divina Comédia de Dante. É uma alegoria, dizendo da visão de Dante do céu, guiado por Beatriz, amor platônico de Dante.",
-                "price": 78,
-                "status": 1,
+                "price": Decimal("78.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -104,8 +93,8 @@ class Command(BaseCommand):
                 "writer": writers["Dante Alighieri"],
                 "genre": genres["poesia"],
                 "description": "Escrito originalmente em italiano vulgar baseado no dialeto toscano da época e bastante semelhante ao italiano atual, e não em latim como fazia-se comum à época, trata-se de um poema articulado por trilogias",
-                "price": 150,
-                "status": 1,
+                "price": Decimal("150.00"),
+                "status": "NEW",
                 "amount": 120,
             },
             {
@@ -113,8 +102,8 @@ class Command(BaseCommand):
                 "writer": writers["J. R. R. Tolkien"],
                 "genre": genres["ficcao"],
                 "description": "O Silmarillion é o relato dos Dias Antigos da Primeira Era do mundo criado por J.R.R. Tolkien",
-                "price": 44,
-                "status": 1,
+                "price": Decimal("44.00"),
+                "status": "NEW",
                 "amount": 33,
             },
             {
@@ -122,8 +111,8 @@ class Command(BaseCommand):
                 "writer": writers["J. R. R. Tolkien"],
                 "genre": genres["ficcao"],
                 "description": "Bilbo Bolseiro era um dos mais respeitáveis hobbits de todo o Condado até que, um dia, o mago Gandalf bate à sua porta.",
-                "price": 31,
-                "status": 1,
+                "price": Decimal("31.00"),
+                "status": "NEW",
                 "amount": 2,
             },
             {
@@ -131,8 +120,8 @@ class Command(BaseCommand):
                 "writer": writers["J. R. R. Tolkien"],
                 "genre": genres["ficcao"],
                 "description": "Apesar de ter sido publicado em três volumes – A Sociedade do Anel, As Duas Torres e O Retorno do Rei – desde os anos 1950, O Senhor dos Anéis não é exatamente uma trilogia, mas um único grande romance que só pode ser compreendido em seu conjunto, segundo a concepção de seu autor, J.R.R. Tolkien. ",
-                "price": 200,
-                "status": 1,
+                "price": Decimal("200.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -140,8 +129,8 @@ class Command(BaseCommand):
                 "writer": writers["J. R. R. Tolkien"],
                 "genre": genres["ficcao"],
                 "description": "O último dos três Grandes Contos Perdidos do legendário de J.R.R.Tolkien narra a jornada de Tuor rumo à cidade secreta de Gondolin, refúgio élfico do povo do Rei Turgon. Contra a bela cidade, levanta-se Morgoth, o Inimigo Sombrio, com seu exército de seres malévolos.",
-                "price": 35,
-                "status": 1,
+                "price": Decimal("35.00"),
+                "status": "NEW",
                 "amount": 19,
             },
             {
@@ -149,8 +138,8 @@ class Command(BaseCommand):
                 "writer": writers["Olavo de Carvalho"],
                 "genre": genres["filosofia"],
                 "description": "A tese fundamental deste monumental ensaio é a de que a história do ocidente é marcada pela ideia de Império e de suas sucessivas tentativas de reestruturação; mesmo com roupagens diferentes, há sempre o mesmo objetivo: ampliar os domínios do Império até os limites do mundo visível.",
-                "price": 70,
-                "status": 1,
+                "price": Decimal("70.00"),
+                "status": "NEW",
                 "amount": 190,
             },
             {
@@ -158,8 +147,8 @@ class Command(BaseCommand):
                 "writer": writers["Olavo de Carvalho"],
                 "genre": genres["filosofia"],
                 "description": "A Nova Era, da qual Fritjof Capra se tornou festejado porta-voz, e a Revolução Cultural, de Antonio Gramsci, têm algo em comum: ambas pretendem introduzir no espírito humano modificações vastas, profundas e irreversíveis.",
-                "price": 56,
-                "status": 1,
+                "price": Decimal("56.00"),
+                "status": "NEW",
                 "amount": 20,
             },
             {
@@ -167,8 +156,8 @@ class Command(BaseCommand):
                 "writer": writers["Olavo de Carvalho"],
                 "genre": genres["filosofia"],
                 "description": "Quem é o imbecil coletivo?Ele é duplo: nasce do improvável matrimônio do intelectual pernóstico com a ralé enfurecida.",
-                "price": 66,
-                "status": 1,
+                "price": Decimal("66.00"),
+                "status": "NEW",
                 "amount": 5,
             },
             {
@@ -176,8 +165,8 @@ class Command(BaseCommand):
                 "writer": writers["Olavo de Carvalho"],
                 "genre": genres["filosofia"],
                 "description": "Mas não só. Olavo de Carvalho nos recorda que não esquecer nossa condição mortal é o ponto de partida da investigação metafísica",
-                "price": 35,
-                "status": 1,
+                "price": Decimal("35.00"),
+                "status": "NEW",
                 "amount": 120,
             },
             {
@@ -185,8 +174,8 @@ class Command(BaseCommand):
                 "writer": writers["Olavo de Carvalho"],
                 "genre": genres["filosofia"],
                 "description": " O mínimo que você precisa saber para não ser idiota, são uma pequena parcela dos textos assinados pelo filósofo em diversos veículos da imprensa brasileira entre 1997 e 2013.",
-                "price": 299,
-                "status": 1,
+                "price": Decimal("299.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -194,8 +183,8 @@ class Command(BaseCommand):
                 "writer": writers["Tomás de Aquino"],
                 "genre": genres["filosofia"],
                 "description": "Verdade e conhecimento', em edição bilíngue, apresenta ao leitor o tratamento que Tomás de Aquino dá - nas Quaestiones Disputatae de Veritate ",
-                "price": 4,
-                "status": 1,
+                "price": Decimal("4.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -203,8 +192,8 @@ class Command(BaseCommand):
                 "writer": writers["Tomás de Aquino"],
                 "genre": genres["filosofia"],
                 "description": "Suma Teológica, a síntese brilhante de Santo Tomás de Aquino do pensamento cristão, teve um impacto decisivo e permanente na filosofia e na religião desde o século XIII.",
-                "price": 189,
-                "status": 1,
+                "price": Decimal("189.00"),
+                "status": "NEW",
                 "amount": 43,
             },
             {
@@ -212,8 +201,8 @@ class Command(BaseCommand):
                 "writer": writers["Tomás de Aquino"],
                 "genre": genres["religiao"],
                 "description": "Tomás de Aquino, filósofo e teólogo dominicano, santo e doutor da Igreja, escreveu diversas obras, dentre as mais importantes estão as famosas Questões Disputadas, que são o fruto característico da universidade medieval. ",
-                "price": 78,
-                "status": 1,
+                "price": Decimal("78.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -221,8 +210,8 @@ class Command(BaseCommand):
                 "writer": writers["Tomás de Aquino"],
                 "genre": genres["religiao"],
                 "description": "ão Tomás de Aquino foi um importante teólogo, filósofo e padre dominicano do século XIII. Foi declarado santo pelo papa João XXII em 18 de julho de 1323. ",
-                "price": 10,
-                "status": 1,
+                "price": Decimal("10.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -230,8 +219,8 @@ class Command(BaseCommand):
                 "writer": writers["René Guénon"],
                 "genre": genres["religiao"],
                 "description": "Essa obra extremamente profética do grande filósofo perenialista René Guénon trata de uma investigação das causas responsáveis pela atual crise no mundo moderno, bem como as suas consequências e possíveis soluções. Mesmo tendo sido publicada pela primeira vez em 1927, a obra continua a ser relevante.",
-                "price": 18,
-                "status": 1,
+                "price": Decimal("18.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -239,8 +228,8 @@ class Command(BaseCommand):
                 "writer": writers["René Guénon"],
                 "genre": genres["religiao"],
                 "description": "Nesta obra, o grande filósofo perenialista René Guénon analisa um dos símbolos mais antigos e mais proeminentes da história da humanidade, a Cruz, sob o ponto de vista metafísico e comparativo da grande tradição primordial, e não do ponto de vista puramente histórico",
-                "price": 8,
-                "status": 1,
+                "price": Decimal("8.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -248,8 +237,8 @@ class Command(BaseCommand):
                 "writer": writers["René Guénon"],
                 "genre": genres["religiao"],
                 "description": "",
-                "price": 11,
-                "status": 1,
+                "price": Decimal("11.00"),
+                "status": "NEW",
                 "amount": 12,
             },
             {
@@ -257,8 +246,8 @@ class Command(BaseCommand):
                 "writer": writers["Otto Maria Carpeaux"],
                 "genre": genres["filosofia"],
                 "description": "Retratos e Leituras é o quarto livro escrito por Otto Maria Carpeaux no Brasil. A primeira edição foi publicada em 1953. ",
-                "price": 49,
-                "status": 1,
+                "price": Decimal("49.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -266,8 +255,8 @@ class Command(BaseCommand):
                 "writer": writers["Otto Maria Carpeaux"],
                 "genre": genres["historia-do-ocidente"],
                 "description": "O primeiro volume da História da Literatura Ocidental, de Carpeaux. Neste volume, o autor discorre sobre as literaturas grega e latina.",
-                "price": 120,
-                "status": 1,
+                "price": Decimal("120.00"),
+                "status": "NEW",
                 "amount": 97,
             },
             {
@@ -275,8 +264,8 @@ class Command(BaseCommand):
                 "writer": writers["Otto Maria Carpeaux"],
                 "genre": genres["religiao"],
                 "description": "Estamos em crise, quer dizer, estamos sem fé. Começou na Reforma, com a autocracia do indivíduo, o caminho funesto que, através do racionalismo, iluminismo, liberalismo, imperialismo, bolchevismo, conduz ainda ao horror do aniquilamento.",
-                "price": 46,
-                "status": 1,
+                "price": Decimal("46.00"),
+                "status": "NEW",
                 "amount": 10,
             },
             {
@@ -284,8 +273,8 @@ class Command(BaseCommand):
                 "writer": writers["Mário Ferreira dos Santos"],
                 "genre": genres["politica"],
                 "description": "Ocupando um lugar de destaque na vasta produção do filósofo brasileiro Mário Ferreira dos Santos, Filosofia da Crise é o mais novo lançamento da É Realizações. ",
-                "price": 33,
-                "status": 1,
+                "price": Decimal("33.00"),
+                "status": "NEW",
                 "amount": 40,
             },
             {
@@ -293,8 +282,8 @@ class Command(BaseCommand):
                 "writer": writers["Mário Ferreira dos Santos"],
                 "genre": genres["filosofia"],
                 "description": "A história nos relata que houve muitas invasões horizontais de bárbaros; hoje, porém, vivemos uma invasão vertical de bárbaros, que é a que penetra pela cultura",
-                "price": 47,
-                "status": 1,
+                "price": Decimal("47.00"),
+                "status": "NEW",
                 "amount": 9,
             },
             {
@@ -302,8 +291,8 @@ class Command(BaseCommand):
                 "writer": writers["Mário Ferreira dos Santos"],
                 "genre": genres["filosofia"],
                 "description": "resultado da transcrição de duas palestras de Mário Ferreira dos Santos.",
-                "price": 12,
-                "status": 1,
+                "price": Decimal("12.00"),
+                "status": "NEW",
                 "amount": 20,
             },
             # Livros de C.S. Lewis
@@ -312,8 +301,8 @@ class Command(BaseCommand):
                 "writer": writers["C. S. Lewis"],
                 "genre": genres["ficcao"],
                 "description": "Viagens ao fim do mundo, criaturas fantásticas e batalhas épicas entre o bem e o mal - o que mais um leitor poderia querer de um livro? O livro que tem tudo isso é O Leão, a Feiticeira e o Guarda-Roupa, escrito em 1950 por C. S. Lewis.",
-                "price": 80,
-                "status": 1,
+                "price": Decimal("80.00"),
+                "status": "NEW",
                 "amount": 25,
             },
             {
@@ -321,8 +310,8 @@ class Command(BaseCommand):
                 "writer": writers["C. S. Lewis"],
                 "genre": genres["religiao"],
                 "description": "Um dos maiores clássicos do pensamento cristão, esta obra foi adaptada de uma série de programas de rádio produzidos pela BBC durante a Segunda Guerra Mundial.",
-                "price": 45,
-                "status": 1,
+                "price": Decimal("45.00"),
+                "status": "NEW",
                 "amount": 30,
             },
             {
@@ -330,8 +319,8 @@ class Command(BaseCommand):
                 "writer": writers["C. S. Lewis"],
                 "genre": genres["religiao"],
                 "description": "Irônica, astuta e original, esta obra-prima da sátira é a correspondência entre um diabo e seu sobrinho, um demônio júnior.",
-                "price": 38,
-                "status": 1,
+                "price": Decimal("38.00"),
+                "status": "NEW",
                 "amount": 15,
             },
             # Livros de Filosofia Clássica
@@ -340,8 +329,8 @@ class Command(BaseCommand):
                 "writer": writers["Platão"],
                 "genre": genres["filosofia"],
                 "description": "A República é um diálogo socrático escrito por Platão, filósofo grego, por volta de 380 a.C. É uma das obras mais influentes da filosofia e da teoria política.",
-                "price": 65,
-                "status": 1,
+                "price": Decimal("65.00"),
+                "status": "NEW",
                 "amount": 20,
             },
             {
@@ -349,8 +338,8 @@ class Command(BaseCommand):
                 "writer": writers["Sêneca"],
                 "genre": genres["filosofia-estoica"],
                 "description": "Um dos textos mais importantes da filosofia estoica, onde Sêneca argumenta que a vida não é curta, mas nós a tornamos assim.",
-                "price": 25,
-                "status": 1,
+                "price": Decimal("25.00"),
+                "status": "NEW",
                 "amount": 50,
             },
             {
@@ -358,8 +347,8 @@ class Command(BaseCommand):
                 "writer": writers["Aristóteles"],
                 "genre": genres["filosofia"],
                 "description": "Principal obra de Aristóteles sobre ética. Nela, o filósofo expõe sua concepção de eudaimonia (felicidade) como a finalidade da vida humana.",
-                "price": 55,
-                "status": 1,
+                "price": Decimal("55.00"),
+                "status": "NEW",
                 "amount": 18,
             },
         ]

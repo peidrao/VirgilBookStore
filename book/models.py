@@ -48,8 +48,8 @@ class Writer(models.Model):
         return reverse("writer_detail", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.slug and self.title:
-            unique_slugify(self, self.title)
+        if not self.slug and self.fullname:
+            unique_slugify(self, self.fullname)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -65,10 +65,10 @@ class Book(models.Model):
     keywords = models.CharField(max_length=255, null=True, blank=True)
     image = models.FileField(upload_to="images/capa", null=True)
 
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     amount = models.IntegerField()
     specification = models.TextField(null=True, blank=True)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True, null=True, max_length=255)
     is_publish = models.BooleanField(default=False)
 
     status = models.CharField(choices=BookStatusChoice, default=BookStatusChoice.NEW)

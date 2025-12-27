@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Virgil Bookstore - Catalogo{% endblock %}
+{% block title %}Virgil Bookstore - {{ book.title }}{% endblock %}
 {% block content %}
     <main class="container mx-auto px-4 py-8">
 
     <!-- Breadcrumb -->
     <nav class="mb-6 text-sm" aria-label="Breadcrumb">
       <ol class="flex items-center gap-2 text-gray-600">
-        <li><a href="index.html" class="hover:text-amber-700">Home</a></li>
+        <li><a href="{% url 'home:home' %}" class="hover:text-amber-700">Home</a></li>
         <li>›</li>
-        <li><a href="books.html" class="hover:text-amber-700">Catálogo</a></li>
+        <li><a href="{% url 'home:catalog' %}" class="hover:text-amber-700">Catálogo</a></li>
         <li>›</li>
-        <li><a href="books.html?category=fantasia" class="hover:text-amber-700">Fantasia</a></li>
+        <li><a href="{% url 'book:books_by_genre' slug=book.genre.slug %}" class="hover:text-amber-700">{{ book.genre.title }}</a></li>
         <li>›</li>
-        <li class="text-gray-900 font-medium">O Senhor dos Anéis</li>
+        <li class="text-gray-900 font-medium">{{ book.title }}</li>
       </ol>
     </nav>
 
@@ -39,8 +39,8 @@
       <!-- Product Info -->
       <div>
         <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded mb-3">-25% OFF</span>
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">O Senhor dos Anéis</h1>
-        <p class="text-xl text-gray-600 mb-4">por J.R.R. Tolkien</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{{ book.title }}</h1>
+        <p class="text-xl text-gray-600 mb-4">por {{ book.writer.fullname }}</p>
 
         <!-- Rating -->
         <div class="flex items-center gap-3 mb-6">
@@ -52,7 +52,7 @@
         <!-- Price -->
         <div class="bg-amber-50 border-2 border-amber-200 rounded-lg p-6 mb-6">
           <div class="flex items-baseline gap-3 mb-2">
-            <span class="text-4xl font-bold text-amber-700">R$ 89,90</span>
+            <span class="text-4xl font-bold text-amber-700">R$ {{ book.price }}</span>
             <span class="text-xl text-gray-400 line-through">R$ 119,90</span>
           </div>
           <p class="text-sm text-gray-600">ou em até <strong>3x de R$ 29,97</strong> sem juros</p>
@@ -63,7 +63,7 @@
           <label class="block font-semibold text-gray-900 mb-3">Formato:</label>
           <div class="flex gap-3">
             <button class="format-btn flex-1 px-4 py-3 border-2 border-amber-600 bg-amber-50 rounded-lg font-medium text-amber-800">
-              Físico - R$ 89,90
+              Físico - R$ {{ book.price }}
             </button>
             <button class="format-btn flex-1 px-4 py-3 border-2 border-gray-300 hover:border-amber-600 rounded-lg font-medium">
               E-book - R$ 39,90
@@ -82,7 +82,7 @@
             <button id="qty-plus" class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-xl" aria-label="Aumentar quantidade">
               +
             </button>
-            <span class="text-sm text-green-600 ml-3">✓ Em estoque (23 unidades)</span>
+            <span class="text-sm text-green-600 ml-3">✓ Em estoque ({{ book.amount }} unidades)</span>
           </div>
         </div>
 
@@ -142,18 +142,7 @@
         <div id="description" class="tab-content">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Sobre o Livro</h2>
           <div class="prose max-w-none text-gray-700 space-y-4">
-            <p>
-              Uma aventura épica que mudou para sempre a fantasia moderna. <strong>O Senhor dos Anéis</strong> conta a jornada do hobbit Frodo Bolseiro e seus companheiros para destruir o Um Anel, um artefato de poder supremo criado pelo Lorde Sombrio Sauron.
-            </p>
-            <p>
-              A narrativa magistral de J.R.R. Tolkien transporta os leitores para a Terra-média, um mundo rico em mitologia, línguas e culturas próprias. Com personagens inesquecíveis, batalhas épicas e temas universais de amizade, coragem e sacrifício, esta trilogia se tornou um dos maiores clássicos da literatura mundial.
-            </p>
-            <p>
-              Esta edição especial inclui prefácio do autor, mapas detalhados da Terra-média e um apêndice com informações sobre as línguas élficas. Perfeito tanto para novos leitores quanto para fãs que desejam revisitar esta obra-prima.
-            </p>
-            <blockquote class="border-l-4 border-amber-600 pl-4 italic text-gray-600 my-6">
-              "Nem todos aqueles que vagam estão perdidos."
-            </blockquote>
+            {{ book.description }}
           </div>
         </div>
 

@@ -233,6 +233,8 @@ cython_debug/
 banner/
 images/
 capa/
+
+.idea
 # pytype static type analyzer
 
 # Cython debug symbols

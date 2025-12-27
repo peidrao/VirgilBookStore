@@ -11,6 +11,9 @@ class ShopCart(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
 
+    class Meta:
+        db_table = "shop_carts"
+
     def __str__(self):
         return self.book.title
 
@@ -66,6 +69,9 @@ class Order(models.Model):
     def __str__(self):
         return self.profile.first_name
 
+    class Meta:
+        db_table = "orders"
+
 
 class OrderBook(models.Model):
     STATUS = (
@@ -89,3 +95,6 @@ class OrderBook(models.Model):
 
     def __str__(self):
         return self.book.title
+
+    class Meta:
+        db_table = "order_books"

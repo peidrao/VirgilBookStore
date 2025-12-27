@@ -6,42 +6,42 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Usando get_or_create para garantir que os objetos existam e evitar duplicação
         genres = {
-            "arte": Genre.objects.get_or_create(name="Arte", slug="arte")[0],
-            "comedia": Genre.objects.get_or_create(name="Comédia", slug="comedia")[0],
+            "arte": Genre.objects.get_or_create(title="Arte", slug="arte")[0],
+            "comedia": Genre.objects.get_or_create(title="Comédia", slug="comedia")[0],
             "matematica": Genre.objects.get_or_create(
-                name="Matemática", slug="matematica"
+                title="Matemática", slug="matematica"
             )[0],
-            "ficcao": Genre.objects.get_or_create(name="Ficção", slug="ficcao")[0],
-            "poesia": Genre.objects.get_or_create(name="Poesia", slug="poesia")[0],
-            "politica": Genre.objects.get_or_create(name="Política", slug="politica")[
+            "ficcao": Genre.objects.get_or_create(title="Ficção", slug="ficcao")[0],
+            "poesia": Genre.objects.get_or_create(title="Poesia", slug="poesia")[0],
+            "politica": Genre.objects.get_or_create(title="Política", slug="politica")[
                 0
             ],
-            "religiao": Genre.objects.get_or_create(name="Religião", slug="religiao")[
+            "religiao": Genre.objects.get_or_create(title="Religião", slug="religiao")[
                 0
             ],
-            "economia": Genre.objects.get_or_create(name="Economia", slug="economia")[
+            "economia": Genre.objects.get_or_create(title="Economia", slug="economia")[
                 0
             ],
             "filosofia": Genre.objects.get_or_create(
-                name="Filosofia", slug="filosofia"
+                title="Filosofia", slug="filosofia"
             )[0],
             "filosofia-medieval": Genre.objects.get_or_create(
-                name="Filosofia Medieval", slug="filosofia-medieval"
+                title="Filosofia Medieval", slug="filosofia-medieval"
             )[0],
             "filosofia-estoica": Genre.objects.get_or_create(
-                name="Filosofia Estóica", slug="filosofia-estoica"
+                title="Filosofia Estóica", slug="filosofia-estoica"
             )[0],
-            "historia": Genre.objects.get_or_create(name="História", slug="historia")[
+            "historia": Genre.objects.get_or_create(title="História", slug="historia")[
                 0
             ],
             "historia-do-brasil": Genre.objects.get_or_create(
-                name="História do Brasil", slug="historia-do-brasil"
+                title="História do Brasil", slug="historia-do-brasil"
             )[0],
             "historia-do-ocidente": Genre.objects.get_or_create(
-                name="História do Ocidente", slug="historia-do-ocidente"
+                title="História do Ocidente", slug="historia-do-ocidente"
             )[0],
             "historia-africana": Genre.objects.get_or_create(
-                name="História Africana", slug="historia-africana"
+                title="História Africana", slug="historia-africana"
             )[0],
         }
 

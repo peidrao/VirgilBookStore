@@ -24,23 +24,15 @@ class HomeView(generic.ListView):
         return context
 
 
-def contact(request):
-    if request.method == "POST":
-        form = ContactMessageForm(request.POST)
-        if form.is_valid():
-            data = ContactMessage()
-            data.name = form.cleaned_data["name"]
-            data.email = form.cleaned_data["email"]
-            data.subject = form.cleaned_data["subject"]
-            data.message = form.cleaned_data["message"]
-            data.ip = request.META.get("REMOTE_ADDR")
+class CatalogView(generic.ListView):
+    queryset = Book.objects.all()
+    template_name = "catalog/index.html"
+    paginate_by = 12
 
-            data.save()
-            return HttpResponseRedirect(reverse("home:contact"))
-
-    context = {"form": ContactMessageForm()}
-
-    return render(request, "pages/contact.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["books"] = self.get_queryset()
+        return context
 
 
 def search(request):

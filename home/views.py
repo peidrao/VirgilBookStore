@@ -10,7 +10,7 @@ from .forms import ContactMessageForm, SearchForm
 
 class HomeView(generic.ListView):
     queryset = Book.objects.all()
-    template_name = "index.html"
+    template_name = "home/index.html"
 
     def get_queryset(self):
         queryset = self.queryset.exclude(image__in=["", None]).order_by("-created_at")[

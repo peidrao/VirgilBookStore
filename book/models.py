@@ -3,13 +3,9 @@ from django.utils.text import slugify
 from django.db.models import Avg, Count
 from django.urls import reverse
 from django.db import models
+
+from book.choices import BookStatusChoice, CommentStatusChoice
 from user.models import Profile
-from django.utils.translation import gettext as _
-
-
-def slugify_pre_save(sender, instance, *args, **kwargs):
-    if instance.slug is None:
-        instance.slug = slugify(instance.title)
 
 
 class Genre(models.Model):
@@ -26,12 +22,7 @@ class Genre(models.Model):
         return reverse("book:book_genre", kwargs={"slug": self.slug})
 
     def __str__(self):
-        full_path = [self.title]
-        k = self.origin
-        while k is not None:
-            full_path.append(k.title)
-            k = k.origin
-        return " / ".join(full_path[::-1])
+        return f'{self.title} - {self.slug}'
 
 
 class Writer(models.Model):
@@ -51,10 +42,6 @@ class Writer(models.Model):
 
 
 class Book(models.Model):
-    class StatusChoice(models.IntegerChoices):
-        YES = 1, _("Yes")
-        NOT = 2, _("Not")
-
     writer = models.ForeignKey(Writer, on_delete=models.SET_NULL, null=True)
     genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
 
@@ -69,7 +56,7 @@ class Book(models.Model):
     slug = models.SlugField(unique=True, null=True)
     is_publish = models.BooleanField(default=False)
 
-    status = models.IntegerField(choices=StatusChoice.choices, default=StatusChoice.YES)
+    status = models.CharField(choices=BookStatusChoice, default=BookStatusChoice.NEW)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -107,11 +94,6 @@ class Images(models.Model):
 
 
 class Comment(models.Model):
-    class StatusChoice(models.IntegerChoices):
-        NEW = 1, _("New")
-        READ = 2, _("Read")
-        TRASH = 3, _("Trash")
-
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     subject = models.CharField(max_length=100, blank=True)
@@ -119,7 +101,7 @@ class Comment(models.Model):
 
     rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=50, blank=True)
-    status = models.IntegerField(choices=StatusChoice.choices, default=StatusChoice.NEW)
+    status = models.CharField(choices=CommentStatusChoice, default=CommentStatusChoice.PENDING)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -128,4 +110,8 @@ class Comment(models.Model):
         return self.subject
 
 
-pre_save.connect(slugify_pre_save, sender=Genre)
+def book_pre_save(sender, instance, **kwargs):
+    if not instance.slug and instance.title:
+        instance.slug = slugify(instance.title)
+
+pre_save.connect(book_pre_save, sender=Book)

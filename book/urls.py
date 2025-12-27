@@ -16,7 +16,6 @@ urlpatterns = [
         views.ManagerBookUpdateView.as_view(),
         name="book_update",
     ),
-    path("book/create", views.ManagerBookAddService.as_view(), name="book_create"),
     path("book/export", views.ManagerBookExportService.as_view(), name="book_export"),
     path(
         "book/update/service/<int:pk>/",

@@ -4,7 +4,6 @@ from book.helpers import create_book_payload
 from book.models import Book, Images, Comment, Genre
 from django.shortcuts import get_object_or_404
 
-from book.serializers import BookSerializer
 from .forms import CommentForm
 from django.views import generic
 from rest_framework import generics, status, permissions, views
@@ -56,21 +55,6 @@ class ManagerBookUpdateView(generic.TemplateView):
 class ManageRemoveBook(generics.DestroyAPIView):
     queryset = Book.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
-
-
-class ManagerBookAddService(views.APIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def post(self, request, *args, **kwargs):
-        payload = create_book_payload(request)
-
-        serializer = self.serializer_class(data=payload)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ManagerBookExportService(views.APIView):

@@ -13,7 +13,7 @@ class BookDetailView(generic.DetailView):
     queryset = Book.objects.all()
 
     def get(self, request, *args, **kwargs):
-        book = get_object_or_404(Book, pk=kwargs["pk"])
+        book = get_object_or_404(Book, slug=kwargs["slug"])
         context = {"book": book}
         return render(request, "books/book_detail.html", context)
 

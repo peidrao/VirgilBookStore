@@ -1,6 +1,6 @@
 <article
         class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-    <a href="book.html?id=1" class="block">
+    <a href="{% url 'book:book_detail' book.slug %}" class="block">
         <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
             <img src="https://picsum.photos/seed/book1/300/400" alt="O Senhor dos Anéis"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">

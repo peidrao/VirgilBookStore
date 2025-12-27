@@ -1,311 +1,221 @@
 from django.core.management.base import BaseCommand
-
 from book.models import Book, Genre, Writer
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        Genre.objects.get(slug="arte")
-        Genre.objects.get(slug="comedia")
-        Genre.objects.get(slug="matematica")
-        fiction = Genre.objects.get(slug="ficcao")
-        poetry = Genre.objects.get(slug="poesia")
-        policy = Genre.objects.get(slug="politica")
-        religion = Genre.objects.get(slug="religiao")
-        Genre.objects.get(slug="economia")
-        philosophy = Genre.objects.get(slug="filosofia")
-        Genre.objects.get(slug="filosofia-medieval")
-        Genre.objects.get(slug="filosofia-estoica")
-        Genre.objects.get(slug="historia")
-        Genre.objects.get(slug="historia-do-brasil")
-        western_history = Genre.objects.get(slug="historia-do-ocidente")
-        Genre.objects.get(slug="historia-africana")
+        # Usando get_or_create para garantir que os objetos existam e evitar duplicação
+        genres = {
+            "arte": Genre.objects.get_or_create(name="Arte", slug="arte")[0],
+            "comedia": Genre.objects.get_or_create(name="Comédia", slug="comedia")[0],
+            "matematica": Genre.objects.get_or_create(name="Matemática", slug="matematica")[0],
+            "ficcao": Genre.objects.get_or_create(name="Ficção", slug="ficcao")[0],
+            "poesia": Genre.objects.get_or_create(name="Poesia", slug="poesia")[0],
+            "politica": Genre.objects.get_or_create(name="Política", slug="politica")[0],
+            "religiao": Genre.objects.get_or_create(name="Religião", slug="religiao")[0],
+            "economia": Genre.objects.get_or_create(name="Economia", slug="economia")[0],
+            "filosofia": Genre.objects.get_or_create(name="Filosofia", slug="filosofia")[0],
+            "filosofia-medieval": Genre.objects.get_or_create(name="Filosofia Medieval", slug="filosofia-medieval")[0],
+            "filosofia-estoica": Genre.objects.get_or_create(name="Filosofia Estóica", slug="filosofia-estoica")[0],
+            "historia": Genre.objects.get_or_create(name="História", slug="historia")[0],
+            "historia-do-brasil": Genre.objects.get_or_create(name="História do Brasil", slug="historia-do-brasil")[0],
+            "historia-do-ocidente": Genre.objects.get_or_create(name="História do Ocidente", slug="historia-do-ocidente")[0],
+            "historia-africana": Genre.objects.get_or_create(name="História Africana", slug="historia-africana")[0],
+        }
 
-        jrrt = Writer.objects.get(fullname="J. R. R. Tolkien")
-        oc = Writer.objects.get(fullname="Olavo de Carvalho")
-        ta = Writer.objects.get(fullname="Tomás de Aquino")
-        rg = Writer.objects.get(fullname="René Guénon")
-        da = Writer.objects.get(fullname="Dante Alighieri")
-        Writer.objects.get(fullname="Aristóteles")
-        omc = Writer.objects.get(fullname="Otto Maria Carpeaux")
-        mfs = Writer.objects.get(fullname="Mário Ferreira dos Santos")
-        Writer.objects.create(fullname="C. S. Lewis")
+        writers = {
+            "J. R. R. Tolkien": Writer.objects.get_or_create(fullname="J. R. R. Tolkien")[0],
+            "Olavo de Carvalho": Writer.objects.get_or_create(fullname="Olavo de Carvalho")[0],
+            "Tomás de Aquino": Writer.objects.get_or_create(fullname="Tomás de Aquino")[0],
+            "René Guénon": Writer.objects.get_or_create(fullname="René Guénon")[0],
+            "Dante Alighieri": Writer.objects.get_or_create(fullname="Dante Alighieri")[0],
+            "Aristóteles": Writer.objects.get_or_create(fullname="Aristóteles")[0],
+            "Otto Maria Carpeaux": Writer.objects.get_or_create(fullname="Otto Maria Carpeaux")[0],
+            "Mário Ferreira dos Santos": Writer.objects.get_or_create(fullname="Mário Ferreira dos Santos")[0],
+            "C. S. Lewis": Writer.objects.get_or_create(fullname="C. S. Lewis")[0],
+            "Platão": Writer.objects.get_or_create(fullname="Platão")[0],
+            "Sêneca": Writer.objects.get_or_create(fullname="Sêneca")[0],
+        }
 
-        if not Book.objects.filter(title="Inferno").exists():
-            Book.objects.create(
-                title="Inferno",
-                writer=da,
-                genre=poetry,
-                description="O Inferno é a primeira parte da Divina Comédia de Dante Alighieri, sendo as outras duas o Purgatório e o Paraíso.",
-                price=50,
-                status=1,
-                amount=12,
-            )
-        if not Book.objects.filter(title="Inferno").exists():
-            Book.objects.create(
-                title="Purgatório",
-                writer=da,
-                genre=poetry,
-                description="Purgatório é a segunda parte da Divina Comédia de Dante Alighieri. Está dividido em trinta e três cantos.",
-                price=20,
-                status=1,
-                amount=40,
-            )
-        if not Book.objects.filter(title="Paraíso").exists():
-            Book.objects.create(
-                title="Paraíso",
-                writer=da,
-                genre=poetry,
-                description="Paraíso é a terceira e última parte da Divina Comédia de Dante. É uma alegoria, dizendo da visão de Dante do céu, guiado por Beatriz, amor platônico de Dante.",
-                price=78,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(title="Divina Comédia").exists():
-            Book.objects.create(
-                title="Divina Comédia",
-                writer=da,
-                genre=poetry,
-                description="Escrito originalmente em italiano vulgar baseado no dialeto toscano da época e bastante semelhante ao italiano atual, e não em latim como fazia-se comum à época, trata-se de um poema articulado por trilogias",
-                price=150,
-                status=1,
-                amount=120,
-            )
+        books_data = [
+            {
+                "title": "Inferno", "writer": writers["Dante Alighieri"], "genre": genres["poesia"],
+                "description": "O Inferno é a primeira parte da Divina Comédia de Dante Alighieri, sendo as outras duas o Purgatório e o Paraíso.",
+                "price": 50, "status": 1, "amount": 12,
+            },
+            {
+                "title": "Purgatório", "writer": writers["Dante Alighieri"], "genre": genres["poesia"],
+                "description": "Purgatório é a segunda parte da Divina Comédia de Dante Alighieri. Está dividido em trinta e três cantos.",
+                "price": 20, "status": 1, "amount": 40,
+            },
+            {
+                "title": "Paraíso", "writer": writers["Dante Alighieri"], "genre": genres["poesia"],
+                "description": "Paraíso é a terceira e última parte da Divina Comédia de Dante. É uma alegoria, dizendo da visão de Dante do céu, guiado por Beatriz, amor platônico de Dante.",
+                "price": 78, "status": 1, "amount": 10,
+            },
+            {
+                "title": "Divina Comédia", "writer": writers["Dante Alighieri"], "genre": genres["poesia"],
+                "description": "Escrito originalmente em italiano vulgar baseado no dialeto toscano da época e bastante semelhante ao italiano atual, e não em latim como fazia-se comum à época, trata-se de um poema articulado por trilogias",
+                "price": 150, "status": 1, "amount": 120,
+            },
+            {
+                "title": "O Silmarillion", "writer": writers["J. R. R. Tolkien"], "genre": genres["ficcao"],
+                "description": "O Silmarillion é o relato dos Dias Antigos da Primeira Era do mundo criado por J.R.R. Tolkien",
+                "price": 44, "status": 1, "amount": 33,
+            },
+            {
+                "title": "O Hobbit", "writer": writers["J. R. R. Tolkien"], "genre": genres["ficcao"],
+                "description": "Bilbo Bolseiro era um dos mais respeitáveis hobbits de todo o Condado até que, um dia, o mago Gandalf bate à sua porta.",
+                "price": 31, "status": 1, "amount": 2,
+            },
+            {
+                "title": "O Senhor dos Anéis", "writer": writers["J. R. R. Tolkien"], "genre": genres["ficcao"],
+                "description": "Apesar de ter sido publicado em três volumes – A Sociedade do Anel, As Duas Torres e O Retorno do Rei – desde os anos 1950, O Senhor dos Anéis não é exatamente uma trilogia, mas um único grande romance que só pode ser compreendido em seu conjunto, segundo a concepção de seu autor, J.R.R. Tolkien. ",
+                "price": 200, "status": 1, "amount": 10,
+            },
+            {
+                "title": "A Queda de Gondolin", "writer": writers["J. R. R. Tolkien"], "genre": genres["ficcao"],
+                "description": "O último dos três Grandes Contos Perdidos do legendário de J.R.R.Tolkien narra a jornada de Tuor rumo à cidade secreta de Gondolin, refúgio élfico do povo do Rei Turgon. Contra a bela cidade, levanta-se Morgoth, o Inimigo Sombrio, com seu exército de seres malévolos.",
+                "price": 35, "status": 1, "amount": 19,
+            },
+            {
+                "title": "O Jardim das Aflições", "writer": writers["Olavo de Carvalho"], "genre": genres["filosofia"],
+                "description": "A tese fundamental deste monumental ensaio é a de que a história do ocidente é marcada pela ideia de Império e de suas sucessivas tentativas de reestruturação; mesmo com roupagens diferentes, há sempre o mesmo objetivo: ampliar os domínios do Império até os limites do mundo visível.",
+                "price": 70, "status": 1, "amount": 190,
+            },
+            {
+                "title": "A Nova Era e a Revolução Cultural", "writer": writers["Olavo de Carvalho"], "genre": genres["filosofia"],
+                "description": "A Nova Era, da qual Fritjof Capra se tornou festejado porta-voz, e a Revolução Cultural, de Antonio Gramsci, têm algo em comum: ambas pretendem introduzir no espírito humano modificações vastas, profundas e irreversíveis.",
+                "price": 56, "status": 1, "amount": 20,
+            },
+            {
+                "title": "O Imbecil Coletivo: Atualidades Inculturais Brasileiras", "writer": writers["Olavo de Carvalho"], "genre": genres["filosofia"],
+                "description": "Quem é o imbecil coletivo?Ele é duplo: nasce do improvável matrimônio do intelectual pernóstico com a ralé enfurecida.",
+                "price": 66, "status": 1, "amount": 5,
+            },
+            {
+                "title": "A Filosofia e seu Inverso", "writer": writers["Olavo de Carvalho"], "genre": genres["filosofia"],
+                "description": "Mas não só. Olavo de Carvalho nos recorda que não esquecer nossa condição mortal é o ponto de partida da investigação metafísica",
+                "price": 35, "status": 1, "amount": 120,
+            },
+            {
+                "title": "O mínimo que você precisa saber para não ser um idiota", "writer": writers["Olavo de Carvalho"], "genre": genres["filosofia"],
+                "description": " O mínimo que você precisa saber para não ser idiota, são uma pequena parcela dos textos assinados pelo filósofo em diversos veículos da imprensa brasileira entre 1997 e 2013.",
+                "price": 299, "status": 1, "amount": 10,
+            },
+            {
+                "title": "Verdade e conhecimento", "writer": writers["Tomás de Aquino"], "genre": genres["filosofia"],
+                "description": "Verdade e conhecimento', em edição bilíngue, apresenta ao leitor o tratamento que Tomás de Aquino dá - nas Quaestiones Disputatae de Veritate ",
+                "price": 4, "status": 1, "amount": 10,
+            },
+            {
+                "title": "Suma Teológica:", "writer": writers["Tomás de Aquino"], "genre": genres["filosofia"],
+                "description": "Suma Teológica, a síntese brilhante de Santo Tomás de Aquino do pensamento cristão, teve um impacto decisivo e permanente na filosofia e na religião desde o século XIII.",
+                "price": 189, "status": 1, "amount": 43,
+            },
+            {
+                "title": "A Caridade, a Correção Fraterna e a Esperança", "writer": writers["Tomás de Aquino"], "genre": genres["religiao"],
+                "description": "Tomás de Aquino, filósofo e teólogo dominicano, santo e doutor da Igreja, escreveu diversas obras, dentre as mais importantes estão as famosas Questões Disputadas, que são o fruto característico da universidade medieval. ",
+                "price": 78, "status": 1, "amount": 10,
+            },
+            {
+                "title": "O CREDO: EXPLICADO POR SÃO TOMÁS DE AQUINO", "writer": writers["Tomás de Aquino"], "genre": genres["religiao"],
+                "description": "ão Tomás de Aquino foi um importante teólogo, filósofo e padre dominicano do século XIII. Foi declarado santo pelo papa João XXII em 18 de julho de 1323. ",
+                "price": 10, "status": 1, "amount": 10,
+            },
+            {
+                "title": "A Crise do Mundo Moderno", "writer": writers["René Guénon"], "genre": genres["religiao"],
+                "description": "Essa obra extremamente profética do grande filósofo perenialista René Guénon trata de uma investigação das causas responsáveis pela atual crise no mundo moderno, bem como as suas consequências e possíveis soluções. Mesmo tendo sido publicada pela primeira vez em 1927, a obra continua a ser relevante.",
+                "price": 18, "status": 1, "amount": 10,
+            },
+            {
+                "title": "O Simbolismo da Cruz", "writer": writers["René Guénon"], "genre": genres["religiao"],
+                "description": "Nesta obra, o grande filósofo perenialista René Guénon analisa um dos símbolos mais antigos e mais proeminentes da história da humanidade, a Cruz, sob o ponto de vista metafísico e comparativo da grande tradição primordial, e não do ponto de vista puramente histórico",
+                "price": 8, "status": 1, "amount": 10,
+            },
+            {
+                "title": "O Erro Espírita", "writer": writers["René Guénon"], "genre": genres["religiao"],
+                "description": "", "price": 11, "status": 1, "amount": 12,
+            },
+            {
+                "title": "Retratos e Leituras", "writer": writers["Otto Maria Carpeaux"], "genre": genres["filosofia"],
+                "description": "Retratos e Leituras é o quarto livro escrito por Otto Maria Carpeaux no Brasil. A primeira edição foi publicada em 1953. ",
+                "price": 49, "status": 1, "amount": 10,
+            },
+            {
+                "title": "História da Literatura Ocidental - Vol. I: A Herança Grego", "writer": writers["Otto Maria Carpeaux"], "genre": genres["historia-do-ocidente"],
+                "description": "O primeiro volume da História da Literatura Ocidental, de Carpeaux. Neste volume, o autor discorre sobre as literaturas grega e latina.",
+                "price": 120, "status": 1, "amount": 97,
+            },
+            {
+                "title": "Caminhos para Roma: Aventura, queda e vitória do espírito", "writer": writers["Otto Maria Carpeaux"], "genre": genres["religiao"],
+                "description": "Estamos em crise, quer dizer, estamos sem fé. Começou na Reforma, com a autocracia do indivíduo, o caminho funesto que, através do racionalismo, iluminismo, liberalismo, imperialismo, bolchevismo, conduz ainda ao horror do aniquilamento.",
+                "price": 46, "status": 1, "amount": 10,
+            },
+            {
+                "title": "Filosofia da Crise", "writer": writers["Mário Ferreira dos Santos"], "genre": genres["politica"],
+                "description": "Ocupando um lugar de destaque na vasta produção do filósofo brasileiro Mário Ferreira dos Santos, Filosofia da Crise é o mais novo lançamento da É Realizações. ",
+                "price": 33, "status": 1, "amount": 40,
+            },
+            {
+                "title": "Invasão Vertical dos Bárbaros ", "writer": writers["Mário Ferreira dos Santos"], "genre": genres["filosofia"],
+                "description": "A história nos relata que houve muitas invasões horizontais de bárbaros; hoje, porém, vivemos uma invasão vertical de bárbaros, que é a que penetra pela cultura",
+                "price": 47, "status": 1, "amount": 9,
+            },
+            {
+                "title": "Tratado de Simbólica", "writer": writers["Mário Ferreira dos Santos"], "genre": genres["filosofia"],
+                "description": "resultado da transcrição de duas palestras de Mário Ferreira dos Santos.",
+                "price": 12, "status": 1, "amount": 20,
+            },
+            # Livros de C.S. Lewis
+            {
+                "title": "As Crônicas de Nárnia", "writer": writers["C. S. Lewis"], "genre": genres["ficcao"],
+                "description": "Viagens ao fim do mundo, criaturas fantásticas e batalhas épicas entre o bem e o mal - o que mais um leitor poderia querer de um livro? O livro que tem tudo isso é O Leão, a Feiticeira e o Guarda-Roupa, escrito em 1950 por C. S. Lewis.",
+                "price": 80, "status": 1, "amount": 25,
+            },
+            {
+                "title": "Cristianismo Puro e Simples", "writer": writers["C. S. Lewis"], "genre": genres["religiao"],
+                "description": "Um dos maiores clássicos do pensamento cristão, esta obra foi adaptada de uma série de programas de rádio produzidos pela BBC durante a Segunda Guerra Mundial.",
+                "price": 45, "status": 1, "amount": 30,
+            },
+            {
+                "title": "Cartas de um diabo a seu aprendiz", "writer": writers["C. S. Lewis"], "genre": genres["religiao"],
+                "description": "Irônica, astuta e original, esta obra-prima da sátira é a correspondência entre um diabo e seu sobrinho, um demônio júnior.",
+                "price": 38, "status": 1, "amount": 15,
+            },
+            # Livros de Filosofia Clássica
+            {
+                "title": "A República", "writer": writers["Platão"], "genre": genres["filosofia"],
+                "description": "A República é um diálogo socrático escrito por Platão, filósofo grego, por volta de 380 a.C. É uma das obras mais influentes da filosofia e da teoria política.",
+                "price": 65, "status": 1, "amount": 20,
+            },
+            {
+                "title": "Sobre a Brevidade da Vida", "writer": writers["Sêneca"], "genre": genres["filosofia-estoica"],
+                "description": "Um dos textos mais importantes da filosofia estoica, onde Sêneca argumenta que a vida não é curta, mas nós a tornamos assim.",
+                "price": 25, "status": 1, "amount": 50,
+            },
+            {
+                "title": "Ética a Nicômaco", "writer": writers["Aristóteles"], "genre": genres["filosofia"],
+                "description": "Principal obra de Aristóteles sobre ética. Nela, o filósofo expõe sua concepção de eudaimonia (felicidade) como a finalidade da vida humana.",
+                "price": 55, "status": 1, "amount": 18,
+            },
+        ]
 
-        if not Book.objects.filter(title="O Silmarillion").exists():
-            Book.objects.create(
-                title="O Silmarillion",
-                writer=jrrt,
-                genre=fiction,
-                description="O Silmarillion é o relato dos Dias Antigos da Primeira Era do mundo criado por J.R.R. Tolkien",
-                price=44,
-                status=1,
-                amount=33,
+        for book_data in books_data:
+            book, created = Book.objects.get_or_create(
+                title=book_data["title"],
+                defaults={
+                    "writer": book_data["writer"],
+                    "genre": book_data["genre"],
+                    "description": book_data["description"],
+                    "price": book_data["price"],
+                    "status": book_data["status"],
+                    "amount": book_data["amount"],
+                }
             )
-        if not Book.objects.filter(title="O Hobbit").exists():
-            Book.objects.create(
-                title="O Hobbit",
-                writer=jrrt,
-                genre=fiction,
-                description="Bilbo Bolseiro era um dos mais respeitáveis hobbits de todo o Condado até que, um dia, o mago Gandalf bate à sua porta.",
-                price=31,
-                status=1,
-                amount=2,
-            )
-        if not Book.objects.filter(title="O Senhor dos Anéis").exists():
-            Book.objects.create(
-                title="O Senhor dos Anéis",
-                writer=jrrt,
-                genre=fiction,
-                description="Apesar de ter sido publicado em três volumes – A Sociedade do Anel, As Duas Torres e O Retorno do Rei – desde os anos 1950, O Senhor dos Anéis não é exatamente uma trilogia, mas um único grande romance que só pode ser compreendido em seu conjunto, segundo a concepção de seu autor, J.R.R. Tolkien. ",
-                price=200,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(title="A Queda de Gondolin").exists():
-            Book.objects.create(
-                title="A Queda de Gondolin",
-                writer=jrrt,
-                genre=fiction,
-                description="O último dos três Grandes Contos Perdidos do legendário de J.R.R.Tolkien narra a jornada de Tuor rumo à cidade secreta de Gondolin, refúgio élfico do povo do Rei Turgon. Contra a bela cidade, levanta-se Morgoth, o Inimigo Sombrio, com seu exército de seres malévolos.",
-                price=35,
-                status=1,
-                amount=19,
-            )
+            if created:
+                self.stdout.write(self.style.SUCCESS(f'Livro "{book.title}" criado com sucesso.'))
+            else:
+                self.stdout.write(self.style.WARNING(f'Livro "{book.title}" já existe.'))
 
-        if not Book.objects.filter(title="O Jardim das Aflições").exists():
-            Book.objects.create(
-                title="O Jardim das Aflições",
-                writer=oc,
-                genre=philosophy,
-                description="A tese fundamental deste monumental ensaio é a de que a história do ocidente é marcada pela ideia de Império e de suas sucessivas tentativas de reestruturação; mesmo com roupagens diferentes, há sempre o mesmo objetivo: ampliar os domínios do Império até os limites do mundo visível.",
-                price=70,
-                status=1,
-                amount=190,
-            )
-        if not Book.objects.filter(title="A Nova Era e a Revolução Cultural").exists():
-            Book.objects.create(
-                title="A Nova Era e a Revolução Cultural",
-                writer=oc,
-                genre=philosophy,
-                description="A Nova Era, da qual Fritjof Capra se tornou festejado porta-voz, e a Revolução Cultural, de Antonio Gramsci, têm algo em comum: ambas pretendem introduzir no espírito humano modificações vastas, profundas e irreversíveis.",
-                price=56,
-                status=1,
-                amount=20,
-            )
-        if not Book.objects.filter(
-            title="O Imbecil Coletivo: Atualidades Inculturais Brasileiras"
-        ).exists():
-            Book.objects.create(
-                title="O Imbecil Coletivo: Atualidades Inculturais Brasileiras",
-                writer=oc,
-                genre=philosophy,
-                description="Quem é o imbecil coletivo?Ele é duplo: nasce do improvável matrimônio do intelectual pernóstico com a ralé enfurecida.",
-                price=66,
-                status=1,
-                amount=5,
-            )
-        if not Book.objects.filter(title="A Filosofia e seu Inverso").exists():
-            Book.objects.create(
-                title="A Filosofia e seu Inverso",
-                writer=oc,
-                genre=philosophy,
-                description="Mas não só. Olavo de Carvalho nos recorda que não esquecer nossa condição mortal é o ponto de partida da investigação metafísica",
-                price=35,
-                status=1,
-                amount=120,
-            )
-        if not Book.objects.filter(
-            title="O mínimo que você precisa saber para não ser um idiota"
-        ).exists():
-            Book.objects.create(
-                title="O mínimo que você precisa saber para não ser um idiota",
-                writer=oc,
-                genre=philosophy,
-                description=" O mínimo que você precisa saber para não ser idiota, são uma pequena parcela dos textos assinados pelo filósofo em diversos veículos da imprensa brasileira entre 1997 e 2013.",
-                price=299,
-                status=1,
-                amount=10,
-            )
-
-        if not Book.objects.filter(title="Verdade e conhecimento").exists():
-            Book.objects.create(
-                title="Verdade e conhecimento",
-                writer=ta,
-                genre=philosophy,
-                description="Verdade e conhecimento', em edição bilíngue, apresenta ao leitor o tratamento que Tomás de Aquino dá - nas Quaestiones Disputatae de Veritate ",
-                price=4,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(title="Suma Teológica:").exists():
-            Book.objects.create(
-                title="Suma Teológica:",
-                writer=ta,
-                genre=philosophy,
-                description="Suma Teológica, a síntese brilhante de Santo Tomás de Aquino do pensamento cristão, teve um impacto decisivo e permanente na filosofia e na religião desde o século XIII.",
-                price=189,
-                status=1,
-                amount=43,
-            )
-        if not Book.objects.filter(
-            title="A Caridade, a Correção Fraterna e a Esperança"
-        ).exists():
-            Book.objects.create(
-                title="A Caridade, a Correção Fraterna e a Esperança",
-                writer=ta,
-                genre=religion,
-                description="Tomás de Aquino, filósofo e teólogo dominicano, santo e doutor da Igreja, escreveu diversas obras, dentre as mais importantes estão as famosas Questões Disputadas, que são o fruto característico da universidade medieval. ",
-                price=78,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(
-            title="O CREDO: EXPLICADO POR SÃO TOMÁS DE AQUINO"
-        ).exists():
-            Book.objects.create(
-                title="O CREDO: EXPLICADO POR SÃO TOMÁS DE AQUINO",
-                writer=ta,
-                genre=religion,
-                description="ão Tomás de Aquino foi um importante teólogo, filósofo e padre dominicano do século XIII. Foi declarado santo pelo papa João XXII em 18 de julho de 1323. ",
-                price=10,
-                status=1,
-                amount=10,
-            )
-
-        if not Book.objects.filter(title="A Crise do Mundo Moderno").exists():
-            Book.objects.create(
-                title="A Crise do Mundo Moderno",
-                writer=rg,
-                genre=religion,
-                description="Essa obra extremamente profética do grande filósofo perenialista René Guénon trata de uma investigação das causas responsáveis pela atual crise no mundo moderno, bem como as suas consequências e possíveis soluções. Mesmo tendo sido publicada pela primeira vez em 1927, a obra continua a ser relevante.",
-                price=18,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(title="O Simbolismo da Cruz").exists():
-            Book.objects.create(
-                title="O Simbolismo da Cruz",
-                writer=rg,
-                genre=religion,
-                description="Nesta obra, o grande filósofo perenialista René Guénon analisa um dos símbolos mais antigos e mais proeminentes da história da humanidade, a Cruz, sob o ponto de vista metafísico e comparativo da grande tradição primordial, e não do ponto de vista puramente histórico",
-                price=8,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(title="O Erro Espírita").exists():
-            Book.objects.create(
-                title="O Erro Espírita",
-                writer=rg,
-                genre=religion,
-                description="",
-                price=11,
-                status=1,
-                amount=12,
-            )
-
-        if not Book.objects.filter(title="Retratos e Leituras").exists():
-            Book.objects.create(
-                title="Retratos e Leituras",
-                writer=omc,
-                genre=philosophy,
-                description="Retratos e Leituras é o quarto livro escrito por Otto Maria Carpeaux no Brasil. A primeira edição foi publicada em 1953. ",
-                price=49,
-                status=1,
-                amount=10,
-            )
-        if not Book.objects.filter(
-            title="História da Literatura Ocidental - Vol. I: A Herança Grego"
-        ).exists():
-            Book.objects.create(
-                title="História da Literatura Ocidental - Vol. I: A Herança Grego",
-                writer=omc,
-                genre=western_history,
-                description="O primeiro volume da História da Literatura Ocidental, de Carpeaux. Neste volume, o autor discorre sobre as literaturas grega e latina.",
-                price=120,
-                status=1,
-                amount=97,
-            )
-        if not Book.objects.filter(
-            title="Caminhos para Roma: Aventura, queda e vitória do espírito"
-        ).exists():
-            Book.objects.create(
-                title="Caminhos para Roma: Aventura, queda e vitória do espírito",
-                writer=omc,
-                genre=religion,
-                description="Estamos em crise, quer dizer, estamos sem fé. Começou na Reforma, com a autocracia do indivíduo, o caminho funesto que, através do racionalismo, iluminismo, liberalismo, imperialismo, bolchevismo, conduz ainda ao horror do aniquilamento.",
-                price=46,
-                status=1,
-                amount=10,
-            )
-
-        if not Book.objects.filter(title="Filosofia da Crise").exists():
-            Book.objects.create(
-                title="Filosofia da Crise",
-                writer=mfs,
-                genre=policy,
-                description="Ocupando um lugar de destaque na vasta produção do filósofo brasileiro Mário Ferreira dos Santos, Filosofia da Crise é o mais novo lançamento da É Realizações. ",
-                price=33,
-                status=1,
-                amount=40,
-            )
-        if not Book.objects.filter(title="Invasão Vertical dos Bárbaros ").exists():
-            Book.objects.create(
-                title="Invasão Vertical dos Bárbaros ",
-                writer=mfs,
-                genre=philosophy,
-                description="A história nos relata que houve muitas invasões horizontais de bárbaros; hoje, porém, vivemos uma invasão vertical de bárbaros, que é a que penetra pela cultura",
-                price=47,
-                status=1,
-                amount=9,
-            )
-        if not Book.objects.filter(title="Tratado de Simbólica").exists():
-            Book.objects.create(
-                title="Tratado de Simbólica",
-                writer=mfs,
-                genre=philosophy,
-                description="resultado da transcrição de duas palestras de Mário Ferreira dos Santos.",
-                price=12,
-                status=1,
-                amount=20,
-            )
+        self.stdout.write(self.style.SUCCESS("Comando finalizado."))

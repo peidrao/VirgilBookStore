@@ -18,8 +18,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "rest_framework",
-    'drf_spectacular',
     "home",
     "book",
     "order",
@@ -36,16 +34,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-}
-
-SPECTACULAR_SETTINGS = {
-    "TITLE": "Virgil Bookstore API",
-    "DESCRIPTION": "API documentation for Virgil Bookstore",
-    "VERSION": "1.0.0",
-}
 
 
 ROOT_URLCONF = "virgilbookstore.urls"

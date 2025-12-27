@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Livraria Premium</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .filter-drawer { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .filter-drawer.open { transform: translateX(0); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between gap-4">
+        <a href="index.html" class="text-2xl font-bold text-amber-800 hover:text-amber-900 transition-colors">
+          📚 Livraria Premium
+        </a>
+        <div class="hidden md:flex flex-1 max-w-2xl">
+          <div class="relative w-full">
+            <input type="search" placeholder="Buscar livros, autores, ISBN..." class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" aria-label="Buscar livros">
+            <button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-amber-700" aria-label="Buscar">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </button>
+          </div>
+        </div>
+        <nav class="hidden lg:flex items-center gap-6">
+          <a href="books.html" class="text-amber-700 font-semibold">Categorias</a>
+          <a href="books.html?filter=ofertas" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Ofertas</a>
+          <a href="books.html?filter=novidades" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Novidades</a>
+          <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Ajuda</a>
+        </nav>
+        <a href="cart.html" class="relative p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Carrinho de compras">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          <span class="absolute -top-1 -right-1 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
+        </a>
+      </div>
+      <div class="md:hidden mt-3">
+        <div class="relative">
+          <input type="search" placeholder="Buscar livros..." class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="Buscar livros">
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" aria-label="Buscar">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-2 text-gray-600">
+        <li><a href="index.html" class="hover:text-amber-700">Home</a></li>
+        <li>›</li>
+        <li class="text-gray-900 font-medium">Catálogo</li>
+      </ol>
+    </nav>
+
+    <!-- Title and Controls -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Todos os Livros</h1>
+        <p class="text-gray-600">Mostrando <span id="results-count">144</span> resultados</p>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <!-- Mobile Filter Button -->
+        <button id="filter-toggle" class="lg:hidden flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+          Filtros <span id="filter-badge" class="hidden bg-amber-600 text-white text-xs font-bold rounded-full px-2 py-0.5">3</span>
+        </button>
+        
+        <!-- Sort -->
+        <div>
+          <label for="sort-select" class="sr-only">Ordenar por</label>
+          <select id="sort-select" class="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+            <option value="relevance">Relevância</option>
+            <option value="price-asc">Preço: menor</option>
+            <option value="price-desc">Preço: maior</option>
+            <option value="rating">Mais bem avaliados</option>
+            <option value="newest">Lançamentos</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-6">
+      
+      <!-- Filters Sidebar - Desktop -->
+      <aside class="hidden lg:block w-64 flex-shrink-0">
+        <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+          <h2 class="font-bold text-lg mb-4">Filtros</h2>
+          
+          <!-- Categoria -->
+          <div class="mb-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Categoria</h3>
+            <div class="space-y-2">
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Ficção (32)</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Fantasia (28)</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Romance (24)</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Suspense (19)</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Autoajuda (15)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Preço -->
+          <div class="mb-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Faixa de Preço</h3>
+            <div class="space-y-3">
+              <input type="range" min="0" max="200" value="200" class="w-full accent-amber-600">
+              <div class="flex justify-between text-sm text-gray-600">
+                <span>R$ 0</span>
+                <span>R$ 200+</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Idioma -->
+          <div class="mb-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Idioma</h3>
+            <label for="language-select" class="sr-only">Selecionar idioma</label>
+            <select id="language-select" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+              <option>Todos</option>
+              <option>Português</option>
+              <option>Inglês</option>
+              <option>Espanhol</option>
+            </select>
+          </div>
+
+          <!-- Rating -->
+          <div class="mb-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Avaliação Mínima</h3>
+            <div class="space-y-2">
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="radio" name="rating" class="mr-2 text-amber-600 focus:ring-amber-500">
+                <span class="text-sm flex items-center">★★★★★ (5.0)</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="radio" name="rating" class="mr-2 text-amber-600 focus:ring-amber-500" checked>
+                <span class="text-sm flex items-center">★★★★☆ (4.0+)</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="radio" name="rating" class="mr-2 text-amber-600 focus:ring-amber-500">
+                <span class="text-sm flex items-center">★★★☆☆ (3.0+)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Formato -->
+          <div class="mb-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Formato</h3>
+            <div class="space-y-2">
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Físico</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">E-book</span>
+              </label>
+              <label class="flex items-center cursor-pointer hover:text-amber-700">
+                <input type="checkbox" class="mr-2 rounded text-amber-600 focus:ring-amber-500">
+                <span class="text-sm">Audiobook</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Disponibilidade -->
+          <div class="mb-6">
+            <label class="flex items-center justify-between cursor-pointer">
+              <span class="font-semibold text-gray-900">Disponível</span>
+              <input type="checkbox" class="toggle-checkbox sr-only">
+              <div class="toggle-bg w-11 h-6 bg-gray-300 rounded-full relative">
+                <div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Clear Filters -->
+          <button class="w-full py-2 text-amber-700 hover:text-amber-800 font-medium border border-amber-700 rounded-lg hover:bg-amber-50 transition-colors">
+            Limpar Filtros
+          </button>
+        </div>
+      </aside>
+
+      <!-- Mobile Filter Drawer -->
+      <div id="filter-drawer" class="fixed inset-0 z-50 lg:hidden hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50" id="filter-overlay"></div>
+        <aside class="filter-drawer absolute top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="font-bold text-lg">Filtros</h2>
+              <button id="filter-close" class="p-2 hover:bg-gray-100 rounded-lg" aria-label="Fechar filtros">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </button>
+            </div>
+            
+            <!-- Same filters as desktop -->
+            <div class="mb-6">
+              <h3 class="font-semibold text-gray-900 mb-3">Categoria</h3>
+              <div class="space-y-2">
+                <label class="flex items-center cursor-pointer"><input type="checkbox" class="mr-2 rounded text-amber-600 filter-checkbox"><span class="text-sm">Ficção (32)</span></label>
+                <label class="flex items-center cursor-pointer"><input type="checkbox" class="mr-2 rounded text-amber-600 filter-checkbox"><span class="text-sm">Fantasia (28)</span></label>
+                <label class="flex items-center cursor-pointer"><input type="checkbox" class="mr-2 rounded text-amber-600 filter-checkbox"><span class="text-sm">Romance (24)</span></label>
+                <label class="flex items-center cursor-pointer"><input type="checkbox" class="mr-2 rounded text-amber-600 filter-checkbox"><span class="text-sm">Suspense (19)</span></label>
+                <label class="flex items-center cursor-pointer"><input type="checkbox" class="mr-2 rounded text-amber-600 filter-checkbox"><span class="text-sm">Autoajuda (15)</span></label>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <h3 class="font-semibold text-gray-900 mb-3">Faixa de Preço</h3>
+              <input type="range" min="0" max="200" value="200" class="w-full accent-amber-600">
+              <div class="flex justify-between text-sm text-gray-600 mt-2">
+                <span>R$ 0</span>
+                <span>R$ 200+</span>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <h3 class="font-semibold text-gray-900 mb-3">Idioma</h3>
+              <select class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
+                <option>Todos</option>
+                <option>Português</option>
+                <option>Inglês</option>
+              </select>
+            </div>
+
+            <div class="flex gap-3">
+              <button class="flex-1 py-2 text-amber-700 font-medium border border-amber-700 rounded-lg">Limpar</button>
+              <button id="apply-filters" class="flex-1 py-2 bg-amber-700 text-white font-medium rounded-lg">Aplicar</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Books Grid -->
+      <div class="flex-1">
+        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          
+          <!-- Book Cards (12 total) -->
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=1" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book1/300/400" alt="O Senhor dos Anéis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-25%</span>
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Senhor dos Anéis</h3>
+                <p class="text-xs text-gray-600 mb-2">J.R.R. Tolkien</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(523)</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-base md:text-lg font-bold text-amber-700">R$ 89,90</span>
+                  <span class="text-xs text-gray-400 line-through">R$ 119,90</span>
+                </div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=2" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book2/300/400" alt="1984" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded mb-2">Novo</span>
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">1984</h3>
+                <p class="text-xs text-gray-600 mb-2">George Orwell</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(789)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 54,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=3" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book3/300/400" alt="Harry Potter" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Harry Potter e a Pedra Filosofal</h3>
+                <p class="text-xs text-gray-600 mb-2">J.K. Rowling</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(1.2k)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 49,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=4" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book4/300/400" alt="Cem Anos de Solidão" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-15%</span>
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Cem Anos de Solidão</h3>
+                <p class="text-xs text-gray-600 mb-2">Gabriel García Márquez</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★☆</div>
+                  <span class="text-xs text-gray-500 ml-1">(456)</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-base md:text-lg font-bold text-amber-700">R$ 59,90</span>
+                  <span class="text-xs text-gray-400 line-through">R$ 69,90</span>
+                </div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=5" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book5/300/400" alt="O Hobbit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Hobbit</h3>
+                <p class="text-xs text-gray-600 mb-2">J.R.R. Tolkien</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(612)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 44,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=6" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book6/300/400" alt="O Pequeno Príncipe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Pequeno Príncipe</h3>
+                <p class="text-xs text-gray-600 mb-2">Antoine de Saint-Exupéry</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(934)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 29,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=7" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book7/300/400" alt="Dom Casmurro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Dom Casmurro</h3>
+                <p class="text-xs text-gray-600 mb-2">Machado de Assis</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★☆</div>
+                  <span class="text-xs text-gray-500 ml-1">(312)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 34,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=8" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book8/300/400" alt="A Culpa é das Estrelas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-20%</span>
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">A Culpa é das Estrelas</h3>
+                <p class="text-xs text-gray-600 mb-2">John Green</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(1.5k)</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-base md:text-lg font-bold text-amber-700">R$ 39,90</span>
+                  <span class="text-xs text-gray-400 line-through">R$ 49,90</span>
+                </div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=9" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book9/300/400" alt="Sapiens" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Sapiens</h3>
+                <p class="text-xs text-gray-600 mb-2">Yuval Noah Harari</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(2.1k)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 64,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=10" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book10/300/400" alt="A Revolução dos Bichos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">A Revolução dos Bichos</h3>
+                <p class="text-xs text-gray-600 mb-2">George Orwell</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★☆</div>
+                  <span class="text-xs text-gray-500 ml-1">(678)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 42,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=11" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book11/300/400" alt="O Cortiço" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Cortiço</h3>
+                <p class="text-xs text-gray-600 mb-2">Aluísio Azevedo</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★☆</div>
+                  <span class="text-xs text-gray-500 ml-1">(234)</span>
+                </div>
+                <div class="text-base md:text-lg font-bold text-amber-700">R$ 32,90</div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+          <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+            <a href="book.html?id=12" class="block">
+              <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                <img src="https://picsum.photos/seed/book12/300/400" alt="A Menina que Roubava Livros" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </div>
+              <div class="p-4">
+                <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-10%</span>
+                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">A Menina que Roubava Livros</h3>
+                <p class="text-xs text-gray-600 mb-2">Markus Zusak</p>
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span class="text-xs text-gray-500 ml-1">(891)</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-base md:text-lg font-bold text-amber-700">R$ 53,90</span>
+                  <span class="text-xs text-gray-400 line-through">R$ 59,90</span>
+                </div>
+              </div>
+            </a>
+            <div class="px-4 pb-4">
+              <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                Adicionar
+              </button>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-12 flex justify-center" aria-label="Paginação">
+          <ul class="flex items-center gap-2">
+            <li>
+              <button class="px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed" disabled aria-label="Página anterior">
+                ‹
+              </button>
+            </li>
+            <li><button class="px-4 py-2 rounded-md bg-amber-700 text-white font-medium">1</button></li>
+            <li><button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50">2</button></li>
+            <li><button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50">3</button></li>
+            <li><button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50">4</button></li>
+            <li><button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50">5</button></li>
+            <li>
+              <button class="px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-50" aria-label="Próxima página">
+                ›
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-12 mt-16">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-white font-bold text-lg mb-4">📚 Livraria Premium</h3>
+          <p class="text-sm text-gray-400">Sua melhor escolha para encontrar os melhores livros com os melhores preços.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Navegação</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-amber-400 transition-colors">Home</a></li>
+            <li><a href="books.html" class="hover:text-amber-400 transition-colors">Catálogo</a></li>
+            <li><a href="books.html?filter=ofertas" class="hover:text-amber-400 transition-colors">Ofertas</a></li>
+            <li><a href="books.html?filter=novidades" class="hover:text-amber-400 transition-colors">Novidades</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Ajuda</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-amber-400 transition-colors">Central de Ajuda</a></li>
+            <li><a href="#" class="hover:text-amber-400 transition-colors">Trocas e Devoluções</a></li>
+            <li><a href="#" class="hover:text-amber-400 transition-colors">Formas de Pagamento</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contato</h4>
+          <ul class="space-y-2 text-sm">
+            <li>📧 contato@livrariapremiumbr</li>
+            <li>📱 (11) 9999-9999</li>
+            <li>🕒 Seg-Sex: 9h às 18h</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-sm">
+        <p>&copy; 2025 Livraria Premium. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TypeScript for filter drawer and filter counting -->
+  <script type="module">
+    // Filter drawer toggle
+    const filterToggle = document.getElementById('filter-toggle');
+    const filterDrawer = document.getElementById('filter-drawer');
+    const filterClose = document.getElementById('filter-close');
+    const filterOverlay = document.getElementById('filter-overlay');
+    const applyFilters = document.getElementById('apply-filters');
+    const drawer = filterDrawer?.querySelector('.filter-drawer');
+    const filterBadge = document.getElementById('filter-badge');
+    
+    // Open drawer
+    filterToggle?.addEventListener('click', () => {
+      filterDrawer?.classList.remove('hidden');
+      setTimeout(() => drawer?.classList.add('open'), 10);
+    });
+    
+    // Close drawer
+    const closeDrawer = () => {
+      drawer?.classList.remove('open');
+      setTimeout(() => filterDrawer?.classList.add('hidden'), 300);
+    };
+    
+    filterClose?.addEventListener('click', closeDrawer);
+    filterOverlay?.addEventListener('click', closeDrawer);
+    applyFilters?.addEventListener('click', closeDrawer);
+    
+    // Count active filters (simple simulation)
+    const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+    const updateFilterCount = () => {
+      const checkedCount = Array.from(filterCheckboxes).filter(cb => cb.checked).length;
+      if (checkedCount > 0) {
+        filterBadge.textContent = checkedCount;
+        filterBadge.classList.remove('hidden');
+      } else {
+        filterBadge.classList.add('hidden');
+      }
+    };
+    
+    filterCheckboxes.forEach(cb => {
+      cb.addEventListener('change', updateFilterCount);
+    });
+  </script>
+
+</body>
+</html>

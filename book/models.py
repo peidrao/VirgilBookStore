@@ -13,6 +13,7 @@ class Genre(models.Model):
         "self", related_name="genre_origin", on_delete=models.SET_NULL, null=True
     )
     slug = models.SlugField(unique=True, blank=True, null=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

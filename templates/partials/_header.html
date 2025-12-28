@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between gap-4">
             <!-- Logo -->
             <a href="/index.html" class="text-2xl font-bold text-amber-800 hover:text-amber-900 transition-colors">
-                📚 Livraria Premium
+                📚 Virgil BookStore
             </a>
 
             <!-- Search - Desktop -->
@@ -27,7 +27,7 @@
 
             <!-- Nav Links -->
             <nav class="hidden lg:flex items-center gap-6">
-                <a href="/books.html" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Categorias</a>
+                <a href="{% url 'home:categories_list' %}" class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Categories</a>
                 <a href="/books.html?filter=ofertas"
                    class="text-gray-700 hover:text-amber-700 font-medium transition-colors">Ofertas</a>
                 <a href="/books.html?filter=novidades"

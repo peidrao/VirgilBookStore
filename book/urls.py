@@ -11,10 +11,6 @@ urlpatterns = [
     path("books/", views.ManagerBoksView.as_view(), name="books"),
     path("book/remove/<int:pk>", views.ManageRemoveBook.as_view(), name="remove"),
     path("add/", views.ManagerBookAddView.as_view(), name="book_add"),
-    path(
-        "book/update/<int:pk>",
-        views.ManagerBookUpdateView.as_view(),
-        name="book_update",
-    ),
-    path("book/export", views.ManagerBookExportService.as_view(), name="book_export")
+    path("book/update/<int:pk>", views.ManagerBookUpdateView.as_view(), name="book_update"),
+    path("book/export", views.ManagerBookExportService.as_view(), name="book_export"),
 ]

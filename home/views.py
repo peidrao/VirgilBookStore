@@ -40,6 +40,12 @@ class CategoriesListView(generic.ListView):
     context_object_name = "categories"
 
 
+class CategoryDetailView(generic.DetailView):
+    model = Genre
+    template_name = "pages/categories/detail.html"
+    context_object_name = "category"
+
+
 def search(request):
     if request.method == "POST":
         form = SearchForm(request.POST)

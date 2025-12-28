@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between mb-4">
             <span class="text-sm font-semibold text-amber-700">12 livros disponíveis</span>
         </div>
-        <a href="/books.html?category=Ficção"
+        <a href="{% url 'home:category_detail' category.slug %}"
            class="block w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white text-center font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg">
             Explorar {{ category.title }}
         </a>

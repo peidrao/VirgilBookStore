@@ -65,6 +65,31 @@ authors = [
     {"fullname": "Jorge Luis Borges", "description": "Jorge Francisco Isidoro Luis Borges was an Argentine short-story writer, essayist, poet and translator, and a key figure in Spanish-language literature."},
 ]
 
+authors += [
+    {"fullname": "Jostein Gaarder", "description": "Jostein Gaarder é um escritor norueguês, autor de livros de ficção e literatura infantojuvenil, conhecido mundialmente por 'O Mundo de Sofia'."},
+    {"fullname": "Umberto Eco", "description": "Umberto Eco foi um escritor, filósofo, semiólogo e professor universitário italiano, autor de 'O Nome da Rosa'."},
+    {"fullname": "Dan Brown", "description": "Dan Brown é um escritor norte-americano de suspense, famoso por 'O Código Da Vinci'."},
+    {"fullname": "João Guimarães Rosa", "description": "João Guimarães Rosa foi um dos maiores escritores brasileiros, autor de 'Grande Sertão: Veredas'."},
+    {"fullname": "Joaquim Manuel de Macedo", "description": "Joaquim Manuel de Macedo foi um escritor, médico e professor brasileiro, autor de 'A Moreninha'."},
+    {"fullname": "José de Alencar", "description": "José de Alencar foi um dos mais importantes romancistas brasileiros, autor de 'Iracema', 'Senhora' e 'O Guarani'."},
+    {"fullname": "Jorge Amado", "description": "Jorge Amado foi um dos mais famosos escritores brasileiros, autor de 'Gabriela, Cravo e Canela' e 'Capitães da Areia'."},
+    {"fullname": "Aluísio Azevedo", "description": "Aluísio Azevedo foi um escritor, caricaturista e diplomata brasileiro, autor de 'O Cortiço'."},
+    {"fullname": "Bernardo Guimarães", "description": "Bernardo Guimarães foi um escritor e poeta brasileiro, autor de 'A Escrava Isaura'."},
+    {"fullname": "Raul Pompeia", "description": "Raul Pompeia foi um escritor brasileiro, autor de 'O Ateneu'."},
+    {"fullname": "Albert Camus", "description": "Albert Camus foi um escritor, filósofo e jornalista francês, autor de 'O Estrangeiro' e 'A Peste'."},
+    {"fullname": "René Goscinny", "description": "René Goscinny foi um escritor e editor francês, famoso por criar 'O Pequeno Nicolau' e 'Asterix'."},
+    {"fullname": "J. D. Salinger", "description": "Jerome David Salinger foi um escritor norte-americano, autor de 'O Apanhador no Campo de Centeio'."},
+    {"fullname": "Herman Melville", "description": "Herman Melville foi um escritor norte-americano, autor de 'Moby Dick'."},
+    {"fullname": "Bram Stoker", "description": "Bram Stoker foi um escritor irlandês, autor de 'Drácula'."},
+    {"fullname": "Mary Shelley", "description": "Mary Shelley foi uma escritora britânica, autora de 'Frankenstein'."},
+    {"fullname": "Robert Louis Stevenson", "description": "Robert Louis Stevenson foi um escritor escocês, autor de 'O Médico e o Monstro'."},
+    {"fullname": "Emily Brontë", "description": "Emily Brontë foi uma escritora inglesa, autora de 'O Morro dos Ventos Uivantes'."},
+    {"fullname": "Charlotte Brontë", "description": "Charlotte Brontë foi uma escritora inglesa, autora de 'Jane Eyre'."},
+    {"fullname": "Oscar Wilde", "description": "Oscar Wilde foi um escritor, poeta e dramaturgo irlandês, autor de 'O Retrato de Dorian Gray'."},
+    {"fullname": "Fiódor Dostoiévski", "description": "Fiódor Dostoiévski foi um escritor russo, autor de 'Crime e Castigo' e 'Os Irmãos Karamázov'."},
+    {"fullname": "Liev Tolstói", "description": "Liev Tolstói foi um escritor russo, autor de 'Guerra e Paz' e 'Anna Kariênina'."},
+]
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for author in authors:

@@ -41,11 +41,11 @@
             <div class="flex items-center gap-2">
                 <div id="authButtons" class="hidden lg:flex items-center gap-2">
                     <!-- Logged out state -->
-                    <a id="loginBtn" href="/login.html"
+                    <a id="loginBtn" href="{% url 'user:login' %}"
                        class="text-gray-700 hover:text-amber-700 font-medium transition-colors px-3 py-2">
                         Entrar
                     </a>
-                    <a id="registerBtn" href="/register.html"
+                    <a id="registerBtn" href="{% url 'user:signup' %}"
                        class="bg-amber-700 hover:bg-amber-800 text-white font-medium px-4 py-2 rounded-lg transition-colors">
                         Criar Conta
                     </a>

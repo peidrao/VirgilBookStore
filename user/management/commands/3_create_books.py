@@ -3,375 +3,145 @@ from django.core.management.base import BaseCommand
 from book.models import Book, Genre, Writer
 
 
+books = [
+    {"title": "O Senhor dos Anéis: A Sociedade do Anel", "description": "Primeiro volume da trilogia épica de fantasia.", "author": "J. R. R. Tolkien", "genre": "Fantasia", "price": 89.90, "amount": 10},
+    {"title": "O Senhor dos Anéis: As Duas Torres", "description": "Segundo volume da trilogia épica de fantasia.", "author": "J. R. R. Tolkien", "genre": "Fantasia", "price": 89.90, "amount": 10},
+    {"title": "O Senhor dos Anéis: O Retorno do Rei", "description": "Terceiro volume da trilogia épica de fantasia.", "author": "J. R. R. Tolkien", "genre": "Fantasia", "price": 89.90, "amount": 10},
+    {"title": "O Hobbit", "description": "A aventura de Bilbo Bolseiro antes da trilogia O Senhor dos Anéis.", "author": "J. R. R. Tolkien", "genre": "Fantasia", "price": 59.90, "amount": 12},
+    {"title": "Silmarillion", "description": "Histórias da Primeira Era da Terra Média.", "author": "J. R. R. Tolkien", "genre": "Fantasia", "price": 69.90, "amount": 8},
+    {"title": "Harry Potter e a Pedra Filosofal", "description": "Primeiro livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 49.90, "amount": 15},
+    {"title": "Harry Potter e a Câmara Secreta", "description": "Segundo livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 49.90, "amount": 15},
+    {"title": "Harry Potter e o Prisioneiro de Azkaban", "description": "Terceiro livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 49.90, "amount": 15},
+    {"title": "Harry Potter e o Cálice de Fogo", "description": "Quarto livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 59.90, "amount": 15},
+    {"title": "Harry Potter e a Ordem da Fênix", "description": "Quinto livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 59.90, "amount": 15},
+    {"title": "Harry Potter e o Enigma do Príncipe", "description": "Sexto livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 59.90, "amount": 15},
+    {"title": "Harry Potter e as Relíquias da Morte", "description": "Sétimo livro da saga Harry Potter.", "author": "J. K. Rowling", "genre": "Fantasia", "price": 59.90, "amount": 15},
+    {"title": "Dom Casmurro", "description": "Clássico da literatura brasileira.", "author": "Machado de Assis", "genre": "Literatura Clássica", "price": 39.90, "amount": 20},
+    {"title": "Memórias Póstumas de Brás Cubas", "description": "Obra-prima de Machado de Assis.", "author": "Machado de Assis", "genre": "Literatura Clássica", "price": 39.90, "amount": 20},
+    {"title": "Quincas Borba", "description": "Romance filosófico de Machado de Assis.", "author": "Machado de Assis", "genre": "Romance", "price": 39.90, "amount": 20},
+    {"title": "A Hora da Estrela", "description": "Obra marcante de Clarice Lispector.", "author": "Clarice Lispector", "genre": "Romance", "price": 34.90, "amount": 18},
+    {"title": "Perto do Coração Selvagem", "description": "Romance de estreia de Clarice Lispector.", "author": "Clarice Lispector", "genre": "Romance", "price": 34.90, "amount": 18},
+    {"title": "A Paixão Segundo G.H.", "description": "Um dos romances mais conhecidos de Clarice Lispector.", "author": "Clarice Lispector", "genre": "Romance", "price": 34.90, "amount": 18},
+    {"title": "1984", "description": "Distopia clássica sobre totalitarismo.", "author": "George Orwell", "genre": "Ficção Científica", "price": 44.90, "amount": 25},
+    {"title": "A Revolução dos Bichos", "description": "Fábula política satírica.", "author": "George Orwell", "genre": "Ficção Científica", "price": 39.90, "amount": 25},
+    {"title": "Orgulho e Preconceito", "description": "Clássico romance inglês.", "author": "Jane Austen", "genre": "Romance", "price": 42.90, "amount": 15},
+    {"title": "Razão e Sensibilidade", "description": "Outro grande romance de Jane Austen.", "author": "Jane Austen", "genre": "Romance", "price": 42.90, "amount": 15},
+    {"title": "Cem Anos de Solidão", "description": "Obra-prima do realismo mágico.", "author": "Gabriel García Márquez", "genre": "Romance", "price": 54.90, "amount": 12},
+    {"title": "O Amor nos Tempos do Cólera", "description": "Romance sobre o amor e o tempo.", "author": "Gabriel García Márquez", "genre": "Romance", "price": 54.90, "amount": 12},
+    {"title": "Ensaio sobre a Cegueira", "description": "Romance alegórico sobre a sociedade.", "author": "José Saramago", "genre": "Romance", "price": 49.90, "amount": 10},
+    {"title": "O Evangelho Segundo Jesus Cristo", "description": "Polêmico romance de Saramago.", "author": "José Saramago", "genre": "Romance", "price": 49.90, "amount": 10},
+    {"title": "A Metamorfose", "description": "Clássico da literatura existencialista.", "author": "Franz Kafka", "genre": "Romance", "price": 39.90, "amount": 14},
+    {"title": "O Processo", "description": "Romance sobre burocracia e alienação.", "author": "Franz Kafka", "genre": "Romance", "price": 39.90, "amount": 14},
+    {"title": "Mrs. Dalloway", "description": "Romance modernista inglês.", "author": "Virginia Woolf", "genre": "Romance", "price": 44.90, "amount": 10},
+    {"title": "Ao Farol", "description": "Obra-prima de Virginia Woolf.", "author": "Virginia Woolf", "genre": "Romance", "price": 44.90, "amount": 10},
+    {"title": "O Primo Basílio", "description": "Romance realista português.", "author": "José Saramago", "genre": "Romance", "price": 44.90, "amount": 10},
+    {"title": "O Mundo de Sofia", "description": "Introdução à filosofia para jovens.", "author": "Jostein Gaarder", "genre": "Infantojuvenil", "price": 39.90, "amount": 20},
+    {"title": "O Nome da Rosa", "description": "Romance policial histórico.", "author": "Umberto Eco", "genre": "Mistério", "price": 49.90, "amount": 10},
+    {"title": "O Código Da Vinci", "description": "Thriller de mistério e conspiração.", "author": "Dan Brown", "genre": "Mistério", "price": 49.90, "amount": 15},
+    {"title": "O Iluminado", "description": "Terror psicológico em um hotel isolado.", "author": "Stephen King", "genre": "Terror", "price": 49.90, "amount": 12},
+    {"title": "It: A Coisa", "description": "Terror sobrenatural em uma pequena cidade.", "author": "Stephen King", "genre": "Terror", "price": 59.90, "amount": 12},
+    {"title": "Carrie, a Estranha", "description": "Primeiro romance publicado de Stephen King.", "author": "Stephen King", "genre": "Terror", "price": 39.90, "amount": 12},
+    {"title": "A Arte da Guerra", "description": "Clássico tratado militar chinês.", "author": "Sun Tzu", "genre": "Negócios", "price": 34.90, "amount": 20},
+    {"title": "Odisseia", "description": "Poema épico grego.", "author": "Homero", "genre": "Literatura Clássica", "price": 49.90, "amount": 10},
+    {"title": "Ilíada", "description": "Poema épico grego.", "author": "Homero", "genre": "Literatura Clássica", "price": 49.90, "amount": 10},
+    {"title": "A República", "description": "Obra filosófica fundamental.", "author": "Platão", "genre": "Filosofia", "price": 44.90, "amount": 10},
+    {"title": "Édipo Rei", "description": "Tragédia grega clássica.", "author": "Sófocles", "genre": "Literatura Clássica", "price": 34.90, "amount": 10},
+    {"title": "Mensagem", "description": "Obra poética de Fernando Pessoa.", "author": "Fernando Pessoa", "genre": "Poesia", "price": 29.90, "amount": 10},
+    {"title": "Alguma Poesia", "description": "Primeiro livro de Carlos Drummond de Andrade.", "author": "Carlos Drummond de Andrade", "genre": "Poesia", "price": 29.90, "amount": 10},
+    {"title": "Ficciones", "description": "Coletânea de contos fantásticos.", "author": "Jorge Luis Borges", "genre": "Contos", "price": 39.90, "amount": 10},
+    {"title": "O Aleph", "description": "Contos e reflexões filosóficas.", "author": "Jorge Luis Borges", "genre": "Contos", "price": 39.90, "amount": 10},
+    {"title": "Sítio do Picapau Amarelo", "description": "Clássico da literatura infantil brasileira.", "author": "Monteiro Lobato", "genre": "Infantojuvenil", "price": 34.90, "amount": 20},
+    {"title": "Reinações de Narizinho", "description": "Aventuras no Sítio do Picapau Amarelo.", "author": "Monteiro Lobato", "genre": "Infantojuvenil", "price": 34.90, "amount": 20},
+    {"title": "O Caso dos Dez Negrinhos", "description": "Mistério policial de Agatha Christie.", "author": "Agatha Christie", "genre": "Mistério", "price": 39.90, "amount": 15},
+    {"title": "Assassinato no Expresso do Oriente", "description": "Clássico romance policial.", "author": "Agatha Christie", "genre": "Mistério", "price": 39.90, "amount": 15},
+    {"title": "Grande Sertão: Veredas", "description": "Obra-prima de Guimarães Rosa, um dos maiores romances brasileiros.", "author": "João Guimarães Rosa", "genre": "Literatura Nacional", "price": 49.90, "amount": 15},
+    {"title": "Sagarana", "description": "Coletânea de contos de Guimarães Rosa.", "author": "João Guimarães Rosa", "genre": "Contos", "price": 39.90, "amount": 10},
+    {"title": "Vidas Secas", "description": "Romance marcante de Graciliano Ramos sobre a seca no sertão.", "author": "Graciliano Ramos", "genre": "Literatura Nacional", "price": 39.90, "amount": 12},
+    {"title": "São Bernardo", "description": "Romance psicológico de Graciliano Ramos.", "author": "Graciliano Ramos", "genre": "Romance", "price": 39.90, "amount": 12},
+    {"title": "O Alienista", "description": "Sátira de Machado de Assis sobre a loucura e a sociedade.", "author": "Machado de Assis", "genre": "Contos", "price": 29.90, "amount": 18},
+    {"title": "A Moreninha", "description": "Primeiro romance do romantismo brasileiro.", "author": "Joaquim Manuel de Macedo", "genre": "Romance", "price": 29.90, "amount": 10},
+    {"title": "Senhora", "description": "Romance de José de Alencar sobre amor e dinheiro.", "author": "José de Alencar", "genre": "Romance", "price": 34.90, "amount": 10},
+    {"title": "Iracema", "description": "Romance indianista de José de Alencar.", "author": "José de Alencar", "genre": "Romance", "price": 34.90, "amount": 10},
+    {"title": "O Guarani", "description": "Romance de aventura e amor no Brasil colonial.", "author": "José de Alencar", "genre": "Aventura", "price": 34.90, "amount": 10},
+    {"title": "Capitães da Areia", "description": "Romance de Jorge Amado sobre meninos de rua em Salvador.", "author": "Jorge Amado", "genre": "Literatura Nacional", "price": 39.90, "amount": 12},
+    {"title": "Gabriela, Cravo e Canela", "description": "Romance de Jorge Amado ambientado em Ilhéus.", "author": "Jorge Amado", "genre": "Romance", "price": 39.90, "amount": 12},
+    {"title": "O Cortiço", "description": "Romance naturalista de Aluísio Azevedo.", "author": "Aluísio Azevedo", "genre": "Literatura Nacional", "price": 34.90, "amount": 10},
+    {"title": "A Escrava Isaura", "description": "Romance abolicionista de Bernardo Guimarães.", "author": "Bernardo Guimarães", "genre": "Romance", "price": 29.90, "amount": 10},
+    {"title": "O Ateneu", "description": "Romance de Raul Pompeia sobre a vida em um internato.", "author": "Raul Pompeia", "genre": "Romance", "price": 29.90, "amount": 10},
+    {"title": "A Divina Comédia", "description": "Poema épico de Dante Alighieri.", "author": "Dante Alighieri", "genre": "Literatura Clássica", "price": 59.90, "amount": 10},
+    {"title": "Inferno", "description": "Primeira parte da Divina Comédia.", "author": "Dante Alighieri", "genre": "Literatura Clássica", "price": 39.90, "amount": 10},
+    {"title": "Purgatório", "description": "Segunda parte da Divina Comédia.", "author": "Dante Alighieri", "genre": "Literatura Clássica", "price": 39.90, "amount": 10},
+    {"title": "Paraíso", "description": "Terceira parte da Divina Comédia.", "author": "Dante Alighieri", "genre": "Literatura Clássica", "price": 39.90, "amount": 10},
+    {"title": "O Estrangeiro", "description": "Romance existencialista de Albert Camus.", "author": "Albert Camus", "genre": "Romance", "price": 39.90, "amount": 10},
+    {"title": "A Peste", "description": "Romance filosófico de Albert Camus.", "author": "Albert Camus", "genre": "Romance", "price": 39.90, "amount": 10},
+    {"title": "O Pequeno Nicolau", "description": "Histórias divertidas de um menino francês.", "author": "René Goscinny", "genre": "Infantojuvenil", "price": 29.90, "amount": 10},
+    {"title": "O Apanhador no Campo de Centeio", "description": "Romance de formação de J. D. Salinger.", "author": "J. D. Salinger", "genre": "Romance", "price": 39.90, "amount": 10},
+    {"title": "Moby Dick", "description": "Clássico da literatura americana sobre a caça à baleia.", "author": "Herman Melville", "genre": "Aventura", "price": 49.90, "amount": 10},
+    {"title": "Drácula", "description": "Romance gótico de Bram Stoker.", "author": "Bram Stoker", "genre": "Terror", "price": 39.90, "amount": 10},
+    {"title": "Frankenstein", "description": "Romance gótico de Mary Shelley.", "author": "Mary Shelley", "genre": "Terror", "price": 39.90, "amount": 10},
+    {"title": "O Médico e o Monstro", "description": "Clássico do terror psicológico.", "author": "Robert Louis Stevenson", "genre": "Terror", "price": 34.90, "amount": 10},
+    {"title": "O Morro dos Ventos Uivantes", "description": "Romance inglês de Emily Brontë.", "author": "Emily Brontë", "genre": "Romance", "price": 39.90, "amount": 10},
+    {"title": "Jane Eyre", "description": "Romance inglês de Charlotte Brontë.", "author": "Charlotte Brontë", "genre": "Romance", "price": 39.90, "amount": 10},
+    {"title": "O Retrato de Dorian Gray", "description": "Romance de Oscar Wilde sobre vaidade e juventude.", "author": "Oscar Wilde", "genre": "Romance", "price": 39.90, "amount": 10},
+    {"title": "Crime e Castigo", "description": "Romance russo de Fiódor Dostoiévski.", "author": "Fiódor Dostoiévski", "genre": "Romance", "price": 49.90, "amount": 10},
+    {"title": "Os Irmãos Karamázov", "description": "Último romance de Dostoiévski.", "author": "Fiódor Dostoiévski", "genre": "Romance", "price": 59.90, "amount": 10},
+    {"title": "Guerra e Paz", "description": "Romance épico de Liev Tolstói.", "author": "Liev Tolstói", "genre": "Romance", "price": 69.90, "amount": 10},
+    {"title": "Anna Kariênina", "description": "Romance russo de Liev Tolstói.", "author": "Liev Tolstói", "genre": "Romance", "price": 59.90, "amount": 10},
+    {"title": "O Pequeno Príncipe", "description": "Clássico infantojuvenil.", "author": "Antoine de Saint-Exupéry", "genre": "Infantojuvenil", "price": 29.90, "amount": 30},
+]
+
+
+# Remover duplicações
+unique_titles = set()
+unique_books = []
+for book in books:
+    if book["title"] not in unique_titles:
+        unique_books.append(book)
+        unique_titles.add(book["title"])
+books = unique_books
+
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        # Usando get_or_create para garantir que os objetos existam e evitar duplicação
-        genres = {
-            "arte": Genre.objects.get_or_create(title="Arte")[0],
-            "comedia": Genre.objects.get_or_create(title="Comédia")[0],
-            "matematica": Genre.objects.get_or_create(title="Matemática")[0],
-            "ficcao": Genre.objects.get_or_create(title="Ficção")[0],
-            "poesia": Genre.objects.get_or_create(title="Poesia")[0],
-            "politica": Genre.objects.get_or_create(title="Política")[0],
-            "religiao": Genre.objects.get_or_create(title="Religião")[0],
-            "economia": Genre.objects.get_or_create(title="Economia")[0],
-            "filosofia": Genre.objects.get_or_create(title="Filosofia")[0],
-            "filosofia-medieval": Genre.objects.get_or_create(
-                title="Filosofia Medieval"
-            )[0],
-            "filosofia-estoica": Genre.objects.get_or_create(
-                title="Filosofia Estóica"
-            )[0],
-            "historia": Genre.objects.get_or_create(title="História")[0],
-            "historia-do-brasil": Genre.objects.get_or_create(
-                title="História do Brasil"
-            )[0],
-            "historia-do-ocidente": Genre.objects.get_or_create(
-                title="História do Ocidente"
-            )[0],
-            "historia-africana": Genre.objects.get_or_create(
-                title="História Africana"
-            )[0],
-        }
-
-        writers = {
-            "J. R. R. Tolkien": Writer.objects.get_or_create(
-                fullname="J. R. R. Tolkien"
-            )[0],
-            "Olavo de Carvalho": Writer.objects.get_or_create(
-                fullname="Olavo de Carvalho"
-            )[0],
-            "Tomás de Aquino": Writer.objects.get_or_create(fullname="Tomás de Aquino")[
-                0
-            ],
-            "René Guénon": Writer.objects.get_or_create(fullname="René Guénon")[0],
-            "Dante Alighieri": Writer.objects.get_or_create(fullname="Dante Alighieri")[
-                0
-            ],
-            "Aristóteles": Writer.objects.get_or_create(fullname="Aristóteles")[0],
-            "Otto Maria Carpeaux": Writer.objects.get_or_create(
-                fullname="Otto Maria Carpeaux"
-            )[0],
-            "Mário Ferreira dos Santos": Writer.objects.get_or_create(
-                fullname="Mário Ferreira dos Santos"
-            )[0],
-            "C. S. Lewis": Writer.objects.get_or_create(fullname="C. S. Lewis")[0],
-            "Platão": Writer.objects.get_or_create(fullname="Platão")[0],
-            "Sêneca": Writer.objects.get_or_create(fullname="Sêneca")[0],
-        }
-
-        books_data = [
-            {
-                "title": "Inferno",
-                "writer": writers["Dante Alighieri"],
-                "genre": genres["poesia"],
-                "description": "O Inferno é a primeira parte da Divina Comédia de Dante Alighieri, sendo as outras duas o Purgatório e o Paraíso.",
-                "price": Decimal("50.00"),
-                "status": "NEW",
-                "amount": 12,
-            },
-            {
-                "title": "Purgatório",
-                "writer": writers["Dante Alighieri"],
-                "genre": genres["poesia"],
-                "description": "Purgatório é a segunda parte da Divina Comédia de Dante Alighieri. Está dividido em trinta e três cantos.",
-                "price": Decimal("20.00"),
-                "status": "NEW",
-                "amount": 40,
-            },
-            {
-                "title": "Paraíso",
-                "writer": writers["Dante Alighieri"],
-                "genre": genres["poesia"],
-                "description": "Paraíso é a terceira e última parte da Divina Comédia de Dante. É uma alegoria, dizendo da visão de Dante do céu, guiado por Beatriz, amor platônico de Dante.",
-                "price": Decimal("78.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "Divina Comédia",
-                "writer": writers["Dante Alighieri"],
-                "genre": genres["poesia"],
-                "description": "Escrito originalmente em italiano vulgar baseado no dialeto toscano da época e bastante semelhante ao italiano atual, e não em latim como fazia-se comum à época, trata-se de um poema articulado por trilogias",
-                "price": Decimal("150.00"),
-                "status": "NEW",
-                "amount": 120,
-            },
-            {
-                "title": "O Silmarillion",
-                "writer": writers["J. R. R. Tolkien"],
-                "genre": genres["ficcao"],
-                "description": "O Silmarillion é o relato dos Dias Antigos da Primeira Era do mundo criado por J.R.R. Tolkien",
-                "price": Decimal("44.00"),
-                "status": "NEW",
-                "amount": 33,
-            },
-            {
-                "title": "O Hobbit",
-                "writer": writers["J. R. R. Tolkien"],
-                "genre": genres["ficcao"],
-                "description": "Bilbo Bolseiro era um dos mais respeitáveis hobbits de todo o Condado até que, um dia, o mago Gandalf bate à sua porta.",
-                "price": Decimal("31.00"),
-                "status": "NEW",
-                "amount": 2,
-            },
-            {
-                "title": "O Senhor dos Anéis",
-                "writer": writers["J. R. R. Tolkien"],
-                "genre": genres["ficcao"],
-                "description": "Apesar de ter sido publicado em três volumes – A Sociedade do Anel, As Duas Torres e O Retorno do Rei – desde os anos 1950, O Senhor dos Anéis não é exatamente uma trilogia, mas um único grande romance que só pode ser compreendido em seu conjunto, segundo a concepção de seu autor, J.R.R. Tolkien. ",
-                "price": Decimal("200.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "A Queda de Gondolin",
-                "writer": writers["J. R. R. Tolkien"],
-                "genre": genres["ficcao"],
-                "description": "O último dos três Grandes Contos Perdidos do legendário de J.R.R.Tolkien narra a jornada de Tuor rumo à cidade secreta de Gondolin, refúgio élfico do povo do Rei Turgon. Contra a bela cidade, levanta-se Morgoth, o Inimigo Sombrio, com seu exército de seres malévolos.",
-                "price": Decimal("35.00"),
-                "status": "NEW",
-                "amount": 19,
-            },
-            {
-                "title": "O Jardim das Aflições",
-                "writer": writers["Olavo de Carvalho"],
-                "genre": genres["filosofia"],
-                "description": "A tese fundamental deste monumental ensaio é a de que a história do ocidente é marcada pela ideia de Império e de suas sucessivas tentativas de reestruturação; mesmo com roupagens diferentes, há sempre o mesmo objetivo: ampliar os domínios do Império até os limites do mundo visível.",
-                "price": Decimal("70.00"),
-                "status": "NEW",
-                "amount": 190,
-            },
-            {
-                "title": "A Nova Era e a Revolução Cultural",
-                "writer": writers["Olavo de Carvalho"],
-                "genre": genres["filosofia"],
-                "description": "A Nova Era, da qual Fritjof Capra se tornou festejado porta-voz, e a Revolução Cultural, de Antonio Gramsci, têm algo em comum: ambas pretendem introduzir no espírito humano modificações vastas, profundas e irreversíveis.",
-                "price": Decimal("56.00"),
-                "status": "NEW",
-                "amount": 20,
-            },
-            {
-                "title": "O Imbecil Coletivo: Atualidades Inculturais Brasileiras",
-                "writer": writers["Olavo de Carvalho"],
-                "genre": genres["filosofia"],
-                "description": "Quem é o imbecil coletivo?Ele é duplo: nasce do improvável matrimônio do intelectual pernóstico com a ralé enfurecida.",
-                "price": Decimal("66.00"),
-                "status": "NEW",
-                "amount": 5,
-            },
-            {
-                "title": "A Filosofia e seu Inverso",
-                "writer": writers["Olavo de Carvalho"],
-                "genre": genres["filosofia"],
-                "description": "Mas não só. Olavo de Carvalho nos recorda que não esquecer nossa condição mortal é o ponto de partida da investigação metafísica",
-                "price": Decimal("35.00"),
-                "status": "NEW",
-                "amount": 120,
-            },
-            {
-                "title": "O mínimo que você precisa saber para não ser um idiota",
-                "writer": writers["Olavo de Carvalho"],
-                "genre": genres["filosofia"],
-                "description": " O mínimo que você precisa saber para não ser idiota, são uma pequena parcela dos textos assinados pelo filósofo em diversos veículos da imprensa brasileira entre 1997 e 2013.",
-                "price": Decimal("299.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "Verdade e conhecimento",
-                "writer": writers["Tomás de Aquino"],
-                "genre": genres["filosofia"],
-                "description": "Verdade e conhecimento', em edição bilíngue, apresenta ao leitor o tratamento que Tomás de Aquino dá - nas Quaestiones Disputatae de Veritate ",
-                "price": Decimal("4.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "Suma Teológica:",
-                "writer": writers["Tomás de Aquino"],
-                "genre": genres["filosofia"],
-                "description": "Suma Teológica, a síntese brilhante de Santo Tomás de Aquino do pensamento cristão, teve um impacto decisivo e permanente na filosofia e na religião desde o século XIII.",
-                "price": Decimal("189.00"),
-                "status": "NEW",
-                "amount": 43,
-            },
-            {
-                "title": "A Caridade, a Correção Fraterna e a Esperança",
-                "writer": writers["Tomás de Aquino"],
-                "genre": genres["religiao"],
-                "description": "Tomás de Aquino, filósofo e teólogo dominicano, santo e doutor da Igreja, escreveu diversas obras, dentre as mais importantes estão as famosas Questões Disputadas, que são o fruto característico da universidade medieval. ",
-                "price": Decimal("78.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "O CREDO: EXPLICADO POR SÃO TOMÁS DE AQUINO",
-                "writer": writers["Tomás de Aquino"],
-                "genre": genres["religiao"],
-                "description": "ão Tomás de Aquino foi um importante teólogo, filósofo e padre dominicano do século XIII. Foi declarado santo pelo papa João XXII em 18 de julho de 1323. ",
-                "price": Decimal("10.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "A Crise do Mundo Moderno",
-                "writer": writers["René Guénon"],
-                "genre": genres["religiao"],
-                "description": "Essa obra extremamente profética do grande filósofo perenialista René Guénon trata de uma investigação das causas responsáveis pela atual crise no mundo moderno, bem como as suas consequências e possíveis soluções. Mesmo tendo sido publicada pela primeira vez em 1927, a obra continua a ser relevante.",
-                "price": Decimal("18.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "O Simbolismo da Cruz",
-                "writer": writers["René Guénon"],
-                "genre": genres["religiao"],
-                "description": "Nesta obra, o grande filósofo perenialista René Guénon analisa um dos símbolos mais antigos e mais proeminentes da história da humanidade, a Cruz, sob o ponto de vista metafísico e comparativo da grande tradição primordial, e não do ponto de vista puramente histórico",
-                "price": Decimal("8.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "O Erro Espírita",
-                "writer": writers["René Guénon"],
-                "genre": genres["religiao"],
-                "description": "",
-                "price": Decimal("11.00"),
-                "status": "NEW",
-                "amount": 12,
-            },
-            {
-                "title": "Retratos e Leituras",
-                "writer": writers["Otto Maria Carpeaux"],
-                "genre": genres["filosofia"],
-                "description": "Retratos e Leituras é o quarto livro escrito por Otto Maria Carpeaux no Brasil. A primeira edição foi publicada em 1953. ",
-                "price": Decimal("49.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "História da Literatura Ocidental - Vol. I: A Herança Grego",
-                "writer": writers["Otto Maria Carpeaux"],
-                "genre": genres["historia-do-ocidente"],
-                "description": "O primeiro volume da História da Literatura Ocidental, de Carpeaux. Neste volume, o autor discorre sobre as literaturas grega e latina.",
-                "price": Decimal("120.00"),
-                "status": "NEW",
-                "amount": 97,
-            },
-            {
-                "title": "Caminhos para Roma: Aventura, queda e vitória do espírito",
-                "writer": writers["Otto Maria Carpeaux"],
-                "genre": genres["religiao"],
-                "description": "Estamos em crise, quer dizer, estamos sem fé. Começou na Reforma, com a autocracia do indivíduo, o caminho funesto que, através do racionalismo, iluminismo, liberalismo, imperialismo, bolchevismo, conduz ainda ao horror do aniquilamento.",
-                "price": Decimal("46.00"),
-                "status": "NEW",
-                "amount": 10,
-            },
-            {
-                "title": "Filosofia da Crise",
-                "writer": writers["Mário Ferreira dos Santos"],
-                "genre": genres["politica"],
-                "description": "Ocupando um lugar de destaque na vasta produção do filósofo brasileiro Mário Ferreira dos Santos, Filosofia da Crise é o mais novo lançamento da É Realizações. ",
-                "price": Decimal("33.00"),
-                "status": "NEW",
-                "amount": 40,
-            },
-            {
-                "title": "Invasão Vertical dos Bárbaros ",
-                "writer": writers["Mário Ferreira dos Santos"],
-                "genre": genres["filosofia"],
-                "description": "A história nos relata que houve muitas invasões horizontais de bárbaros; hoje, porém, vivemos uma invasão vertical de bárbaros, que é a que penetra pela cultura",
-                "price": Decimal("47.00"),
-                "status": "NEW",
-                "amount": 9,
-            },
-            {
-                "title": "Tratado de Simbólica",
-                "writer": writers["Mário Ferreira dos Santos"],
-                "genre": genres["filosofia"],
-                "description": "resultado da transcrição de duas palestras de Mário Ferreira dos Santos.",
-                "price": Decimal("12.00"),
-                "status": "NEW",
-                "amount": 20,
-            },
-            # Livros de C.S. Lewis
-            {
-                "title": "As Crônicas de Nárnia",
-                "writer": writers["C. S. Lewis"],
-                "genre": genres["ficcao"],
-                "description": "Viagens ao fim do mundo, criaturas fantásticas e batalhas épicas entre o bem e o mal - o que mais um leitor poderia querer de um livro? O livro que tem tudo isso é O Leão, a Feiticeira e o Guarda-Roupa, escrito em 1950 por C. S. Lewis.",
-                "price": Decimal("80.00"),
-                "status": "NEW",
-                "amount": 25,
-            },
-            {
-                "title": "Cristianismo Puro e Simples",
-                "writer": writers["C. S. Lewis"],
-                "genre": genres["religiao"],
-                "description": "Um dos maiores clássicos do pensamento cristão, esta obra foi adaptada de uma série de programas de rádio produzidos pela BBC durante a Segunda Guerra Mundial.",
-                "price": Decimal("45.00"),
-                "status": "NEW",
-                "amount": 30,
-            },
-            {
-                "title": "Cartas de um diabo a seu aprendiz",
-                "writer": writers["C. S. Lewis"],
-                "genre": genres["religiao"],
-                "description": "Irônica, astuta e original, esta obra-prima da sátira é a correspondência entre um diabo e seu sobrinho, um demônio júnior.",
-                "price": Decimal("38.00"),
-                "status": "NEW",
-                "amount": 15,
-            },
-            # Livros de Filosofia Clássica
-            {
-                "title": "A República",
-                "writer": writers["Platão"],
-                "genre": genres["filosofia"],
-                "description": "A República é um diálogo socrático escrito por Platão, filósofo grego, por volta de 380 a.C. É uma das obras mais influentes da filosofia e da teoria política.",
-                "price": Decimal("65.00"),
-                "status": "NEW",
-                "amount": 20,
-            },
-            {
-                "title": "Sobre a Brevidade da Vida",
-                "writer": writers["Sêneca"],
-                "genre": genres["filosofia-estoica"],
-                "description": "Um dos textos mais importantes da filosofia estoica, onde Sêneca argumenta que a vida não é curta, mas nós a tornamos assim.",
-                "price": Decimal("25.00"),
-                "status": "NEW",
-                "amount": 50,
-            },
-            {
-                "title": "Ética a Nicômaco",
-                "writer": writers["Aristóteles"],
-                "genre": genres["filosofia"],
-                "description": "Principal obra de Aristóteles sobre ética. Nela, o filósofo expõe sua concepção de eudaimonia (felicidade) como a finalidade da vida humana.",
-                "price": Decimal("55.00"),
-                "status": "NEW",
-                "amount": 18,
-            },
-        ]
-
-        for book_data in books_data:
-            book, created = Book.objects.get_or_create(
-                title=book_data["title"],
-                defaults={
-                    "writer": book_data["writer"],
-                    "genre": book_data["genre"],
-                    "description": book_data["description"],
-                    "price": book_data["price"],
-                    "status": book_data["status"],
-                    "amount": book_data["amount"],
-                },
-            )
-            if created:
-                self.stdout.write(
-                    self.style.SUCCESS(f'Livro "{book.title}" criado com sucesso.')
+        for book in books:
+            try:
+                writer = Writer.objects.get(fullname=book["author"])
+                genre = Genre.objects.get(title=book["genre"])
+                obj, created = Book.objects.get_or_create(
+                    title=book["title"],
+                    defaults={
+                        "writer": writer,
+                        "genre": genre,
+                        "description": book["description"],
+                        "price": Decimal(book["price"]),
+                        "amount": book["amount"],
+                    },
                 )
-            else:
-                self.stdout.write(
-                    self.style.WARNING(f'Livro "{book.title}" já existe.')
-                )
-
-        self.stdout.write(self.style.SUCCESS("Comando finalizado."))
+                if created:
+                    self.stdout.write(self.style.SUCCESS(f'Livro "{book["title"]}" criado.'))
+                else:
+                    needs_save = False
+                    if obj.writer != writer:
+                        obj.writer = writer
+                        needs_save = True
+                    if obj.genre != genre:
+                        obj.genre = genre
+                        needs_save = True
+                    if obj.description != book["description"]:
+                        obj.description = book["description"]
+                        needs_save = True
+                    if obj.price != Decimal(book["price"]):
+                        obj.price = Decimal(book["price"])
+                        needs_save = True
+                    if obj.amount != book["amount"]:
+                        obj.amount = book["amount"]
+                        needs_save = True
+                    if needs_save:
+                        obj.save()
+                        self.stdout.write(self.style.WARNING(f'Livro "{book["title"]}" atualizado.'))
+                    else:
+                        self.stdout.write(self.style.WARNING(f'Livro "{book["title"]}" já existe e está atualizado.'))
+            except Writer.DoesNotExist:
+                self.stdout.write(self.style.ERROR(f'Autor "{book["author"]}" não encontrado.'))
+            except Genre.DoesNotExist:
+                self.stdout.write(self.style.ERROR(f'Gênero "{book["genre"]}" não encontrado.'))

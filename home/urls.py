@@ -10,4 +10,6 @@ urlpatterns = [
     # path('search_auto/', views.search_auto, name='search_auto'),
     path("catalog/", views.CatalogView.as_view(), name="catalog"),
     path("", views.HomeView.as_view(), name="home"),
+    path("categories/", views.CategoriesListView.as_view(), name="categories_list")
+
 ]

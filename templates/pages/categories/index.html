@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Virgil Bookstore - Catalogo{% endblock %}
+{% block content %}
+    <section class="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-4">Explore por Categorias</h1>
+            <p class="text-xl text-amber-100 max-w-2xl mx-auto">Encontre os melhores livros organizados por gênero
+                literário</p>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Categorias Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Ficção -->
+            {% for category in categories %}
+                {% include "pages/categories/item.html" with category=category %}
+            {% endfor %}
+        </div>
+
+        <!-- Stats Section -->
+        <div class="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-8 mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Nossa Coleção em Números</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-amber-700 mb-2">83+</div>
+                    <div class="text-gray-600 font-medium">Livros Totais</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-blue-600 mb-2">6</div>
+                    <div class="text-gray-600 font-medium">Categorias</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-green-600 mb-2">50+</div>
+                    <div class="text-gray-600 font-medium">Autores</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-purple-600 mb-2">4.8⭐</div>
+                    <div class="text-gray-600 font-medium">Avaliação Média</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="bg-gradient-to-r from-amber-600 to-amber-800 rounded-xl shadow-xl p-12 text-center text-white">
+            <h2 class="text-4xl font-bold mb-4">Não encontrou o que procura?</h2>
+            <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">Explore nosso catálogo completo com todos os livros
+                disponíveis</p>
+            <a href="/books.html"
+               class="inline-block bg-white text-amber-700 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl text-lg">
+                Ver Todos os Livros
+            </a>
+        </div>
+    </main>
+{% endblock %}

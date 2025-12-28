@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
-from book.models import Book
+from book.models import Book, Genre
 from .forms import SearchForm
 
 
@@ -32,6 +32,12 @@ class CatalogView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["books"] = self.get_queryset()
         return context
+
+
+class CategoriesListView(generic.ListView):
+    model = Genre
+    template_name = "pages/categories/index.html"
+    context_object_name = "categories"
 
 
 def search(request):

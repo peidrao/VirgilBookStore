@@ -9,7 +9,7 @@ from .forms import SearchForm
 
 class HomeView(generic.ListView):
     queryset = Book.objects.all()
-    template_name = "home/index.html"
+    template_name = "pages/home/index.html"
 
     def get_queryset(self):
         queryset = self.queryset.exclude(image__in=["", None]).order_by("-created_at")[
@@ -25,7 +25,7 @@ class HomeView(generic.ListView):
 
 class CatalogView(generic.ListView):
     queryset = Book.objects.all()
-    template_name = "catalog/index.html"
+    template_name = "pages/catalog/index.html"
     paginate_by = 12
 
     def get_context_data(self, **kwargs):

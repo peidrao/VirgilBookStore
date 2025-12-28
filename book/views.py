@@ -15,7 +15,7 @@ class BookDetailView(generic.DetailView):
     def get(self, request, *args, **kwargs):
         book = get_object_or_404(Book, slug=kwargs["slug"])
         context = {"book": book}
-        return render(request, "books/book_detail.html", context)
+        return render(request, "pages/books/book_detail.html", context)
 
 
 class BookByGenreView(generic.DetailView):
@@ -24,7 +24,7 @@ class BookByGenreView(generic.DetailView):
 
         books = Book.objects.filter(genre=genre)
         context = {"books": books, "genre": genre}
-        return render(request, "books/book_genre.html", context=context)
+        return render(request, "pages/books/book_genre.html", context=context)
 
 
 class ManagerBoksView(AdministratorPermission, generic.ListView):
@@ -33,15 +33,15 @@ class ManagerBoksView(AdministratorPermission, generic.ListView):
     def get(self, request, *args, **kwargs):
         books = Book.objects.all().order_by("created_at")
         context = {"books": books}
-        return render(request, "books/books.html", context=context)
+        return render(request, "pages/books/books.html", context=context)
 
 
 class ManagerBookAddView(generic.TemplateView):
-    template_name = "books/book_add.html"
+    template_name = "pages/books/book_add.html"
 
 
 class ManagerBookUpdateView(generic.TemplateView):
-    template_name = "books/book_update.html"
+    template_name = "pages/books/book_update.html"
     queryset = Book.objects.all()
 
     def get(self, request, pk):
@@ -73,10 +73,10 @@ def book_detail(request, id, slug):
         "comments": Comment.objects.filter(book_id=id, status="Verdade"),
     }
 
-    return render(request, "books/book_detail.html", context)
+    return render(request, "pages/books/book_detail.html", context)
 
 
 def book_genre(request, slug):
     context = {"books": Book.objects.filter(genre__slug=slug)}
 
-    return render(request, "books/book_genre.html", context)
+    return render(request, "pages/books/book_genre.html", context)

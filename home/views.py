@@ -45,6 +45,12 @@ class CategoryDetailView(generic.DetailView):
     template_name = "pages/categories/detail.html"
     context_object_name = "category"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["books"] = Book.objects.filter(genre=self.object).select_related("writer", "genre")
+
+        return context
+
 
 def search(request):
     if request.method == "POST":

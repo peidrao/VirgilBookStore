@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Virgil Bookstore - {{ category.title }}{% endblock %}
+{% block content %}
+    <!-- Category Hero Section -->
+    <section id="category-hero" class="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 text-white py-16">
+        <div class="container mx-auto px-4">
+            <nav class="text-sm mb-6">
+                <ol class="flex items-center gap-2 text-amber-100">
+                    <li><a href="{% url 'home:home' %}" class="hover:text-white transition-colors">Início</a></li>
+                    <li>/</li>
+                    <li><a href="{% url 'home:categories_list' %}"
+                           class="hover:text-white transition-colors">Categorias</a></li>
+                    <li>/</li>
+                    <li id="breadcrumb-category" class="text-white font-semibold">{{ category.title }}</li>
+                </ol>
+            </nav>
+            <div class="flex items-center gap-4 mb-4">
+                <span id="category-icon" class="text-6xl">📖</span>
+                <div>
+                    <h1 id="category-title" class="text-5xl font-bold mb-2">{{ category.title }}</h1>
+                    <p id="category-description" class="text-xl text-amber-100 max-w-2xl">{{ category.description }}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-amber-100">
+                <span id="books-count">{{ books.count }} livros</span>
+                <span>•</span>
+                <span>Avaliação média: <span id="avg-rating" class="text-white font-semibold">4.8⭐</span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <main class="container mx-auto px-4 py-12">
+        <div id="books-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {% for book in books %}
+                <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+                    <a href="{% url 'book:book_detail' slug=book.slug %}" class="block">
+                        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                            <img src="${book.image}" alt="Capa do livro ${book.title}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-4">
+{#                            ${book.discount ? '<span#}
+{#                                class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-' + Math.round((1 - book.price / (book.originalPrice || book.price)) * 100) + '%</span>'#}
+{#                            : ''}#}
+{#                            ${book.isNew ? '<span#}
+{#                                class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded mb-2">Novo</span>'#}
+{#                            : ''}#}
+                            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">{{ book.title }}</h3>
+                            <p class="text-xs text-gray-600 mb-2">{{ book.writer.fullname }}</p>
+                            <div class="flex items-center mb-2">
+{#                                <div class="flex text-yellow-400 text-xs">#}
+{#                                    ${'★'.repeat(Math.floor(book.rating))}${'☆'.repeat(5 - Math.floor(book.rating))}#}
+{#                                </div>#}
+{#                                <span class="text-xs text-gray-500 ml-1">(${book.rating})</span>#}
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-lg font-bold text-amber-700">R$ {{book.price}}</span>
+
+{#                                ${book.originalPrice ? `<span class="text-sm text-gray-400 line-through">R$ ${book.originalPrice.toFixed(2)}</span>`#}
+{#                                : ''}#}
+                            </div>
+                        </div>
+                    </a>
+                    <div class="px-4 pb-4">
+                        <button onclick=""
+                                class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-16">
+            <div class="text-6xl mb-4">📚</div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nenhum livro encontrado</h3>
+            <p class="text-gray-600 mb-6">Tente ajustar os filtros ou fazer outra busca</p>
+            <a href="/categories.html"
+               class="inline-block bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors">
+                Ver Todas as Categorias
+            </a>
+        </div>
+    </main>
+
+{% endblock %}

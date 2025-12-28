@@ -4,85 +4,94 @@ from book.models import Genre
 
 class Command(BaseCommand):
     """
-    Comando para criar gêneros e sub-gêneros de forma estruturada, incluindo descrições.
+    Comando para criar categorias de livros de forma estruturada, incluindo descrições.
     """
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.SUCCESS("Iniciando a criação de gêneros..."))
+        self.stdout.write(self.style.SUCCESS("Iniciando a criação de categorias de livros..."))
 
-        genres_structure = [
-            ("Arte", None, "Livros sobre diversas formas de arte, como pintura, escultura, música e cinema."),
-            ("Comédia", None, "Livros com o objetivo de divertir e provocar o riso."),
-            ("Matemática", None, "Livros que exploram conceitos, teorias e a história da matemática."),
-            ("Ficção", None, "Obras literárias baseadas na imaginação, não estritamente em fatos."),
-            ("Poesia", None, "Textos em verso que exploram a linguagem de forma rítmica e estética."),
-            ("Política", None, "Análises e teorias sobre sistemas de governo, poder e comportamento político."),
-            ("Religião", None, "Escritos sobre crenças, divindades, rituais e a história das religiões."),
-            ("Economia", None, "Estudos sobre a produção, distribuição e consumo de bens e serviços."),
-            ("Filosofia", None,
-             "Investigação de questões fundamentais sobre existência, conhecimento, valores e razão."),
-            ("Filosofia Medieval", "Filosofia", "Filosofia na Europa e no Oriente Médio durante a Idade Média."),
-            ("Filosofia Estóica", "Filosofia",
-             "Escola filosófica que ensina o desenvolvimento do autocontrole e da fortaleza como meio de superar emoções destrutivas."),
-            ("História", None, "Estudo e narração de eventos passados."),
-            ("História do Brasil", "História", "Eventos e processos históricos que formaram o Brasil."),
-            ("História do Ocidente", "História",
-             "História das civilizações ocidentais, desde a antiguidade até a era moderna."),
-            ("História Africana", "História", "História dos povos e nações do continente africano."),
+        categories_structure = [
+            ("Romance", None, "Narrativas ficcionais centradas em relações humanas e emoções."),
+            ("Ficção Científica", None, "Obras que exploram avanços científicos, tecnologia e futuros imaginários."),
+            ("Fantasia", None, "Livros com elementos mágicos, mundos imaginários e criaturas fantásticas."),
+            ("Mistério", None, "Histórias focadas em crimes, enigmas e investigações."),
+            ("Terror", None, "Livros que buscam provocar medo, suspense ou horror."),
+            ("Biografia", None, "Relatos sobre a vida de pessoas reais."),
+            ("História", None, "Estudos e narrativas sobre eventos históricos."),
+            ("Autoajuda", None, "Livros com conselhos para desenvolvimento pessoal e bem-estar."),
+            ("Negócios", None, "Temas de administração, economia, empreendedorismo e carreira."),
+            ("Infantojuvenil", None, "Livros voltados para crianças e adolescentes."),
+            ("Poesia", None, "Textos em verso, explorando linguagem estética e sentimentos."),
+            ("Didáticos", None, "Livros para apoio escolar e acadêmico."),
+            ("Religião", None, "Obras sobre crenças, espiritualidade e práticas religiosas."),
+            ("Filosofia", None, "Reflexões sobre existência, conhecimento, ética e razão."),
+            ("HQs e Mangás", None, "Histórias em quadrinhos e mangás japoneses."),
+            ("Contos", None, "Narrativas curtas, geralmente com poucos personagens e enredo conciso."),
+            ("Drama", None, "Obras que exploram conflitos emocionais e situações intensas."),
+            ("Aventura", None, "Livros com enredos dinâmicos, explorações e desafios."),
+            ("Literatura Clássica", None, "Obras reconhecidas historicamente por seu valor literário."),
+            ("Literatura Nacional", "Literatura", "Livros escritos por autores do país de origem da livraria."),
+            ("Literatura Estrangeira", "Literatura", "Livros traduzidos ou escritos por autores de outros países."),
+            ("Ensaios", None, "Textos reflexivos sobre temas variados, geralmente de não-ficção."),
+            ("Saúde e Bem-estar", None, "Livros sobre cuidados com o corpo, mente e qualidade de vida."),
+            ("Gastronomia", None, "Livros de receitas, culinária e cultura alimentar."),
+            ("Esportes", None, "Obras sobre práticas esportivas, biografias de atletas e história do esporte."),
+            ("Tecnologia", None, "Livros sobre informática, inovação e ciência aplicada."),
+            ("Psicologia", None, "Obras sobre comportamento, mente e emoções humanas."),
+            ("Educação", None, "Livros sobre métodos de ensino, pedagogia e formação de professores."),
+            ("Viagens", None, "Relatos, guias e experiências de viagem."),
+            ("Artes", None, "Livros sobre pintura, música, teatro, cinema, fotografia, etc."),
+            ("Política", None, "Análises, biografias e discussões sobre sistemas políticos e sociedade."),
+            ("Ecologia e Meio Ambiente", None, "Livros sobre natureza, sustentabilidade e preservação ambiental."),
+            ("Literatura", None, "Categoria geral para obras literárias de diversos gêneros."),
         ]
 
-        created_genres = {}
+        created_categories = {}
 
-        for title, parent_title, description in genres_structure:
-            if title in created_genres:
+        for title, parent_title, description in categories_structure:
+            if title in created_categories:
                 continue
 
             parent_obj = None
             if parent_title:
-                if parent_title in created_genres:
-                    parent_obj = created_genres[parent_title]
+                if parent_title in created_categories:
+                    parent_obj = created_categories[parent_title]
                 else:
-                    # Garante que o pai exista antes de criar o filho.
-                    # A descrição do pai será adicionada quando ele for processado.
                     parent_obj, created = Genre.objects.get_or_create(
                         title=parent_title
                     )
-                    created_genres[parent_title] = parent_obj
+                    created_categories[parent_title] = parent_obj
                     if created:
                         self.stdout.write(
-                            self.style.SUCCESS(f'Gênero "{parent_obj.title}" criado.')
+                            self.style.SUCCESS(f'Categoria "{parent_obj.title}" criada.')
                         )
 
-            # Cria ou obtém o gênero
-            genre, created = Genre.objects.get_or_create(
+            category, created = Genre.objects.get_or_create(
                 title=title,
                 defaults={"origin": parent_obj, "description": description},
             )
-            created_genres[title] = genre
+            created_categories[title] = category
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Gênero "{title}" criado com descrição.'))
+                self.stdout.write(self.style.SUCCESS(f'Categoria "{title}" criada com descrição.'))
             else:
-                # Se o gênero já existia, verifica se o pai ou a descrição precisam ser atualizados
                 needs_save = False
-                if genre.origin != parent_obj:
-                    genre.origin = parent_obj
+                if category.origin != parent_obj:
+                    category.origin = parent_obj
                     needs_save = True
-
-                if genre.description != description:
-                    genre.description = description
+                if category.description != description:
+                    category.description = description
                     needs_save = True
-
                 if needs_save:
-                    genre.save()
+                    category.save()
                     self.stdout.write(
                         self.style.WARNING(
-                            f'Gênero "{title}" atualizado.'
+                            f'Categoria "{title}" atualizada.'
                         )
                     )
                 else:
                     self.stdout.write(
-                        self.style.WARNING(f'Gênero "{title}" já existe e está atualizado.')
+                        self.style.WARNING(f'Categoria "{title}" já existe e está atualizada.')
                     )
 
-        self.stdout.write(self.style.SUCCESS("Criação de gêneros finalizada."))
+        self.stdout.write(self.style.SUCCESS("Criação de categorias finalizada."))

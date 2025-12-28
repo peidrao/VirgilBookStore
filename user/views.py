@@ -1,12 +1,14 @@
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.views import LoginView as LoginCustomDjangoView
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from rest_framework import views, status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.views import generic
+
 from home.models import Banner
 
 from virgilbookstore.permissions import AdministratorPermission, LoginRequiredPermission
@@ -39,6 +41,22 @@ def signup_form(request):
 
     context = {"form": SignUpForm()}
     return render(request, "user/signup_page.html", context)
+
+
+class LoginView(LoginCustomDjangoView):
+    template_name = "pages/login/index.html"
+    redirect_authenticated_user = True
+
+    def form_invalid(self, form):
+        messages.warning(self.request, "Usuário ou senha inválidos.")
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("home:catalog")
+
+
+class SignUpView(generic.TemplateView):
+    template_name = "pages/signup/index.html"
 
 
 def login(request):

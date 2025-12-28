@@ -6,7 +6,8 @@ app_name = "user"
 
 urlpatterns = [
     path("", views.index, name="user_index"),
-    path("login/", views.login, name="login"),
+    path("login/", views.LoginView.as_view(), name="login"),
+    path('signup/', views.SignUpView.as_view(), name="signup"),
     path("dashboard/", views.DashBoardProfile.as_view(), name="dashboard"),
     path(
         "profile_offers/", views.AddProfileOffersView.as_view(), name="profile_offers"

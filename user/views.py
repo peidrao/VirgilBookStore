@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.views import LoginView as LoginCustomDjangoView
 from django.shortcuts import render, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from rest_framework import views, status, generics
@@ -13,12 +12,7 @@ from home.models import Banner
 
 from virgilbookstore.permissions import AdministratorPermission, LoginRequiredPermission
 from .models import Profile, ProfileNewsletter, ProfileOffer
-from .forms import LoginAuthenticationForm, LoginForm, SignUpForm
-
-
-@login_required(login_url="/login")
-def index(request):
-    return render(request, "user/profile_page.html")
+from .forms import SignUpForm
 
 
 def signup_form(request):
@@ -57,23 +51,6 @@ class LoginView(LoginCustomDjangoView):
 
 class SignUpView(generic.TemplateView):
     template_name = "pages/signup/index.html"
-
-
-def login(request):
-    if request.method == "POST":
-        form = LoginAuthenticationForm(request, data=request.POST)
-
-        if form.is_valid():
-            auth_login(request, form.get_user())
-
-            return HttpResponseRedirect(reverse("user:dashboard"))
-        else:
-            messages.warning(request, "Erro, usuário ou senha inválidos!")
-            return HttpResponseRedirect(reverse("user:login"))
-
-    context = {"form": LoginForm()}
-
-    return render(request, "pages/login.html", context)
 
 
 class AddProfileOffersView(views.APIView):

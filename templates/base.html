@@ -1,22 +1,38 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% endblock %}</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .smooth-scroll { scroll-behavior: smooth; }
-    .overflow-x-auto::-webkit-scrollbar { height: 8px; }
-    .overflow-x-auto::-webkit-scrollbar-track { background: #f1f1f1; }
-    .overflow-x-auto::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-  </style>
-  {% block extra_head %}{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo/logo.ico' %}">
+
+    {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-gray-50 smooth-scroll min-h-screen flex flex-col">
-  <!-- Header -->
-    {% include 'partials/_header.html' %}
-  {% block content %}{% endblock %}
-  {% include 'partials/_footer.html' %}
+<!-- Header -->
+{% include 'partials/_header.html' %}
+{% block content %}{% endblock %}
+{% include 'partials/_footer.html' %}
 </body>
 </html>

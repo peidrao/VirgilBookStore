@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as LoginCustomDjangoView
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
@@ -58,6 +59,12 @@ class SignUpView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class ProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "pages/profile/index.html"
+    ogin_url = "user:login"
+    redirect_field_name = "next"
 
 
 class AddProfileOffersView(views.APIView):

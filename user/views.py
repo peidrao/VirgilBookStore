@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView as LoginCustomDjangoView
+from django.contrib.auth.views import LoginView as LoginCustomDjangoView, LogoutView
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
@@ -65,6 +65,10 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
     template_name = "pages/profile/index.html"
     ogin_url = "user:login"
     redirect_field_name = "next"
+
+
+class UserLogoutView(LogoutView):
+    next_page = reverse_lazy("home:catalog")
 
 
 class AddProfileOffersView(views.APIView):

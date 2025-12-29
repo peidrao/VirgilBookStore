@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView as LoginCustomDjangoView
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
+from django.views.generic import FormView
 from rest_framework import views, status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -49,8 +50,14 @@ class LoginView(LoginCustomDjangoView):
         return reverse_lazy("home:catalog")
 
 
-class SignUpView(generic.TemplateView):
+class SignUpView(FormView):
     template_name = "pages/signup/index.html"
+    form_class = SignUpForm
+    success_url = reverse_lazy("user:login")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 class AddProfileOffersView(views.APIView):

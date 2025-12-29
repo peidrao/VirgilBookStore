@@ -1,12 +1,16 @@
+{% load static %}
+
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="container mx-auto px-4 py-4">
         <div class="flex items-center justify-between gap-4">
             <!-- Logo -->
-            <a href="{% url 'home:home' %}"
-               class="text-2xl font-bold text-amber-800 hover:text-amber-900 transition-colors">
-                📚 Virgil BookStore
-            </a>
-
+            <div class="flex items-center gap-2">
+                <a href="{% url 'home:catalog' %}"
+                   class="text-2xl font-bold text-amber-800 hover:text-amber-900 transition-colors flex items-center gap-2">
+                    <img src="{% static 'images/logo/logo.png' %}" alt="Logo" class="w-8 h-8">
+                    <span>Virgil BookStore</span>
+                </a>
+            </div>
             <!-- Search - Desktop -->
             <div class="hidden md:flex flex-1 max-w-2xl">
                 <div class="relative w-full">

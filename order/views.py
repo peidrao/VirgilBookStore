@@ -40,6 +40,7 @@ class AddToShopCartView(LoginRequiredMixin, View):
     def post(self, request, id):
         cart_item, created = ShopCart.objects.get_or_create(
             profile=request.user,
+            status=ShopCartStatusChoice.IN_CART,
             book_id=id,
             defaults={"quantity": 1},
         )

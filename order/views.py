@@ -2,10 +2,23 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.crypto import get_random_string
 from django.contrib import messages
+from django.views import generic
+
 from .models import ShopCart, ShopCartForm, Order, OrderBook
 
 from book.models import Book
 from .forms import OrderForm
+
+
+class ShopCartView(generic.ListView):
+    model = ShopCart
+    template_name = "pages/orders/cart/index.html"
+    context_object_name = "shopcart"
+
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return ShopCart.objects.none()
+        return ShopCart.objects.filter(profile=self.request.user)
 
 
 @login_required(login_url="/login")

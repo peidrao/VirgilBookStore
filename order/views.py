@@ -64,7 +64,7 @@ class RemoveFromShopCartView(LoginRequiredMixin, View):
     def post(self, request, id):
         ShopCart.objects.filter(id=id, profile=request.user).update(status=ShopCartStatusChoice.REMOVED)
 
-        cart_count = ShopCart.objects.filter(profile=request.user).count()
+        cart_count = ShopCart.objects.filter(profile=request.user, status=ShopCartStatusChoice.IN_CART).count()
 
         html = render_to_string(
             "partials/cart_badge.html",

@@ -12,7 +12,12 @@
                     <p class="text-sm text-gray-600 mb-1">{{ shopcart.book.writer.fullname }}</p>
                     <p class="text-xs text-gray-500">Formato: Físico</p>
                 </div>
-                <button class="remove-btn p-2 text-gray-400 hover:text-red-600 transition-colors ml-2"
+                <button
+                        hx-post="{% url 'order:removefromshopcart' id=shopcart.id %}"
+                        hx-target="#cart-badge"
+                        hx-swap="outerHTML"
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                        class="remove-btn p-2 text-gray-400 hover:text-red-600 transition-colors ml-2"
                         aria-label="Remover item">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

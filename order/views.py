@@ -63,32 +63,51 @@ class RemoveFromShopCartView(LoginRequiredMixin, View):
     login_url = "/login"
 
     def post(self, request, id):
-        ShopCart.objects.filter(id=id, profile=request.user).update(status=ShopCartStatusChoice.REMOVED)
-
-        cart_count = ShopCart.objects.filter(profile=request.user, status=ShopCartStatusChoice.IN_CART).count()
+        ShopCart.objects.filter(
+            id=id,
+            profile=request.user
+        ).update(status=ShopCartStatusChoice.REMOVED)
 
         qs = ShopCart.objects.filter(
             profile=request.user,
             status=ShopCartStatusChoice.IN_CART
         )
 
-        subtotal = qs.aggregate(total=Sum("book__price"))["total"] or 0
+        cart_count = qs.count()
 
-        return HttpResponse(
-            f"""
-            <div id="cart-item-{id}"></div>
+        badge_html = render_to_string(
+            "partials/cart_badge.html",
+            {"cart_count": cart_count},
+            request=request
+        ).replace('id="cart-badge"', 'id="cart-badge" hx-swap-oob="true"')
 
-            {render_to_string(
-                "partials/cart_badge.html",
-                {"cart_count": cart_count},
+        # Sempre remove o item clicado (se ainda existir no DOM)
+        remove_item_html = f'<div id="cart-item-{id}"></div>'
+
+        # Se ficou vazio: substitui os DOIS WRAPPERS inteiros (com classes!)
+        if cart_count == 0:
+            empty_items = render_to_string(
+                "pages/orders/cart/partials/_cart_empty.html",
                 request=request
-            ).replace(
-                'id="cart-badge"',
-                'id="cart-badge" hx-swap-oob="true"'
-            )}
-            
-             <span id="subtotal" hx-swap-oob="true">
-                R$ {subtotal}
-            </span>
+            )
+            empty_summary = render_to_string(
+                "pages/orders/cart/partials/_cart_summary_empty.html",
+                request=request
+            )
+
+            cart_items_oob = f"""
+            <div id="cart-items" class="lg:col-span-2 space-y-4" hx-swap-oob="true">
+                {empty_items}
+            </div>
             """
-        )
+
+            cart_summary_oob = f"""
+            <div id="cart-summary" class="lg:col-span-1" hx-swap-oob="true">
+                {empty_summary}
+            </div>
+            """
+
+            return HttpResponse("\n".join([remove_item_html, badge_html, cart_items_oob, cart_summary_oob]))
+
+        # Se ainda tem itens: só remove o item e atualiza badge
+        return HttpResponse("\n".join([remove_item_html, badge_html]))

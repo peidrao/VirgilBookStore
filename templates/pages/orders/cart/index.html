@@ -3,7 +3,7 @@
 {% block content %}
     <main class="container mx-auto px-4 py-8">
 
-        <h1 class="text-3xl font-bold text-gray-900 mb-8">Seu Carrinho</h1>
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Your cart</h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-4">
@@ -12,14 +12,14 @@
                 {% empty %}
                     <div class="bg-white rounded-lg shadow p-8 text-center">
                         <h2 class="text-xl font-semibold text-gray-800 mb-2">
-                            Seu carrinho está vazio 🛒
+                            Your cart is empty 🛒
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Que tal explorar alguns produtos?
+                            Discover somes products you might like
                         </p>
                         <a href="{% url 'home:catalog' %}"
                            class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium px-6 py-3 rounded-lg transition">
-                            Continuar comprando
+                            Continue buying
                         </a>
                     </div>
                 {% endfor %}
@@ -31,10 +31,10 @@
                 {% else %}
                     <div class="bg-white rounded-lg shadow p-6 text-center text-gray-600">
                         <p class="font-medium">
-                            Seu carrinho está vazio
+                            Your cart is empty
                         </p>
                         <p class="text-sm mt-1">
-                            Adicione itens para ver o resumo do pedido.
+                            Add items to see the order summary.
                         </p>
                     </div>
                 {% endif %}

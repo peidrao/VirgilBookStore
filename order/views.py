@@ -1,7 +1,7 @@
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.db.models import Sum, ExpressionWrapper
+from django.db.models import Sum
 from django.template.loader import render_to_string
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required

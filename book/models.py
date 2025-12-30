@@ -63,14 +63,12 @@ class Book(models.Model):
 
     title = models.CharField(max_length=150, null=False)
     description = models.TextField(null=True, blank=True)
-    keywords = models.CharField(max_length=255, null=True, blank=True)
     image = models.FileField(upload_to="images/capa", null=True)
 
     price = models.DecimalField(max_digits=10, decimal_places=2)
     amount = models.IntegerField()
     specification = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True, null=True, max_length=255)
-    is_publish = models.BooleanField(default=False)
 
     status = models.CharField(choices=BookStatusChoice, default=BookStatusChoice.NEW)
 

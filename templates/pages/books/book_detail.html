@@ -3,347 +3,387 @@
 {% block content %}
     <main class="container mx-auto px-4 py-8">
 
-    <!-- Breadcrumb -->
-    <nav class="mb-6 text-sm" aria-label="Breadcrumb">
-      <ol class="flex items-center gap-2 text-gray-600">
-        <li><a href="{% url 'home:home' %}" class="hover:text-amber-700">Home</a></li>
-        <li>›</li>
-        <li><a href="{% url 'home:catalog' %}" class="hover:text-amber-700">Catálogo</a></li>
-        <li>›</li>
-        <li><a href="{% url 'book:books_by_genre' slug=book.genre.slug %}" class="hover:text-amber-700">{{ book.genre.title }}</a></li>
-        <li>›</li>
-        <li class="text-gray-900 font-medium">{{ book.title }}</li>
-      </ol>
-    </nav>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-
-      <!-- Gallery -->
-      <div>
-        <div class="bg-white rounded-lg shadow-md p-4 mb-4">
-          <img id="main-image" src="https://picsum.photos/seed/book1/600/800" alt="Capa do livro O Senhor dos Anéis" class="w-full rounded-lg">
-        </div>
-        <div class="flex gap-3">
-          <button class="thumbnail-btn flex-1 border-2 border-amber-600 rounded-lg overflow-hidden">
-            <img src="https://picsum.photos/seed/book1/600/800" alt="Capa principal" class="w-full aspect-[3/4] object-cover">
-          </button>
-          <button class="thumbnail-btn flex-1 border-2 border-gray-200 rounded-lg overflow-hidden hover:border-amber-600 transition-colors">
-            <img src="https://picsum.photos/seed/book1-back/600/800" alt="Contracapa" class="w-full aspect-[3/4] object-cover">
-          </button>
-          <button class="thumbnail-btn flex-1 border-2 border-gray-200 rounded-lg overflow-hidden hover:border-amber-600 transition-colors">
-            <img src="https://picsum.photos/seed/book1-inside/600/800" alt="Página interna" class="w-full aspect-[3/4] object-cover">
-          </button>
-        </div>
-      </div>
-
-      <!-- Product Info -->
-      <div>
-        <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded mb-3">-25% OFF</span>
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{{ book.title }}</h1>
-        <p class="text-xl text-gray-600 mb-4">por {{ book.writer.fullname }}</p>
-
-        <!-- Rating -->
-        <div class="flex items-center gap-3 mb-6">
-          <div class="flex text-yellow-400 text-xl">★★★★★</div>
-          <span class="text-gray-700 font-medium">4.9</span>
-          <span class="text-gray-500">(523 avaliações)</span>
-        </div>
-
-        <!-- Price -->
-        <div class="bg-amber-50 border-2 border-amber-200 rounded-lg p-6 mb-6">
-          <div class="flex items-baseline gap-3 mb-2">
-            <span class="text-4xl font-bold text-amber-700">R$ {{ book.price }}</span>
-            <span class="text-xl text-gray-400 line-through">R$ 119,90</span>
-          </div>
-          <p class="text-sm text-gray-600">ou em até <strong>3x de R$ 29,97</strong> sem juros</p>
-        </div>
-
-        <!-- Format Selection -->
-        <div class="mb-6">
-          <label class="block font-semibold text-gray-900 mb-3">Formato:</label>
-          <div class="flex gap-3">
-            <button class="format-btn flex-1 px-4 py-3 border-2 border-amber-600 bg-amber-50 rounded-lg font-medium text-amber-800">
-              Físico - R$ {{ book.price }}
-            </button>
-            <button class="format-btn flex-1 px-4 py-3 border-2 border-gray-300 hover:border-amber-600 rounded-lg font-medium">
-              E-book - R$ 39,90
-            </button>
-          </div>
-        </div>
-
-        <!-- Quantity -->
-        <div class="mb-6">
-          <label for="quantity" class="block font-semibold text-gray-900 mb-3">Quantidade:</label>
-          <div class="flex items-center gap-3">
-            <button id="qty-minus" class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-xl" aria-label="Diminuir quantidade">
-              −
-            </button>
-            <input type="number" id="quantity" value="1" min="1" max="10" class="w-20 text-center px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="Quantidade">
-            <button id="qty-plus" class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-xl" aria-label="Aumentar quantidade">
-              +
-            </button>
-            <span class="text-sm text-green-600 ml-3">✓ Em estoque ({{ book.amount }} unidades)</span>
-          </div>
-        </div>
-
-        <!-- Shipping -->
-        <div class="mb-6 p-4 bg-white border border-gray-200 rounded-lg">
-          <label for="cep-input" class="block font-semibold text-gray-900 mb-3">Calcular frete:</label>
-          <div class="flex gap-3">
-            <input type="text" id="cep-input" placeholder="00000-000" maxlength="9" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="CEP">
-            <button id="calc-shipping" class="px-6 py-2 bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-lg transition-colors">
-              Calcular
-            </button>
-          </div>
-          <div id="shipping-result" class="mt-3 text-sm hidden">
-            <p class="text-green-600 font-medium">✓ Frete Expresso: R$ 18,90 (entrega em 3-5 dias úteis)</p>
-            <p class="text-gray-600 mt-1">Frete Padrão: R$ 12,90 (entrega em 7-10 dias úteis)</p>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-6">
-          <button class="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-4 rounded-lg transition-colors shadow-lg">
-            🛒 Adicionar ao Carrinho
-          </button>
-          <button class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-lg transition-colors shadow-lg">
-            Comprar Agora
-          </button>
-        </div>
-
-        <!-- Additional Info -->
-        <div class="space-y-2 text-sm text-gray-600">
-          <p>✓ Devolução grátis em 30 dias</p>
-          <p>✓ Envio rápido e rastreável</p>
-          <p>✓ Compra 100% segura</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Tabs Section -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-12">
-      <div class="border-b border-gray-200">
-        <nav class="flex" aria-label="Abas de informação">
-          <button class="tab-btn flex-1 px-6 py-4 font-semibold text-amber-700 border-b-2 border-amber-700 hover:bg-amber-50 transition-colors" data-tab="description">
-            Descrição
-          </button>
-          <button class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors" data-tab="details">
-            Detalhes
-          </button>
-          <button class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors" data-tab="reviews">
-            Avaliações (523)
-          </button>
+        <!-- Breadcrumb -->
+        <nav class="mb-6 text-sm" aria-label="Breadcrumb">
+            <ol class="flex items-center gap-2 text-gray-600">
+                <li><a href="{% url 'home:home' %}" class="hover:text-amber-700">Home</a></li>
+                <li>›</li>
+                <li><a href="{% url 'home:catalog' %}" class="hover:text-amber-700">Catálogo</a></li>
+                <li>›</li>
+                <li><a href="{% url 'book:books_by_genre' slug=book.genre.slug %}"
+                       class="hover:text-amber-700">{{ book.genre.title }}</a></li>
+                <li>›</li>
+                <li class="text-gray-900 font-medium">{{ book.title }}</li>
+            </ol>
         </nav>
-      </div>
 
-      <div class="p-6 md:p-8">
-        <!-- Description Tab -->
-        <div id="description" class="tab-content">
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Sobre o Livro</h2>
-          <div class="prose max-w-none text-gray-700 space-y-4">
-            {{ book.description }}
-          </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+
+            <!-- Gallery -->
+            <div>
+                <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+                    <img id="main-image" src="https://picsum.photos/seed/book1/600/800"
+                         alt="Capa do livro O Senhor dos Anéis" class="w-full rounded-lg">
+                </div>
+                <div class="flex gap-3">
+                    <button class="thumbnail-btn flex-1 border-2 border-amber-600 rounded-lg overflow-hidden">
+                        <img src="https://picsum.photos/seed/book1/600/800" alt="Capa principal"
+                             class="w-full aspect-[3/4] object-cover">
+                    </button>
+                    <button class="thumbnail-btn flex-1 border-2 border-gray-200 rounded-lg overflow-hidden hover:border-amber-600 transition-colors">
+                        <img src="https://picsum.photos/seed/book1-back/600/800" alt="Contracapa"
+                             class="w-full aspect-[3/4] object-cover">
+                    </button>
+                    <button class="thumbnail-btn flex-1 border-2 border-gray-200 rounded-lg overflow-hidden hover:border-amber-600 transition-colors">
+                        <img src="https://picsum.photos/seed/book1-inside/600/800" alt="Página interna"
+                             class="w-full aspect-[3/4] object-cover">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div>
+                <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded mb-3">-25% OFF</span>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{{ book.title }} -- {{ book.amount }}</h1>
+                <p class="text-xl text-gray-600 mb-4">por {{ book.writer.fullname }}</p>
+
+                <!-- Rating -->
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="flex text-yellow-400 text-xl">★★★★★</div>
+                    <span class="text-gray-700 font-medium">4.9</span>
+                    <span class="text-gray-500">(523 avaliações)</span>
+                </div>
+
+                <!-- Price -->
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-lg p-6 mb-6">
+                    <div class="flex items-baseline gap-3 mb-2">
+                        <span class="text-4xl font-bold text-amber-700">R$ {{ book.price }}</span>
+                        <span class="text-xl text-gray-400 line-through">R$ 119,90</span>
+                    </div>
+                    <p class="text-sm text-gray-600">ou em até <strong>3x de R$ 29,97</strong> sem juros</p>
+                </div>
+
+                <!-- Format Selection -->
+                <div class="mb-6">
+                    <label class="block font-semibold text-gray-900 mb-3">Formato:</label>
+                    <div class="flex gap-3">
+                        <button class="format-btn flex-1 px-4 py-3 border-2 border-amber-600 bg-amber-50 rounded-lg font-medium text-amber-800">
+                            Físico - R$ {{ book.price }}
+                        </button>
+                        <button class="format-btn flex-1 px-4 py-3 border-2 border-gray-300 hover:border-amber-600 rounded-lg font-medium">
+                            E-book - R$ 39,90
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-6">
+                    <label for="quantity" class="block font-semibold text-gray-900 mb-3">Quantidade:</label>
+                    <div class="flex items-center gap-3">
+                        <button id="qty-minus"
+                                class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-xl"
+                                aria-label="Diminuir quantidade">
+                            −
+                        </button>
+                        <input type="number" id="quantity" value="1" min="1" max="10"
+                               class="w-20 text-center px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                               aria-label="Quantidade">
+                        <button id="qty-plus"
+                                class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-xl"
+                                aria-label="Aumentar quantidade">
+                            +
+                        </button>
+                        <span class="text-sm text-green-600 ml-3">✓ Em estoque ({{ book.amount }} unidades)</span>
+                    </div>
+                </div>
+
+                <!-- Shipping -->
+                <div class="mb-6 p-4 bg-white border border-gray-200 rounded-lg">
+                    <label for="cep-input" class="block font-semibold text-gray-900 mb-3">Calcular frete:</label>
+                    <div class="flex gap-3">
+                        <input type="text" id="cep-input" placeholder="00000-000" maxlength="9"
+                               class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                               aria-label="CEP">
+                        <button id="calc-shipping"
+                                class="px-6 py-2 bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-lg transition-colors">
+                            Calcular
+                        </button>
+                    </div>
+                    <div id="shipping-result" class="mt-3 text-sm hidden">
+                        <p class="text-green-600 font-medium">✓ Frete Expresso: R$ 18,90 (entrega em 3-5 dias úteis)</p>
+                        <p class="text-gray-600 mt-1">Frete Padrão: R$ 12,90 (entrega em 7-10 dias úteis)</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                {% if book.amount|default:0 > 0 %}
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                        <button
+                                class="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-4 rounded-lg transition-colors shadow-lg">
+                            🛒 Adicionar ao Carrinho
+                        </button>
+                        <button
+                                class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-lg transition-colors shadow-lg">
+                            Comprar Agora
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm font-medium gap-3 mb-6">
+                        Produto sem estoque no momento
+                    </div>
+                {% endif %}
+
+                <!-- Additional Info -->
+                <div class="space-y-2 text-sm text-gray-600">
+                    <p>✓ Devolução grátis em 30 dias</p>
+                    <p>✓ Envio rápido e rastreável</p>
+                    <p>✓ Compra 100% segura</p>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Details Tab -->
-        <div id="details" class="tab-content hidden">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">Especificações Técnicas</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">ISBN:</span>
-              <span class="text-gray-600">978-8595084742</span>
+        <!-- Tabs Section -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-12">
+            <div class="border-b border-gray-200">
+                <nav class="flex" aria-label="Abas de informação">
+                    <button class="tab-btn flex-1 px-6 py-4 font-semibold text-amber-700 border-b-2 border-amber-700 hover:bg-amber-50 transition-colors"
+                            data-tab="description">
+                        Descrição
+                    </button>
+                    <button class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                            data-tab="details">
+                        Detalhes
+                    </button>
+                    <button class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                            data-tab="reviews">
+                        Avaliações (523)
+                    </button>
+                </nav>
             </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Editora:</span>
-              <span class="text-gray-600">HarperCollins Brasil</span>
+
+            <div class="p-6 md:p-8">
+                <!-- Description Tab -->
+                <div id="description" class="tab-content">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Sobre o Livro</h2>
+                    <div class="prose max-w-none text-gray-700 space-y-4">
+                        {{ book.description }}
+                    </div>
+                </div>
+
+                <!-- Details Tab -->
+                <div id="details" class="tab-content hidden">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Especificações Técnicas</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">ISBN:</span>
+                            <span class="text-gray-600">978-8595084742</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Editora:</span>
+                            <span class="text-gray-600">HarperCollins Brasil</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Ano:</span>
+                            <span class="text-gray-600">2019</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Idioma:</span>
+                            <span class="text-gray-600">Português</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Páginas:</span>
+                            <span class="text-gray-600">1.216</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Dimensões:</span>
+                            <span class="text-gray-600">16 x 23 cm</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Peso:</span>
+                            <span class="text-gray-600">1.050g</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Capa:</span>
+                            <span class="text-gray-600">Dura</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Categoria:</span>
+                            <span class="text-gray-600">Fantasia, Aventura</span>
+                        </div>
+                        <div class="flex py-3 border-b border-gray-200">
+                            <span class="font-semibold text-gray-700 w-40">Classificação:</span>
+                            <span class="text-gray-600">Livre</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Tab -->
+                <div id="reviews" class="tab-content hidden">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Avaliações dos Clientes</h2>
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl font-bold text-amber-700">4.9</div>
+                            <div>
+                                <div class="flex text-yellow-400 text-xl mb-1">★★★★★</div>
+                                <p class="text-gray-600">Baseado em 523 avaliações</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Review 1 -->
+                        <article class="border-b border-gray-200 pb-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center font-bold text-amber-800">
+                                    MR
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900">Maria Regina</h3>
+                                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                                <div class="flex text-yellow-400">★★★★★</div>
+                                                <span>•</span>
+                                                <time>15/12/2024</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-medium text-gray-900 mb-2">Uma obra-prima absoluta!</h4>
+                                    <p class="text-gray-700">
+                                        Simplesmente perfeito. A profundidade dos personagens, a construção de mundo e a
+                                        narrativa são incomparáveis. Esta edição está linda, com capa dura e papel de
+                                        qualidade. Recomendo demais!
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Review 2 -->
+                        <article class="border-b border-gray-200 pb-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-800">
+                                    CF
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900">Carlos Fernandes</h3>
+                                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                                <div class="flex text-yellow-400">★★★★★</div>
+                                                <span>•</span>
+                                                <time>10/12/2024</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-medium text-gray-900 mb-2">Clássico indispensável</h4>
+                                    <p class="text-gray-700">
+                                        Releitura perfeita! Cada vez que leio descubro novos detalhes. A entrega foi
+                                        rápida e o livro veio muito bem embalado. Parabéns à loja!
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Review 3 -->
+                        <article class="pb-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-800">
+                                    AS
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900">Ana Silva</h3>
+                                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                                <div class="flex text-yellow-400">★★★★☆</div>
+                                                <span>•</span>
+                                                <time>05/12/2024</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-medium text-gray-900 mb-2">Excelente, mas denso</h4>
+                                    <p class="text-gray-700">
+                                        História maravilhosa, mas requer atenção. Tolkien é muito descritivo, o que pode
+                                        tornar a leitura lenta em alguns momentos. Ainda assim, vale muito a pena!
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Ano:</span>
-              <span class="text-gray-600">2019</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Idioma:</span>
-              <span class="text-gray-600">Português</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Páginas:</span>
-              <span class="text-gray-600">1.216</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Dimensões:</span>
-              <span class="text-gray-600">16 x 23 cm</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Peso:</span>
-              <span class="text-gray-600">1.050g</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Capa:</span>
-              <span class="text-gray-600">Dura</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Categoria:</span>
-              <span class="text-gray-600">Fantasia, Aventura</span>
-            </div>
-            <div class="flex py-3 border-b border-gray-200">
-              <span class="font-semibold text-gray-700 w-40">Classificação:</span>
-              <span class="text-gray-600">Livre</span>
-            </div>
-          </div>
         </div>
 
-        <!-- Reviews Tab -->
-        <div id="reviews" class="tab-content hidden">
-          <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">Avaliações dos Clientes</h2>
-            <div class="flex items-center gap-4">
-              <div class="text-5xl font-bold text-amber-700">4.9</div>
-              <div>
-                <div class="flex text-yellow-400 text-xl mb-1">★★★★★</div>
-                <p class="text-gray-600">Baseado em 523 avaliações</p>
-              </div>
+        <!-- Related Products -->
+        <section>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Você também pode gostar</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+
+                <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+                    <a href="book.html?id=5" class="block">
+                        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                            <img src="https://picsum.photos/seed/book5/300/400" alt="O Hobbit"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Hobbit</h3>
+                            <p class="text-xs text-gray-600 mb-2">J.R.R. Tolkien</p>
+                            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+                            <div class="text-base font-bold text-amber-700">R$ 44,90</div>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+                    <a href="book.html?id=3" class="block">
+                        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                            <img src="https://picsum.photos/seed/book3/300/400" alt="Harry Potter"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Harry Potter e a Pedra
+                                Filosofal</h3>
+                            <p class="text-xs text-gray-600 mb-2">J.K. Rowling</p>
+                            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+                            <div class="text-base font-bold text-amber-700">R$ 49,90</div>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+                    <a href="book.html?id=4" class="block">
+                        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                            <img src="https://picsum.photos/seed/book4/300/400" alt="Cem Anos de Solidão"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-4">
+                            <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-15%</span>
+                            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Cem Anos de Solidão</h3>
+                            <p class="text-xs text-gray-600 mb-2">Gabriel García Márquez</p>
+                            <div class="flex text-yellow-400 text-xs mb-2">★★★★☆</div>
+                            <div class="text-base font-bold text-amber-700">R$ 59,90</div>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
+                    <a href="book.html?id=2" class="block">
+                        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+                            <img src="https://picsum.photos/seed/book2/300/400" alt="1984"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">1984</h3>
+                            <p class="text-xs text-gray-600 mb-2">George Orwell</p>
+                            <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+                            <div class="text-base font-bold text-amber-700">R$ 54,90</div>
+                        </div>
+                    </a>
+                </article>
+
             </div>
-          </div>
+        </section>
 
-          <div class="space-y-6">
-            <!-- Review 1 -->
-            <article class="border-b border-gray-200 pb-6">
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center font-bold text-amber-800">MR</div>
-                <div class="flex-1">
-                  <div class="flex items-center justify-between mb-2">
-                    <div>
-                      <h3 class="font-semibold text-gray-900">Maria Regina</h3>
-                      <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <div class="flex text-yellow-400">★★★★★</div>
-                        <span>•</span>
-                        <time>15/12/2024</time>
-                      </div>
-                    </div>
-                  </div>
-                  <h4 class="font-medium text-gray-900 mb-2">Uma obra-prima absoluta!</h4>
-                  <p class="text-gray-700">
-                    Simplesmente perfeito. A profundidade dos personagens, a construção de mundo e a narrativa são incomparáveis. Esta edição está linda, com capa dura e papel de qualidade. Recomendo demais!
-                  </p>
-                </div>
-              </div>
-            </article>
-
-            <!-- Review 2 -->
-            <article class="border-b border-gray-200 pb-6">
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-800">CF</div>
-                <div class="flex-1">
-                  <div class="flex items-center justify-between mb-2">
-                    <div>
-                      <h3 class="font-semibold text-gray-900">Carlos Fernandes</h3>
-                      <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <div class="flex text-yellow-400">★★★★★</div>
-                        <span>•</span>
-                        <time>10/12/2024</time>
-                      </div>
-                    </div>
-                  </div>
-                  <h4 class="font-medium text-gray-900 mb-2">Clássico indispensável</h4>
-                  <p class="text-gray-700">
-                    Releitura perfeita! Cada vez que leio descubro novos detalhes. A entrega foi rápida e o livro veio muito bem embalado. Parabéns à loja!
-                  </p>
-                </div>
-              </div>
-            </article>
-
-            <!-- Review 3 -->
-            <article class="pb-6">
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-800">AS</div>
-                <div class="flex-1">
-                  <div class="flex items-center justify-between mb-2">
-                    <div>
-                      <h3 class="font-semibold text-gray-900">Ana Silva</h3>
-                      <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <div class="flex text-yellow-400">★★★★☆</div>
-                        <span>•</span>
-                        <time>05/12/2024</time>
-                      </div>
-                    </div>
-                  </div>
-                  <h4 class="font-medium text-gray-900 mb-2">Excelente, mas denso</h4>
-                  <p class="text-gray-700">
-                    História maravilhosa, mas requer atenção. Tolkien é muito descritivo, o que pode tornar a leitura lenta em alguns momentos. Ainda assim, vale muito a pena!
-                  </p>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Related Products -->
-    <section>
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Você também pode gostar</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="book.html?id=5" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book5/300/400" alt="O Hobbit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">O Hobbit</h3>
-              <p class="text-xs text-gray-600 mb-2">J.R.R. Tolkien</p>
-              <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
-              <div class="text-base font-bold text-amber-700">R$ 44,90</div>
-            </div>
-          </a>
-        </article>
-
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="book.html?id=3" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book3/300/400" alt="Harry Potter" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Harry Potter e a Pedra Filosofal</h3>
-              <p class="text-xs text-gray-600 mb-2">J.K. Rowling</p>
-              <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
-              <div class="text-base font-bold text-amber-700">R$ 49,90</div>
-            </div>
-          </a>
-        </article>
-
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="book.html?id=4" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book4/300/400" alt="Cem Anos de Solidão" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mb-2">-15%</span>
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">Cem Anos de Solidão</h3>
-              <p class="text-xs text-gray-600 mb-2">Gabriel García Márquez</p>
-              <div class="flex text-yellow-400 text-xs mb-2">★★★★☆</div>
-              <div class="text-base font-bold text-amber-700">R$ 59,90</div>
-            </div>
-          </a>
-        </article>
-
-        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
-          <a href="book.html?id=2" class="block">
-            <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/seed/book2/300/400" alt="1984" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2 text-sm">1984</h3>
-              <p class="text-xs text-gray-600 mb-2">George Orwell</p>
-              <div class="flex text-yellow-400 text-xs mb-2">★★★★★</div>
-              <div class="text-base font-bold text-amber-700">R$ 54,90</div>
-            </div>
-          </a>
-        </article>
-
-      </div>
-    </section>
-
-  </main>
+    </main>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.db.models import Sum
 from django.template.loader import render_to_string
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -24,6 +25,13 @@ class ShopCartView(generic.ListView):
         if not self.request.user.is_authenticated:
             return ShopCart.objects.none()
         return ShopCart.objects.filter(profile=self.request.user, status=ShopCartStatusChoice.IN_CART)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["subtotal"] = self.get_queryset().aggregate(total=Sum("book__price"))["total"] or 0
+
+        return context
 
 
 class AddToShopCartView(LoginRequiredMixin, View):

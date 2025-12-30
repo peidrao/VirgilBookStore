@@ -1,13 +1,15 @@
 from django.db import models
 from django.forms import ModelForm
+
+from order.choices import ShopCartStatusChoice
 from user.models import Profile
 
-# Create your models here.
 from book.models import Book
 
 
 class ShopCart(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    status = models.CharField(max_length=30, choices=ShopCartStatusChoice.choices, default=ShopCartStatusChoice.IN_CART)
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
 
@@ -16,18 +18,6 @@ class ShopCart(models.Model):
 
     def __str__(self):
         return self.book.title
-
-    @property
-    def price(self):
-        return self.book.price
-
-    @property
-    def amount(self):
-        return self.quantity * self.book.price
-
-    @property
-    def quantity_books(self):
-        return self.quantity
 
 
 class ShopCartForm(ModelForm):

@@ -8,26 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     {% vite_asset 'index.html' %}
-
-    <style>
-        .smooth-scroll {
-            scroll-behavior: smooth;
-        }
-
-        .overflow-x-auto::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .overflow-x-auto::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .overflow-x-auto::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-    </style>
-
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo/logo.ico' %}">
 
     {% block extra_head %}{% endblock %}

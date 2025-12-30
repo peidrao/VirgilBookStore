@@ -1,7 +1,7 @@
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.db.models import Sum
+from django.db.models import Sum, ExpressionWrapper
 from django.template.loader import render_to_string
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -48,7 +48,7 @@ class AddToShopCartView(LoginRequiredMixin, View):
             cart_item.quantity += 1
             cart_item.save()
 
-        cart_count = ShopCart.objects.filter(profile=request.user).count()
+        cart_count = ShopCart.objects.filter(profile=request.user, status=ShopCartStatusChoice.IN_CART).count()
 
         html = render_to_string(
             "partials/cart_badge.html",
@@ -66,12 +66,31 @@ class RemoveFromShopCartView(LoginRequiredMixin, View):
 
         cart_count = ShopCart.objects.filter(profile=request.user, status=ShopCartStatusChoice.IN_CART).count()
 
-        html = render_to_string(
-            "partials/cart_badge.html",
-            {"cart_count": cart_count},
-            request=request,
+        qs = ShopCart.objects.filter(
+            profile=request.user,
+            status=ShopCartStatusChoice.IN_CART
         )
-        return HttpResponse(html)
+
+        subtotal = qs.aggregate(total=Sum("book__price"))["total"] or 0
+
+        return HttpResponse(
+            f"""
+            <div id="cart-item-{id}"></div>
+
+            {render_to_string(
+                "partials/cart_badge.html",
+                {"cart_count": cart_count},
+                request=request
+            ).replace(
+                'id="cart-badge"',
+                'id="cart-badge" hx-swap-oob="true"'
+            )}
+            
+             <span id="subtotal" hx-swap-oob="true">
+                R$ {subtotal}
+            </span>
+            """
+        )
 
 
 def shopcart(request):

@@ -1,4 +1,5 @@
-<article class="bg-white rounded-lg shadow-md p-4 md:p-6" data-item-id="1" data-price="89.90">
+<article id="cart-item-{{ shopcart.id }}" class="bg-white rounded-lg shadow-md p-4 md:p-6" data-item-id="1"
+         data-price="89.90">
     <div class="flex gap-4">
         <a href="{% url 'book:book_detail' slug=shopcart.book.slug %}" class="shrink-0">
             <img src="https://picsum.photos/seed/book1/300/400" alt="{{ shopcart.book.title }}"
@@ -14,7 +15,7 @@
                 </div>
                 <button
                         hx-post="{% url 'order:removefromshopcart' id=shopcart.id %}"
-                        hx-target="#cart-badge"
+                        hx-target="#cart-item-{{ shopcart.id }}"
                         hx-swap="outerHTML"
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         class="remove-btn p-2 text-gray-400 hover:text-red-600 transition-colors ml-2"

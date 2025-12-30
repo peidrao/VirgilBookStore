@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-4">
                 {% for item in shopcart %}
-                    {% include "pages/orders/cart/cart_item.html" with item=item %}
+                    {% include "pages/orders/cart/cart_item.html" with shopcart=item %}
                 {% empty %}
                     <div class="bg-white rounded-lg shadow p-8 text-center">
                         <h2 class="text-xl font-semibold text-gray-800 mb-2">

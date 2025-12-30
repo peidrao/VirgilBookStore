@@ -8,6 +8,7 @@ from django.utils.crypto import get_random_string
 from django.contrib import messages
 from django.views import generic
 
+from .choices import ShopCartStatusChoice
 from .models import ShopCart, ShopCartForm, Order, OrderBook
 
 from book.models import Book
@@ -22,7 +23,7 @@ class ShopCartView(generic.ListView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             return ShopCart.objects.none()
-        return ShopCart.objects.filter(profile=self.request.user)
+        return ShopCart.objects.filter(profile=self.request.user, status=ShopCartStatusChoice.IN_CART)
 
 
 class AddToShopCartView(LoginRequiredMixin, View):

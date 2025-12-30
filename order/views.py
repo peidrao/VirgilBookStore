@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.views import generic
 
 from .choices import ShopCartStatusChoice
-from .models import ShopCart, ShopCartForm, Order, OrderBook
+from .models import ShopCart, Order, OrderBook
 
 from book.models import Book
 from .forms import OrderForm
@@ -47,6 +47,22 @@ class AddToShopCartView(LoginRequiredMixin, View):
         if not created:
             cart_item.quantity += 1
             cart_item.save()
+
+        cart_count = ShopCart.objects.filter(profile=request.user).count()
+
+        html = render_to_string(
+            "partials/cart_badge.html",
+            {"cart_count": cart_count},
+            request=request,
+        )
+        return HttpResponse(html)
+
+
+class RemoveFromShopCartView(LoginRequiredMixin, View):
+    login_url = "/login"
+
+    def post(self, request, id):
+        ShopCart.objects.filter(id=id, profile=request.user).update(status=ShopCartStatusChoice.REMOVED)
 
         cart_count = ShopCart.objects.filter(profile=request.user).count()
 

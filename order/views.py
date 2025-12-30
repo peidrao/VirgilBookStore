@@ -1,3 +1,7 @@
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.crypto import get_random_string
@@ -21,44 +25,28 @@ class ShopCartView(generic.ListView):
         return ShopCart.objects.filter(profile=self.request.user)
 
 
-@login_required(login_url="/login")
-def addtoshopcart(request, id):
-    url = request.META.get("HTTP_REFERER")
+class AddToShopCartView(LoginRequiredMixin, View):
+    login_url = "/login"
 
-    checkproduct = ShopCart.objects.filter(book_id=id)
-    if checkproduct:
-        control = 1
-    else:
-        control = 0
+    def post(self, request, id):
+        cart_item, created = ShopCart.objects.get_or_create(
+            profile=request.user,
+            book_id=id,
+            defaults={"quantity": 1},
+        )
 
-    if request.method == "POST":
-        form = ShopCartForm(request.POST)
-        if form.is_valid():
-            if control == 1:
-                data = ShopCart.objects.get(book_id=id)
-                data.quantity += form.cleaned_data["quantity"]
-                data.save()
-            else:
-                data = ShopCart()
-                data.profile = request.user
-                data.book_id = id
-                data.quantity = form.cleaned_data["quantity"]
-                data.save()
-            messages.success(request, "Livro adicionando no carrinho")
-        return HttpResponseRedirect(url)
-    else:
-        if control == 1:
-            data = ShopCart.objects.get(book_id=id)
-            data.quantity += 1
-            data.save()
-        else:
-            data = ShopCart()
-            data.profile = request.user
-            data.book_id = id
-            data.quantity = 1
-            data.save()  #
-        messages.success(request, "Livro Adicionado!")
-        return HttpResponseRedirect(url)
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+
+        cart_count = ShopCart.objects.filter(profile=request.user).count()
+
+        html = render_to_string(
+            "partials/cart_badge.html",
+            {"cart_count": cart_count},
+            request=request,
+        )
+        return HttpResponse(html)
 
 
 def shopcart(request):

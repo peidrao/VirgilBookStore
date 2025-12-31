@@ -3,18 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.db.models import Sum
 from django.template.loader import render_to_string
-from django.shortcuts import render, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.utils.crypto import get_random_string
-from django.contrib import messages
 from django.views import generic
 
 from .choices import ShopCartStatusChoice
-from .models import ShopCart, Order, OrderBook
-
-from book.models import Book
-from .forms import OrderForm
-
+from .models import ShopCart
 
 class ShopCartView(generic.ListView):
     model = ShopCart
@@ -81,10 +73,8 @@ class RemoveFromShopCartView(LoginRequiredMixin, View):
             request=request
         ).replace('id="cart-badge"', 'id="cart-badge" hx-swap-oob="true"')
 
-        # Sempre remove o item clicado (se ainda existir no DOM)
         remove_item_html = f'<div id="cart-item-{id}"></div>'
 
-        # Se ficou vazio: substitui os DOIS WRAPPERS inteiros (com classes!)
         if cart_count == 0:
             empty_items = render_to_string(
                 "pages/orders/cart/partials/_cart_empty.html",
@@ -109,5 +99,4 @@ class RemoveFromShopCartView(LoginRequiredMixin, View):
 
             return HttpResponse("\n".join([remove_item_html, badge_html, cart_items_oob, cart_summary_oob]))
 
-        # Se ainda tem itens: só remove o item e atualiza badge
         return HttpResponse("\n".join([remove_item_html, badge_html]))

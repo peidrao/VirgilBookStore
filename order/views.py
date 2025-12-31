@@ -1,12 +1,15 @@
+from django.db.models.fields import DecimalField
+from django.db.models import F
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.db.models import Sum
+from django.db.models import Sum, ExpressionWrapper
 from django.template.loader import render_to_string
 from django.views import generic
 
 from .choices import ShopCartStatusChoice
 from .models import ShopCart
+
 
 class ShopCartView(generic.ListView):
     model = ShopCart
@@ -100,3 +103,31 @@ class RemoveFromShopCartView(LoginRequiredMixin, View):
             return HttpResponse("\n".join([remove_item_html, badge_html, cart_items_oob, cart_summary_oob]))
 
         return HttpResponse("\n".join([remove_item_html, badge_html]))
+
+
+class CheckoutView(LoginRequiredMixin, generic.TemplateView):
+    login_url = "/login"
+    template_name = "pages/orders/checkout/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        shopcart_items = (
+            ShopCart.objects
+            .filter(
+                profile=self.request.user,
+                status=ShopCartStatusChoice.IN_CART
+            )
+            .annotate(
+                total=ExpressionWrapper(
+                    F("quantity") * F("book__price"),
+                    output_field=DecimalField(max_digits=10, decimal_places=2)
+                )
+            )
+        )
+
+        context["shopcart_items"] = shopcart_items
+
+        context["subtotal"] = shopcart_items.aggregate(subtotal=Sum("total"))["subtotal"] or 0
+
+        return context

@@ -1,7 +1,7 @@
 <article
         class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden group">
     <a href="{% url 'book:book_detail' book.slug %}" class="block">
-        <div class="aspect-[3/4] bg-gray-200 overflow-hidden">
+        <div class="aspect-3/4 bg-gray-200 overflow-hidden">
             <img src="https://picsum.photos/seed/book1/300/400" alt="O Senhor dos Anéis"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
         </div>
@@ -20,8 +20,13 @@
         </div>
     </a>
     <div class="px-4 pb-4">
-        <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm">
-            Adicionar
+        <button
+                hx-post="{% url 'order:addtoshopcart' book.id %}"
+                hx-target="#cart-badge"
+                hx-swap="outerHTML"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-md transition-colors text-sm cursor-pointer">
+            Add to cart
         </button>
     </div>
 </article>

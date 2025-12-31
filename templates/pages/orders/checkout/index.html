@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+{% block title %}Virgil Bookstore - Checkout{% endblock %}
+{% block content %}
+    <main class="container mx-auto px-4 py-8">
+
+        <nav class="mb-8" aria-label="Progresso do checkout">
+            <ol class="flex items-center justify-center gap-2 md:gap-4 text-xs md:text-sm">
+                <li class="flex items-center">
+                    <span class="flex items-center justify-center w-8 h-8 bg-amber-600 text-white rounded-full font-semibold">1</span>
+                    <span class="ml-2 font-medium text-gray-900 hidden sm:inline">Dados</span>
+                </li>
+                <li class="w-12 md:w-24 h-0.5 bg-gray-300"></li>
+                <li class="flex items-center">
+                    <span class="flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-600 rounded-full font-semibold">2</span>
+                    <span class="ml-2 text-gray-500 hidden sm:inline">Entrega</span>
+                </li>
+                <li class="w-12 md:w-24 h-0.5 bg-gray-300"></li>
+                <li class="flex items-center">
+                    <span class="flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-600 rounded-full font-semibold">3</span>
+                    <span class="ml-2 text-gray-500 hidden sm:inline">Pagamento</span>
+                </li>
+                <li class="w-12 md:w-24 h-0.5 bg-gray-300"></li>
+                <li class="flex items-center">
+                    <span class="flex items-center justify-center w-8 h-8 bg-gray-300 text-gray-600 rounded-full font-semibold">4</span>
+                    <span class="ml-2 text-gray-500 hidden sm:inline">Revisão</span>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Forms -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Personal Data -->
+                <section class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="flex items-center justify-center w-8 h-8 bg-amber-100 text-amber-800 rounded-full font-bold text-sm">1</span>
+                        Dados Pessoais
+                    </h2>
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Nome
+                                    *</label>
+                                <input type="text" id="first-name" required
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                       placeholder="João">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Sobrenome
+                                    *</label>
+                                <input type="text" id="last-name" required
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                       placeholder="Silva">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail *</label>
+                            <input type="email" id="email" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                   placeholder="joao.silva@email.com">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone *</label>
+                            <input type="tel" id="phone" required maxlength="15"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                   placeholder="(11) 99999-9999">
+                        </div>
+                        <div>
+                            <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF *</label>
+                            <input type="text" id="cpf" required maxlength="14"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                   placeholder="000.000.000-00">
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Shipping Address -->
+                <section class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="flex items-center justify-center w-8 h-8 bg-amber-100 text-amber-800 rounded-full font-bold text-sm">2</span>
+                        Endereço de Entrega
+                    </h2>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP *</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="cep" required maxlength="9"
+                                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                       placeholder="00000-000">
+                                <button type="button" id="find-cep"
+                                        class="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-lg transition-colors">
+                                    Buscar
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="street" class="block text-sm font-medium text-gray-700 mb-1">Rua *</label>
+                            <input type="text" id="street" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="number" class="block text-sm font-medium text-gray-700 mb-1">Número
+                                    *</label>
+                                <input type="text" id="number" required
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="complement"
+                                       class="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
+                                <input type="text" id="complement"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                       placeholder="Apto, Bloco, etc.">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="neighborhood" class="block text-sm font-medium text-gray-700 mb-1">Bairro
+                                    *</label>
+                                <input type="text" id="neighborhood" required
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Cidade *</label>
+                                <input type="text" id="city" required
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="state" class="block text-sm font-medium text-gray-700 mb-1">Estado *</label>
+                            <select id="state" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <option value="">Selecione</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                            </select>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Shipping Method -->
+                <section class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="flex items-center justify-center w-8 h-8 bg-amber-100 text-amber-800 rounded-full font-bold text-sm">2</span>
+                        Método de Entrega
+                    </h2>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between p-4 border-2 border-amber-600 bg-amber-50 rounded-lg cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="shipping-method" value="express" checked
+                                       class="text-amber-600 focus:ring-amber-500">
+                                <div>
+                                    <div class="font-semibold text-gray-900">Frete Expresso</div>
+                                    <div class="text-sm text-gray-600">Entrega em 3-5 dias úteis</div>
+                                </div>
+                            </div>
+                            <div class="font-bold text-amber-700">R$ 18,90</div>
+                        </label>
+                        <label class="flex items-center justify-between p-4 border-2 border-gray-300 hover:border-amber-600 rounded-lg cursor-pointer transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="shipping-method" value="standard"
+                                       class="text-amber-600 focus:ring-amber-500">
+                                <div>
+                                    <div class="font-semibold text-gray-900">Frete Padrão</div>
+                                    <div class="text-sm text-gray-600">Entrega em 7-10 dias úteis</div>
+                                </div>
+                            </div>
+                            <div class="font-bold text-gray-700">R$ 12,90</div>
+                        </label>
+                        <label class="flex items-center justify-between p-4 border-2 border-gray-300 hover:border-amber-600 rounded-lg cursor-pointer transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="shipping-method" value="free"
+                                       class="text-amber-600 focus:ring-amber-500">
+                                <div>
+                                    <div class="font-semibold text-gray-900 flex items-center gap-2">
+                                        Frete Econômico
+                                        <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">GRÁTIS</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600">Entrega em 12-20 dias úteis</div>
+                                </div>
+                            </div>
+                            <div class="font-bold text-green-600">GRÁTIS</div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Payment Method -->
+                <section class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="flex items-center justify-center w-8 h-8 bg-amber-100 text-amber-800 rounded-full font-bold text-sm">3</span>
+                        Forma de Pagamento
+                    </h2>
+
+                    <div class="space-y-4">
+                        <label class="flex items-center p-4 border-2 border-amber-600 bg-amber-50 rounded-lg cursor-pointer">
+                            <input type="radio" name="payment-method" value="card" checked
+                                   class="mr-3 text-amber-600 focus:ring-amber-500">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-900">Cartão de Crédito</div>
+                                <div class="text-sm text-gray-600">Em até 3x sem juros</div>
+                            </div>
+                        </label>
+
+                        <!-- Card Form -->
+                        <div id="card-form" class="pl-7 space-y-4">
+                            <div>
+                                <label for="card-number" class="block text-sm font-medium text-gray-700 mb-1">Número do
+                                    Cartão *</label>
+                                <input type="text" id="card-number" required maxlength="19"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                       placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div>
+                                <label for="card-name" class="block text-sm font-medium text-gray-700 mb-1">Nome no
+                                    Cartão *</label>
+                                <input type="text" id="card-name" required
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                       placeholder="JOÃO SILVA">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="card-expiry" class="block text-sm font-medium text-gray-700 mb-1">Validade
+                                        *</label>
+                                    <input type="text" id="card-expiry" required maxlength="5"
+                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                           placeholder="MM/AA">
+                                </div>
+                                <div>
+                                    <label for="card-cvv" class="block text-sm font-medium text-gray-700 mb-1">CVV
+                                        *</label>
+                                    <input type="text" id="card-cvv" required maxlength="4"
+                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                           placeholder="123">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="installments" class="block text-sm font-medium text-gray-700 mb-1">Parcelas
+                                    *</label>
+                                <select id="installments" required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <option value="1">1x de R$ 260,50 sem juros</option>
+                                    <option value="2">2x de R$ 130,25 sem juros</option>
+                                    <option value="3">3x de R$ 86,83 sem juros</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center p-4 border-2 border-gray-300 hover:border-amber-600 rounded-lg cursor-pointer transition-colors">
+                            <input type="radio" name="payment-method" value="pix"
+                                   class="mr-3 text-amber-600 focus:ring-amber-500">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-900">PIX</div>
+                                <div class="text-sm text-gray-600">Aprovação imediata</div>
+                            </div>
+                        </label>
+
+                        <label class="flex items-center p-4 border-2 border-gray-300 hover:border-amber-600 rounded-lg cursor-pointer transition-colors">
+                            <input type="radio" name="payment-method" value="boleto"
+                                   class="mr-3 text-amber-600 focus:ring-amber-500">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-900">Boleto Bancário</div>
+                                <div class="text-sm text-gray-600">Vencimento em 3 dias úteis</div>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Submit Button -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="cart.html"
+                       class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors text-center">
+                        ← Voltar ao Carrinho
+                    </a>
+                    <button id="complete-order" type="button"
+                            class="flex-1 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors shadow-lg">
+                        Confirmar Pedido
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Resumo do Pedido</h2>
+
+                    <!-- Items -->
+                    <div class="space-y-3 mb-6 pb-6 border-b">
+                        {% for item in shopcart_items %}
+                            <div class="flex gap-3">
+                                <img src="https://picsum.photos/seed/book3/300/400" alt="Harry Potter"
+                                     class="w-16 h-20 object-cover rounded">
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 line-clamp-2">{{ item.book.title }}</p>
+                                    <p class="text-xs text-gray-500">Quantity: {{ item.quantity }}</p>
+                                    <p class="text-sm font-semibold text-amber-700">R$
+                                        {{ item.total }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-gray-700">
+                            <span>Subtotal (4 itens)</span>
+                            <span>R$ {{ subtotal }}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-700">
+                            <span>Frete</span>
+                            <span id="summary-shipping">R$ 18,90</span>
+                        </div>
+                        <div class="border-t pt-3 flex justify-between text-lg font-bold text-gray-900">
+                            <span>Total</span>
+                            <span class="text-amber-700">R$ 263,50</span>
+                        </div>
+                    </div>
+
+                    <!-- Security -->
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <p class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-600 flex-shrink-0" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            Compra 100% segura
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-600 flex-shrink-0" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Devolução grátis em 30 dias
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+{% endblock %}
